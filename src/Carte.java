@@ -1,13 +1,16 @@
+public enum Direction {
+	NORD, SUD, OUEST, EST;
+}
+
 public class Carte {
 
+	private int[][] matrice;
 	private int tailleCases;
 
-	public Carte() {
-		this.tailleCases = 0;
-	}
-
-	public Carte(int pTaille) {
+	public Carte(int pNbLignes, int pNbColonnes, int pTaille) {
 		if (pTaille < 0) throw new IllegalArgumentException("Argument invalide : taille de case négative.");
+		if (pNbLignes < 0 | pNbColonnes < 0) throw new IllegalArgumentException("Argument invalide : dimensions de la carte négatives.");
+		this.matrice = new int[pNbLignes][pNbColonnes];
 		this.tailleCases = pTaille;
 	}
 

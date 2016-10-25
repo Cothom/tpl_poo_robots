@@ -1,16 +1,6 @@
 public class Drone extends Robot {
 
-	private static double vtesseMaximale = 150;
-
-	public RobotRoues() {
-		super.position = new Case();
-		super.vitesse = 80;
-		super.volumeReservoir = 5000;
-		super.volumeDisponible = super.volumeReservoir;
-		super.tempsRemplissage = 600;
-		super.volumeDeversUnitaire = 100;
-		super.tempsDeversUnitaire = 5;
-	}
+	private static double vitesseMaximale = 150;
 
 	public Drone(Case pCase) {
 		super.position = pCase;

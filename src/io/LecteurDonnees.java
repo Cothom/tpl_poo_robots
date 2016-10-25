@@ -54,6 +54,7 @@ public class LecteurDonnees {
     // Tout le reste de la classe est prive!
 
     private static Scanner scanner;
+	private static DonneesSimulation donnees;
 
     /**
      * Constructeur prive; impossible d'instancier la classe depuis l'exterieur
@@ -77,6 +78,8 @@ public class LecteurDonnees {
             int tailleCases = scanner.nextInt();	// en m
             System.out.println("Carte " + nbLignes + "x" + nbColonnes
                     + "; taille des cases = " + tailleCases);
+
+			donnees.creerCarte(nbLignes, nbColonnes, tailleCases);
 
             for (int lig = 0; lig < nbLignes; lig++) {
                 for (int col = 0; col < nbColonnes; col++) {
@@ -105,6 +108,7 @@ public class LecteurDonnees {
 
         try {
             chaineNature = scanner.next();
+			donnees.creerCase(lig, col, chaineNature);
             // si NatureTerrain est un Enum, vous pouvez recuperer la valeur
             // de l'enum a partir d'une String avec:
             //			NatureTerrain nature = NatureTerrain.valueOf(chaineNature);
@@ -129,6 +133,7 @@ public class LecteurDonnees {
         ignorerCommentaires();
         try {
             int nbIncendies = scanner.nextInt();
+			donnees.creerListeIncendies(nbIncendies);
             System.out.println("Nb d'incendies = " + nbIncendies);
             for (int i = 0; i < nbIncendies; i++) {
                 lireIncendie(i);
@@ -157,6 +162,7 @@ public class LecteurDonnees {
                 throw new DataFormatException("incendie " + i
                         + "nb litres pour eteindre doit etre > 0");
             }
+			donnees.ajouterIncendie(lig, col, intensite);
             verifieLigneTerminee();
 
             System.out.println("position = (" + lig + "," + col
@@ -176,6 +182,7 @@ public class LecteurDonnees {
         ignorerCommentaires();
         try {
             int nbRobots = scanner.nextInt();
+			donnees.creerListeRobots(nbRobots);
             System.out.println("Nb de robots = " + nbRobots);
             for (int i = 0; i < nbRobots; i++) {
                 lireRobot(i);
@@ -212,8 +219,10 @@ public class LecteurDonnees {
 
             if (s == null) {
                 System.out.print("valeur par defaut");
+				donnees.ajouterRobot(type, -1, lig, col);
             } else {
                 int vitesse = Integer.parseInt(s);
+				donnees.ajouterRobot(type, vitesse, lig, col);
                 System.out.print(vitesse);
             }
             verifieLigneTerminee();
