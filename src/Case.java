@@ -1,5 +1,5 @@
 public enum NatureTerrain {
-	EAU, FORET, ROCHE, TERRAIN_LIBRE, HABITAT;
+    EAU, FORET, ROCHE, TERRAIN_LIBRE, HABITAT;
 }
 
 public class Case {
@@ -24,4 +24,11 @@ public class Case {
 	public NatureTerrain getNature() {
 		return this.nature;
 	}
+
+    public void setNature(NatureTerrain pNature) {
+        if (pNature == NORD || pNature == SUD || pNature == OUEST || pNature == EST)
+            this.nature = pNature;
+        else
+            throw new IllegalArgumentException("Argument invalide : ce type de nature n'existe pas.");
+    }
 }

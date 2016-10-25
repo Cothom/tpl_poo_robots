@@ -1,28 +1,37 @@
 public enum Direction {
-	NORD, SUD, OUEST, EST;
+    NORD, SUD, OUEST, EST;
 }
 
 public class Carte {
 
-	private int[][] matrice;
+    private Case[][] matrice;
+    private int nbLignes;
+    private int nbColonnes;
 	private int tailleCases;
 
-	public Carte(int pNbLignes, int pNbColonnes, int pTaille) {
+	public Carte(int pNbLIgnes, int pNbColonnes, int pTaille) {
+		if (pNbLIgnes < 1 || pNbColonnes < 1) throw new IllegalArgumentException("Argument invalide : taille de carte négative ou nulle.");
 		if (pTaille < 0) throw new IllegalArgumentException("Argument invalide : taille de case négative.");
-		if (pNbLignes < 0 | pNbColonnes < 0) throw new IllegalArgumentException("Argument invalide : dimensions de la carte négatives.");
-		this.matrice = new int[pNbLignes][pNbColonnes];
 		this.tailleCases = pTaille;
+        this.nbLignes = pNbLIgnes;
+        this.nbColonnes = pNbColonnes;
+        this.matrice = new Case[pNbLIgnes][pNbColonnes];
+        for (int i = 0; i < pNbLignes; i++) {
+            for (int j = 0; j < pNbColonnes; j++) {
+                this.matrice[i][j] = new Case(i, j, TERRAIN_LIBRE);
+            }
+        }
 	}
 
 	public void Evenement(long date) {
 	}
 
 	public int getNbLignes() {
-		return 0;
+		return this.nbLignes;
 	}
 
 	public int getNbColonnes() {
-		return 0;
+        return this.nbColonnes;
 	}
 
 	public int getTailleCases() {
@@ -30,14 +39,49 @@ public class Carte {
 	}
 
 	public Case getCase(int ligne, int colonne) {
-		return new Case();
+		return this.matrice[ligne][colonne];
 	}
 
 	public boolean voisinExiste(Case src, Direction dir) {
-		return false;
+		int ligne = src.getLigne();
+        int colonne = src.getColonne();
+        switch (dir) {
+            case NORD :
+                if (ligne <= 0) return false;
+                break;
+            case SUD :
+                if (ligne >= this.nbLignes - 1) return false;
+                break;
+            case OUEST :
+                if (colonne <= 0) return false;
+                break;
+            case EST :
+                if (ligne >= this.nbColonnes - 1) return false;
+                break;
+            default :
+               throw new IllegalArgumentException("Argument invalide : cette direction n'existe pas.");
+               break;
+        }
+        return true;
 	}
 
 	public Case getVoisin(Case src, Direction dir) {
-		return new Case();
+        Case r;
+        if (!voisinExiste(src, dir)) throw new IllegalArgumentException("Argument invalide : cette case n'a pas de voisin dans cette direction.");
+        switch (dir) {
+            case NORD :
+                r = this.matrice[src.getLigne() - 1][src.getColonne()];
+                break;
+            case SUD :
+                r = this.matrice[src.getLigne() + 1][src.getColonne()];
+                break;
+            case OUEST :
+                r = this.matrice[src.getLigne()][src.getColonne - 1];
+                break;
+            case EST :
+                r = this.matrice[src.getLigne()][src.getColonne() + 1];
+                break;
+        }
+        return r;
 	}
 }

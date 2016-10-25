@@ -49,8 +49,6 @@ public class LecteurDonnees {
     }
 
 
-
-
     // Tout le reste de la classe est prive!
 
     private static Scanner scanner;
