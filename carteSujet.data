@@ -1,0 +1,80 @@
+
+ == Lecture du fichier../cartes/carteSujet.map
+Carte 8x8; taille des cases = 10000
+Case (0,0): nature = TERRAIN_LIBRE
+Case (0,1): nature = TERRAIN_LIBRE
+Case (0,2): nature = TERRAIN_LIBRE
+Case (0,3): nature = TERRAIN_LIBRE
+Case (0,4): nature = TERRAIN_LIBRE
+Case (0,5): nature = TERRAIN_LIBRE
+Case (0,6): nature = TERRAIN_LIBRE
+Case (0,7): nature = TERRAIN_LIBRE
+Case (1,0): nature = TERRAIN_LIBRE
+Case (1,1): nature = TERRAIN_LIBRE
+Case (1,2): nature = TERRAIN_LIBRE
+Case (1,3): nature = TERRAIN_LIBRE
+Case (1,4): nature = ROCHE
+Case (1,5): nature = TERRAIN_LIBRE
+Case (1,6): nature = ROCHE
+Case (1,7): nature = TERRAIN_LIBRE
+Case (2,0): nature = TERRAIN_LIBRE
+Case (2,1): nature = TERRAIN_LIBRE
+Case (2,2): nature = EAU
+Case (2,3): nature = EAU
+Case (2,4): nature = TERRAIN_LIBRE
+Case (2,5): nature = FORET
+Case (2,6): nature = TERRAIN_LIBRE
+Case (2,7): nature = TERRAIN_LIBRE
+Case (3,0): nature = TERRAIN_LIBRE
+Case (3,1): nature = TERRAIN_LIBRE
+Case (3,2): nature = EAU
+Case (3,3): nature = EAU
+Case (3,4): nature = TERRAIN_LIBRE
+Case (3,5): nature = FORET
+Case (3,6): nature = FORET
+Case (3,7): nature = TERRAIN_LIBRE
+Case (4,0): nature = TERRAIN_LIBRE
+Case (4,1): nature = TERRAIN_LIBRE
+Case (4,2): nature = EAU
+Case (4,3): nature = TERRAIN_LIBRE
+Case (4,4): nature = TERRAIN_LIBRE
+Case (4,5): nature = FORET
+Case (4,6): nature = FORET
+Case (4,7): nature = TERRAIN_LIBRE
+Case (5,0): nature = TERRAIN_LIBRE
+Case (5,1): nature = TERRAIN_LIBRE
+Case (5,2): nature = EAU
+Case (5,3): nature = TERRAIN_LIBRE
+Case (5,4): nature = TERRAIN_LIBRE
+Case (5,5): nature = HABITAT
+Case (5,6): nature = HABITAT
+Case (5,7): nature = TERRAIN_LIBRE
+Case (6,0): nature = TERRAIN_LIBRE
+Case (6,1): nature = TERRAIN_LIBRE
+Case (6,2): nature = EAU
+Case (6,3): nature = EAU
+Case (6,4): nature = TERRAIN_LIBRE
+Case (6,5): nature = TERRAIN_LIBRE
+Case (6,6): nature = TERRAIN_LIBRE
+Case (6,7): nature = TERRAIN_LIBRE
+Case (7,0): nature = TERRAIN_LIBRE
+Case (7,1): nature = HABITAT
+Case (7,2): nature = HABITAT
+Case (7,3): nature = EAU
+Case (7,4): nature = TERRAIN_LIBRE
+Case (7,5): nature = TERRAIN_LIBRE
+Case (7,6): nature = TERRAIN_LIBRE
+Case (7,7): nature = TERRAIN_LIBRE
+Nb d'incendies = 6
+Incendie 0: position = (7,0);	 intensite = 50000
+Incendie 1: position = (7,1);	 intensite = 10000
+Incendie 2: position = (6,0);	 intensite = 10000
+Incendie 3: position = (6,1);	 intensite = 20000
+Incendie 4: position = (5,5);	 intensite = 8000
+Incendie 5: position = (7,7);	 intensite = 5000
+Nb de robots = 3
+Robot 0: position = (3,3);	 type = DRONE; 	 vitesse = 150
+Robot 1: position = (6,5);	 type = ROUES; 	 vitesse = valeur par defaut
+Robot 2: position = (4,7);	 type = PATTES; 	 vitesse = valeur par defaut
+
+ == Lecture terminee
