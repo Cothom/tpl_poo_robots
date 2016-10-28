@@ -1,6 +1,4 @@
-public enum Direction {
-    NORD, SUD, OUEST, EST;
-}
+package maps;
 
 public class Carte {
 
@@ -9,16 +7,18 @@ public class Carte {
     private int nbColonnes;
 	private int tailleCases;
 
-	public Carte(int pNbLIgnes, int pNbColonnes, int pTaille) {
-		if (pNbLIgnes < 1 || pNbColonnes < 1) throw new IllegalArgumentException("Argument invalide : taille de carte négative ou nulle.");
-		if (pTaille < 0) throw new IllegalArgumentException("Argument invalide : taille de case négative.");
+	public Carte(int pNbLignes, int pNbColonnes, int pTaille) {
+		if (pNbLignes < 1 || pNbColonnes < 1)
+			throw new IllegalArgumentException("Argument invalide : taille de carte négative ou nulle.");
+		if (pTaille < 0)
+			throw new IllegalArgumentException("Argument invalide : taille de case négative.");
 		this.tailleCases = pTaille;
-        this.nbLignes = pNbLIgnes;
+        this.nbLignes = pNbLignes;
         this.nbColonnes = pNbColonnes;
-        this.matrice = new Case[pNbLIgnes][pNbColonnes];
+        this.matrice = new Case[pNbLignes][pNbColonnes];
         for (int i = 0; i < pNbLignes; i++) {
             for (int j = 0; j < pNbColonnes; j++) {
-                this.matrice[i][j] = new Case(i, j, TERRAIN_LIBRE);
+                this.matrice[i][j] = new Case(i, j, NatureTerrain.valueOf("TERRAIN_LIBRE"));
             }
         }
 	}
@@ -60,7 +60,6 @@ public class Carte {
                 break;
             default :
                throw new IllegalArgumentException("Argument invalide : cette direction n'existe pas.");
-               break;
         }
         return true;
 	}
@@ -76,12 +75,18 @@ public class Carte {
                 r = this.matrice[src.getLigne() + 1][src.getColonne()];
                 break;
             case OUEST :
-                r = this.matrice[src.getLigne()][src.getColonne - 1];
+                r = this.matrice[src.getLigne()][src.getColonne() - 1];
                 break;
             case EST :
                 r = this.matrice[src.getLigne()][src.getColonne() + 1];
                 break;
+            default :
+               throw new IllegalArgumentException("Argument invalide : cette direction n'existe pas.");
         }
         return r;
+	}
+
+	public void setNatureCase(int ligne, int colonne, NatureTerrain nature) {
+		this.matrice[ligne][colonne].setNature(nature);
 	}
 }

@@ -1,6 +1,4 @@
-public enum NatureTerrain {
-    EAU, FORET, ROCHE, TERRAIN_LIBRE, HABITAT;
-}
+package maps;
 
 public class Case {
 	private int ligne;
@@ -11,6 +9,12 @@ public class Case {
 		this.ligne = pLigne;
 		this.colonne = pColonne;
 		this.nature = pNature;
+	}
+
+	public Case(Case pCase) {
+		this.ligne = pCase.getLigne();
+		this.colonne = pCase.getColonne();
+		this.nature = pCase.getNature();
 	}
 
 	public int getLigne() {
@@ -26,9 +30,6 @@ public class Case {
 	}
 
     public void setNature(NatureTerrain pNature) {
-        if (pNature == NORD || pNature == SUD || pNature == OUEST || pNature == EST)
             this.nature = pNature;
-        else
-            throw new IllegalArgumentException("Argument invalide : ce type de nature n'existe pas.");
     }
 }

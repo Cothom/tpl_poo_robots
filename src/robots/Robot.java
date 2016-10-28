@@ -1,9 +1,13 @@
+package robots;
+
+import maps.*;
+ 
 public abstract class Robot {
 
 	protected Case position;
 	protected double vitesse;
 	protected int volumeReservoir;
-	protected int volumeDisponibleReservoir;
+	protected int volumeDisponible;
 	protected int tempsRemplissage;
 	protected int volumeDeversUnitaire;
 	protected int tempsDeversUnitaire;

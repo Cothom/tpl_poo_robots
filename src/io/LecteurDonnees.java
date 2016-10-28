@@ -1,5 +1,6 @@
 package io;
 
+import data.*;
 
 import java.io.*;
 import java.util.*;

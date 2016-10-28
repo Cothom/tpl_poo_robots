@@ -1,12 +1,15 @@
+package maps;
+
 public class Incendie {
 
-    private Case position;
+	private Case position;
 	private int intensite;
 	private int intensite_initiale;
 
 	public Incendie(Case pPosition, int pIntensite) {
 		if (pLigne < 0 || pColonne < 0) throw new IllegalArgumentException("Argument invalide : coordonnée négative.");
 		if (pIntensite < 0) throw new IllegalArgumentException("Argument invalide : intensité négative.");
+
 		this.position = pPosition;
 		this.intensite_initiale = pIntensite;
 		this.intensite = pIntensite;
@@ -28,7 +31,7 @@ public class Incendie {
 		return this.intensite_initiale;
 	}
 
-	public int getPosition() {
+	public Case getPosition() {
 		return this.position;
 	}
 }
