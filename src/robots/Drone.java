@@ -7,17 +7,11 @@ public class Drone extends Robot {
 	private static double vitesseMaximale = 150;
 
 	public Drone(Case pPosition) {
-		this.position = new Case(pPosition);
-		this.vitesse = 100;
-		this.volumeReservoir = 10000;
-		this.volumeDisponible = this.volumeReservoir;
-		this.tempsRemplissage = 1800;
-		this.volumeDeversUnitaire = this.volumeReservoir;
-		this.tempsDeversUnitaire = 30;
+	    this(pPosition, 100);
 	}
 
 	public Drone(Case pPosition, double pVitesse) {
-		this.position = new Case(pPosition);
+		this.position = pPosition;
 		this.vitesse = (pVitesse < vitesseMaximale) ? pVitesse : vitesseMaximale;
 		this.volumeReservoir = 10000;
 		this.volumeDisponible = this.volumeReservoir;

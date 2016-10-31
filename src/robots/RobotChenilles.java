@@ -10,20 +10,10 @@ public class RobotChenilles extends Robot {
 	private double vitesseForet;
 
 	public RobotChenilles(Case pPosition) {
-		this.position = new Case(pPosition);
-		this.vitesse = 60;
-		this.volumeReservoir = 2000;
-		this.volumeDisponible = this.volumeReservoir;
-		this.tempsRemplissage = 300;
-		this.volumeDeversUnitaire = 100;
-		this.tempsDeversUnitaire = 8;
-
-		this.vitesseNormale = this.vitesse;
-		this.vitesseForet = this.vitesse / 2;
+	    this(pPosition, 60);
 	}
 
 	public RobotChenilles(Case pPosition, double pVitesse) {
-		this.position = new Case(pPosition);
 		this.vitesse = (pVitesse < vitesseMaximale) ? pVitesse : vitesseMaximale;
 		this.volumeReservoir = 2000;
 		this.volumeDisponible = this.volumeReservoir;
@@ -33,6 +23,8 @@ public class RobotChenilles extends Robot {
 
 		this.vitesseNormale = this.vitesse;
 		this.vitesseForet = this.vitesse / 2;
+
+		this.setPosition(pPosition);
 	}
 
 	public void setPosition(Case pPosition) {

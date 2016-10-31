@@ -1,5 +1,5 @@
 package maps;
 
 public enum Direction {
-	NORD, SUD, OUEST, EST;
+    NORD, SUD, OUEST, EST;
 }

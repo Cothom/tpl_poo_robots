@@ -5,17 +5,11 @@ import maps.*;
 public class RobotRoues extends Robot {
 
 	public RobotRoues(Case pPosition) {
-		this.position = new Case(pPosition);
-		this.vitesse = 80;
-		this.volumeReservoir = 5000;
-		this.volumeDisponible = this.volumeReservoir;
-		this.tempsRemplissage = 600;
-		this.volumeDeversUnitaire = 100;
-		this.tempsDeversUnitaire = 5;
+	    this(pPosition, 80);
 	}
 
 	public RobotRoues(Case pPosition, double pVitesse) {
-		this.position = new Case(pPosition);
+		this.position = pPosition;
 		this.vitesse = pVitesse;
 		this.volumeReservoir = 5000;
 		this.volumeDisponible = this.volumeReservoir;

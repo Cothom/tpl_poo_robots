@@ -8,7 +8,6 @@ public class RobotPattes extends Robot {
 	private double vitesseRocher;
 
 	public RobotPattes(Case pPosition) {
-		this.position = new Case(pPosition);
 		this.vitesse = 30;
 		this.volumeReservoir = 0;
 		this.volumeDisponible = this.volumeReservoir;
@@ -18,6 +17,8 @@ public class RobotPattes extends Robot {
 
 		this.vitesseNormale = 30;
 		this.vitesseRocher = 10;
+
+		this.setPosition(pPosition);
 
 	}
 
