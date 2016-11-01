@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import gui.GUISimulator;
+import gui.ImageElement;
 import gui.Rectangle;
 import gui.Simulable;
 import gui.Text;
@@ -38,7 +39,7 @@ public class TestAffichage {
 
 
 	// crée la fenêtre graphique dans laquelle dessiner
-        GUISimulator gui = new GUISimulator(largeur, hauteur, Color.BLACK);
+        GUISimulator gui = new GUISimulator(largeur, hauteur + 50, Color.WHITE);
 
 	Simulateur simulateur = new Simulateur(gui, donnees);
     }
@@ -65,7 +66,7 @@ class Simulateur implements Simulable {
 	int tailleCases = pCarte.getTailleCases() / 100; // Changement d'Echelle
 	for (int i = 0; i < pCarte.getNbLignes(); i++) {
 	    for (int j = 0; j < pCarte.getNbColonnes(); j++) {
-		dessineCase(tailleCases * j + 50, tailleCases * i + 50, pCarte.getCase(i,j), tailleCases);
+		dessineCase(tailleCases * j + 75, tailleCases * i + 75, pCarte.getCase(i,j), tailleCases);
 	    }
 	}
     }
@@ -75,19 +76,27 @@ class Simulateur implements Simulable {
 	Color couleur;
 	switch (nature) {
 	case EAU :
-	    couleur = Color.BLUE;
+	    couleur = Color.CYAN;
 	    break;	    
 	case ROCHE :
 	    couleur = Color.RED;
 	    break;	    
 	case FORET :
 	    couleur = Color.GREEN;
-	    break;	    
-	default :
+	    break;
+	case TERRAIN_LIBRE :
+	    couleur = Color.decode("#91541e");
+	    break;
+	case HABITAT :
 	    couleur = Color.WHITE;
 	    break;
+	default :
+	    couleur = Color.BLACK;
+	    break;
 	}
-	gui.addGraphicalElement(new Rectangle(x, y, Color.BLACK, couleur, tailleCase));
+	gui.addGraphicalElement(new Rectangle(x, y, couleur, couleur, tailleCase));
+	// java.awt.image.ImageObserver obs;
+	// gui.addGraphicalElement(new ImageElement(x, y, "obscure-abyss.jpg", tailleCase, tailleCase, obs));
 	System.out.println("("+x+","+y+")");
 
     }
