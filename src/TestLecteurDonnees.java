@@ -18,8 +18,7 @@ public class TestLecteurDonnees {
             System.out.println("fichier " + args[0] + " inconnu ou illisible");
         } catch (DataFormatException e) {
             System.out.println("\n\t**format du fichier " + args[0] + " invalide: " + e.getMessage());
-        }
+	}	
     }
-
 }
 

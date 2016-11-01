@@ -21,13 +21,17 @@
 #   -classpath : repertoire dans lequel sont cherches les .class deja compiles
 #   -sourcepath : repertoire dans lequel sont cherches les .java (dependances)
 
-all: testInvader testLecture
+all: testInvader testLecture testAffichage # Ajout de testAffichage
 
 testInvader:
 	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestInvader.java
 
 testLecture:
 	javac -d bin -sourcepath src src/TestLecteurDonnees.java
+
+# Modif
+testAffichage:
+	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestAffichage.java
 
 # Execution:
 # on peut taper directement la ligne de commande :
@@ -39,6 +43,10 @@ exeInvader:
 
 exeLecture: 
 	java -classpath bin TestLecteurDonnees cartes/carteSujet.map
+
+# Modif
+exeAffichage: 
+	java -classpath bin:bin/gui.jar TestAffichage cartes/carteSujet.map
 
 clean:
 	rm -rf bin/*.class
