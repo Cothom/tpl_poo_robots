@@ -43,12 +43,16 @@ public class TestAffichage {
         GUISimulator gui = new GUISimulator(largeur, hauteur + 50, Color.WHITE);
 
 	Simulateur simulateur = new Simulateur(gui, donnees);
-
-
-
-	Deplacement d1 = new Deplacement(10, donnees.getRobots()[0], donnees.getCarte().getCase(4,3), donnees.getCarte());
-	Deplacement d2 = new Deplacement(15, donnees.getRobots()[0], donnees.getCarte().getCase(5,3), donnees.getCarte());
+	
+	/* Deplacement TYPE 1 
+	Deplacement d1 = new Deplacement(10, donnees.getRobots()[0], donnees.getCarte().getCase(4,3) , donnees.getCarte());
+	Deplacement d2 = new Deplacement(15, donnees.getRobots()[0], donnees.getCarte().getCase(5,3) , donnees.getCarte());
         Deplacement d3 = new Deplacement(20, donnees.getRobots()[0], donnees.getCarte().getCase(5,4), donnees.getCarte());
+	*/
+
+	Deplacement2 d1 = new Deplacement2(10, donnees.getRobots()[0], Direction.SUD, donnees.getCarte());
+	Deplacement2 d2 = new Deplacement2(15, donnees.getRobots()[0], Direction.SUD, donnees.getCarte());
+        Deplacement2 d3 = new Deplacement2(20, donnees.getRobots()[0], Direction.EST, donnees.getCarte());
 	Eteindre e1 = new Eteindre(30, donnees.getRobots()[0], donnees.getIncendies()[4], donnees.getCarte());
 	
 	simulateur.ajouteEvenement(d1);
