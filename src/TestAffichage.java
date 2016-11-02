@@ -46,17 +46,38 @@ public class TestAffichage {
 	Simulateur simulateur = new Simulateur(gui, donnees);
 
 	// Ajout de Tests de déplacement
-	Deplacement d1 = new Deplacement(3, donnees.getRobots()[0], donnees.getCarte().getCase(2,3));
-	Deplacement d2 = new Deplacement(30, donnees.getRobots()[0], donnees.getCarte().getCase(1,3));
-        Deplacement d3 = new Deplacement(60, donnees.getRobots()[0], donnees.getCarte().getCase(0,3));
-	Deplacement d4 = new Deplacement(90, donnees.getRobots()[0], donnees.getCarte().getCase(0,2));
+	/*
+	Deplacement d1 = new Deplacement(3, donnees.getRobots()[0], donnees.getCarte().getCase(2,3), donnees.getCarte());
+	Deplacement d2 = new Deplacement(30, donnees.getRobots()[0], donnees.getCarte().getCase(1,3), donnees.getCarte());
+        Deplacement d3 = new Deplacement(60, donnees.getRobots()[0], donnees.getCarte().getCase(0,3), donnees.getCarte());
+	Deplacement d4 = new Deplacement(90, donnees.getRobots()[0], donnees.getCarte().getCase(0,2), donnees.getCarte());
 
 
 	
 	simulateur.ajouteEvenement(d1);
 	simulateur.ajouteEvenement(d2);
 	simulateur.ajouteEvenement(d3);
-	simulateur.ajouteEvenement(d4);
+	simulateur.ajouteEvenement(d4); */
+
+
+
+	Deplacement d1 = new Deplacement(10, donnees.getRobots()[0], donnees.getCarte().getCase(4,3), donnees.getCarte());
+	Deplacement d2 = new Deplacement(15, donnees.getRobots()[0], donnees.getCarte().getCase(5,3), donnees.getCarte());
+        Deplacement d3 = new Deplacement(20, donnees.getRobots()[0], donnees.getCarte().getCase(5,4), donnees.getCarte());
+	Eteindre e1 = new Eteindre(30, donnees.getRobots()[0], donnees.getIncendies()[4], donnees.getCarte());
+
+
+	
+	simulateur.ajouteEvenement(d1);
+	simulateur.ajouteEvenement(d2);
+	simulateur.ajouteEvenement(d3);
+	simulateur.ajouteEvenement(e1);
+
+
+
+
+
+	
 
     }
 
@@ -128,10 +149,11 @@ class Simulateur implements Simulable {
 	int y;
 	int tailleCases = donnees.getCarte().getTailleCases() / 100; // Changement d'Echelle
 	for (int i = 0; i < nb_incendies; i++) {
-	    x = tailleCases * pIncendies[i].getPosition().getColonne() + 75; //+ tailleCases / 8 ?;
-	    y = tailleCases * pIncendies[i].getPosition().getLigne() + 75; // + tailleCases / 8 ?;
-	    gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
-
+	    if (!pIncendies[i].estEteint()) {
+		x = tailleCases * pIncendies[i].getPosition().getColonne() + 75; //+ tailleCases / 8 ?;
+		y = tailleCases * pIncendies[i].getPosition().getLigne() + 75; // + tailleCases / 8 ?;
+		gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
+	    }
 	}
     }
 
@@ -181,18 +203,10 @@ class Simulateur implements Simulable {
 	incrementeDate();
 	System.out.println(dateSimulation);
 	
-	while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() < dateSimulation) {
+	while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
 	    ((Evenement)  Evenements.get(0)).execute();
 	    Evenements.remove(0);
 	}
-	    // TEST
-	/*
-	Evenements.add(12);
-	Evenements.add(13);
-	Evenements.add(14);
-	for (int i = 0; i < Evenements.size(); i++) {
-	    System.out.println(i + " : " + Evenements.get(i));		      
-	}*/
 	gui.reset();
 	dessineCarte(donnees.getCarte());
 	dessineIncendies(donnees.getIncendies());
