@@ -32,11 +32,16 @@ public class Drone extends Robot {
 		this.volumeDisponible = 0;
 	}
 
-	public void remplirReservoir() {
+    public void remplirReservoir() {
 		if (this.position.getNature() == NatureTerrain.EAU)
 			this.volumeDisponible = this.volumeReservoir;
 		else 
 			throw new IllegalArgumentException("Impossible de remplir le reservoir : la case ne contient pas d'eau.");
 	}
+
+    @Override
+    public String toString() {
+	return "Drone";
+    }
 
 }

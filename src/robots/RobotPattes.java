@@ -56,5 +56,9 @@ public class RobotPattes extends Robot {
 	public void remplirReservoir() {
 	}
 
+    @Override
+    public String toString() {
+	return "Pattes";
+    }
 }
 

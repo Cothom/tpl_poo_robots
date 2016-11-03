@@ -48,5 +48,14 @@ exeLecture:
 exeAffichage: 
 	java -classpath bin:bin/gui.jar TestAffichage cartes/carteSujet.map
 
+exeAffichage2: 
+	java -classpath bin:bin/gui.jar TestAffichage cartes/desertOfDeath-20x20.map
+
+exeAffichage3: 
+	java -classpath bin:bin/gui.jar TestAffichage cartes/mushroomOfHell-20x20.map
+
+exeAffichage4: 
+	java -classpath bin:bin/gui.jar TestAffichage cartes/spiralOfMadness-50x50.map
+
 clean:
 	rm -rf bin/*.class
