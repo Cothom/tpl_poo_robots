@@ -18,8 +18,11 @@ public class Eteindre extends Evenement {
     
     @Override
     public void execute() {
-	robot.deverserEau(8000); // A changer
-	incendie.eteindre(8000); // IDEM
+	int volume = robot.getVolumeDisponible();	
+	System.out.println("Volume avant deversement : " + robot.getVolumeDisponible());
+	robot.deverserEau(volume); // A changer
+	incendie.eteindre(volume); // IDEM  	
+	System.out.println("Volume apres deversement : " + robot.getVolumeDisponible());
     }	
 }
     
