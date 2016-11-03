@@ -47,6 +47,9 @@ public class Simulateur implements Simulable {
 
     private void dessineCarte(Carte pCarte) {
 	int tailleCases = pCarte.getTailleCases() / 100; // Changement d'Echelle
+
+	//int tailleCases = 800 / (pCarte.getNbColonnes());
+	    
 	for (int i = 0; i < pCarte.getNbLignes(); i++) {
 	    for (int j = 0; j < pCarte.getNbColonnes(); j++) {
 		dessineCase(tailleCases * j + 75, tailleCases * i + 75, pCarte.getCase(i,j), tailleCases);
@@ -142,7 +145,7 @@ public class Simulateur implements Simulable {
 		chemin = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/roues.png";
 		break;
 	    default :
-		chemin = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/drone.png";
+		chemin = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/roues.png";
 		break;
 	    }
 	    gui.addGraphicalElement(new ImageElement(x - tailleCases / 4, y - tailleCases / 4, chemin, tailleCases / 2, tailleCases / 2, null));

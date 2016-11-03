@@ -38,7 +38,9 @@ public class TestAffichage {
 	
 	int hauteur = donnees.getCarte().getNbLignes() * donnees.getCarte().getTailleCases() / 100;
 
-
+	//int largeur = 800;
+	//int hauteur = 600;
+	
 	// crée la fenêtre graphique dans laquelle dessiner
         GUISimulator gui = new GUISimulator(largeur, hauteur + 50, Color.WHITE);
 
