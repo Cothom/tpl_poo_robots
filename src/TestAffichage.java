@@ -34,15 +34,12 @@ public class TestAffichage {
 	// chargement des donnees 
 	DonneesSimulation donnees = LecteurDonnees.creeDonnees(args[0]);
 	
-	int largeur = donnees.getCarte().getNbColonnes() * donnees.getCarte().getTailleCases() / 100;
-	
-	int hauteur = donnees.getCarte().getNbLignes() * donnees.getCarte().getTailleCases() / 100;
 
-	//int largeur = 800;
-	//int hauteur = 600;
+	int largeur = 800;
+	int hauteur = 600;
 	
 	// crée la fenêtre graphique dans laquelle dessiner
-        GUISimulator gui = new GUISimulator(largeur, hauteur + 50, Color.WHITE);
+        GUISimulator gui = new GUISimulator(largeur, hauteur, Color.WHITE);
 
 	Simulateur simulateur = new Simulateur(gui, donnees);
 	

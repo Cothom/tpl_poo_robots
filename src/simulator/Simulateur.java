@@ -37,28 +37,39 @@ public class Simulateur implements Simulable {
 	this.donnees = pDonnees;
 	this.donneesInitiales = pDonnees;
 
-	dessineCarte(donnees.getCarte());
-	dessineIncendies(donnees.getIncendies());
-	dessineRobots(donnees.getRobots());
-
+        draw();
 	dateSimulation = 0;
 	Evenements = new ArrayList();
     }
 
-    private void dessineCarte(Carte pCarte) {
-	int tailleCases = pCarte.getTailleCases() / 100; // Changement d'Echelle
+    private void draw() {
+    	dessineCarte();
+	dessineIncendies();
+	dessineRobots();
+    }
+    
+    private void dessineCarte() {
+	Carte carte = donnees.getCarte();
 
-	//int tailleCases = 800 / (pCarte.getNbColonnes());
+        /* Changement d'échelle */
+	int a = gui.getPanelWidth() / carte.getNbColonnes();
+	int b = gui.getPanelHeight() / carte.getNbLignes();
+	int tailleCases = (a < b) ? a : b;
+		
+	/* Calcul du décalage */
+	int dx = (a < b) ? 0 : (gui.getPanelWidth() - carte.getNbColonnes() * tailleCases) / 2;
+	int dy = (a < b) ? (gui.getPanelHeight() - carte.getNbLignes() * tailleCases) / 2 : 0;
+
 	    
-	for (int i = 0; i < pCarte.getNbLignes(); i++) {
-	    for (int j = 0; j < pCarte.getNbColonnes(); j++) {
-		dessineCase(tailleCases * j + 75, tailleCases * i + 75, pCarte.getCase(i,j), tailleCases);
+	for (int i = 0; i < carte.getNbLignes(); i++) {
+	    for (int j = 0; j < carte.getNbColonnes(); j++) {
+		dessineCase(tailleCases * j + dx,  tailleCases * i + dy, carte.getCase(i,j), tailleCases);
 	    }
 	}
     }
 
     private void dessineCase(int x, int y, Case pCase, int tailleCase) {
-	NatureTerrain nature = pCase.getNature();
+	/*
 	Color couleur;
 	switch (nature) {
 	case EAU :
@@ -80,75 +91,105 @@ public class Simulateur implements Simulable {
 	    couleur = Color.BLACK;
 	    break;
 	}
-	// gui.addGraphicalElement(new Rectangle(x, y, couleur, couleur, tailleCase));
-	// gui.addGraphicalElement(new ImageElement(x - 50, y - 50, "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/free.png", tailleCase, tailleCase, null));
-	
-	String S = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/";
-	
+	gui.addGraphicalElement(new Rectangle(x, y, couleur, couleur, tailleCase));
+	gui.addGraphicalElement(new ImageElement(x - 50, y - 50, "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/free.png", tailleCase, tailleCase, null));
+	*/ 
+
+	NatureTerrain nature = pCase.getNature();
+	String cheminImage = "/user/6/ranaivmi/2A/Projets/POO/tpl_poo_robots/src/images/";	
+	// String cheminImage = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/";
+
 	switch (nature) {
 	case EAU :
-	    S += "water.png";
+	    cheminImage += "water.png";
 	    break;	    
 	case ROCHE :
-	    S += "rock.png";
+	    cheminImage += "rock.png";
 	    break;	    
 	case FORET :
-	    S += "woods.png";
+	    cheminImage += "woods.png";
 	    break;
 	case TERRAIN_LIBRE :
-	    S += "free.png";
+	    cheminImage += "free.png";
 	    break;
 	case HABITAT :
-	    S += "home.png";
+	    cheminImage += "home.png";
 	    break;
 	default :
 	    break;
 	}
 	// Ajout pour controle chemin image ?
-	gui.addGraphicalElement(new ImageElement(x - 50, y - 50, S, tailleCase, tailleCase, null)); // Ajout controle chargement image ?
+	gui.addGraphicalElement(new ImageElement(x, y, cheminImage, tailleCase, tailleCase, null)); // Ajout controle chargement image ?
 	
 
     }
 
-    private void dessineIncendies(Incendie[] pIncendies) {
+    private void dessineIncendies() {
+	Incendie[] incendies = donnees.getIncendies();
 	int nb_incendies = donnees.getIndiceIncendies(); // Voir si on garde cet attribut ou non avec le groupe.
+
+        /* Changement d'échelle */	
+	int a = gui.getPanelWidth() / donnees.getCarte().getNbColonnes();
+	int b = gui.getPanelHeight() / donnees.getCarte().getNbLignes();
+	int tailleCases = (a < b) ? a : b;	
+
 	int x;
 	int y;
-	int tailleCases = donnees.getCarte().getTailleCases() / 100; // Changement d'Echelle
+
+	/* Calcul du décalage */
+	int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
+	int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
+
+	String cheminImage = "/user/6/ranaivmi/2A/Projets/POO/tpl_poo_robots/src/images/fire.png";
+
 	for (int i = 0; i < nb_incendies; i++) {
-	    if (!pIncendies[i].estEteint()) {
-		x = tailleCases * pIncendies[i].getPosition().getColonne() + 75; //+ tailleCases / 8 ?;
-		y = tailleCases * pIncendies[i].getPosition().getLigne() + 75; // + tailleCases / 8 ?;
-		gui.addGraphicalElement(new ImageElement(x - 50, y - 50, "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/fire.png", tailleCases, tailleCases, null));
+	    if (!incendies[i].estEteint()) {
+		x = tailleCases * incendies[i].getPosition().getColonne(); //+ tailleCases / 8 ?;
+		y = tailleCases * incendies[i].getPosition().getLigne(); // + tailleCases / 8 ?;
+		gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases, tailleCases, null));
 		//gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
 	    }
 	}
     }
 
-    private void dessineRobots(Robot[] pRobots) {
-	int nb_robots = donnees.getIndiceRobots(); // Voir si on garde cet attribut ou non avec le groupe.
-	int x;
-	int y;
-	int tailleCases = donnees.getCarte().getTailleCases() / 100; // Changement d'Echelle
-	String chemin;
-	String typeRobot;
-	for (int i = 0; i < nb_robots; i++) {
-	    x = tailleCases * pRobots[i].getPosition().getColonne() + 75; //+ tailleCases / 8 ?;
-	    y = tailleCases * pRobots[i].getPosition().getLigne() + 75; // + tailleCases / 8 ?;
+    private void dessineRobots() {
+	Robot[] robots = donnees.getRobots();
 
-	    typeRobot = pRobots[i].toString();
-	    switch (typeRobot) {
+	int nb_robots = donnees.getIndiceRobots(); // Voir si on garde cet attribut ou non avec le groupe.
+
+	/* Changement d'échelle */
+	int a = gui.getPanelWidth() / donnees.getCarte().getNbColonnes();
+	int b = gui.getPanelHeight() / donnees.getCarte().getNbLignes();
+	int tailleCases = (a < b) ? a : b;
+	
+	int x;
+	int y;	
+
+	/* Calcul du décalage */
+	int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
+	int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
+	String cheminDossier = "/user/6/ranaivmi/2A/Projets/POO/tpl_poo_robots/src/images/"; 
+	// String cheminDossier = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/"
+	String cheminImage;
+	String typeRobot;
+
+	for (int i = 0; i < nb_robots; i++) {
+	    x = tailleCases * robots[i].getPosition().getColonne() + tailleCases / 4;
+	    y = tailleCases * robots[i].getPosition().getLigne() + tailleCases / 4;
+
+	    typeRobot = robots[i].toString();
+	    switch (typeRobot) { // Autres robots a Ajouter
 	    case "Drone" :
-		chemin = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/drone.png";
+		cheminImage = cheminDossier + "drone.png";
 		break;
 	    case "Roues" :
-		chemin = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/roues.png";
+		cheminImage = cheminDossier + "roues.png";
 		break;
 	    default :
-		chemin = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/roues.png";
+		cheminImage = cheminDossier + "roues.png";
 		break;
 	    }
-	    gui.addGraphicalElement(new ImageElement(x - tailleCases / 4, y - tailleCases / 4, chemin, tailleCases / 2, tailleCases / 2, null));
+	    gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases / 2, tailleCases / 2, null));
 	}
     }
 
@@ -185,25 +226,18 @@ public class Simulateur implements Simulable {
 	
 	incrementeDate();
 	System.out.println(dateSimulation);
-	
+	System.out.println("width" + 800);
+	System.out.println("height" + 600);
 	while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
 	    ((Evenement)  Evenements.get(0)).execute();
 	    Evenements.remove(0);
 	}
 	gui.reset();
-	dessineCarte(donnees.getCarte());
-	dessineIncendies(donnees.getIncendies());
-	dessineRobots(donnees.getRobots());
-		      	
+	draw();	      	
     }
 
     @Override
     public void restart() {
-	gui.reset();
-	donnees = donneesInitiales;
-	dessineCarte(donnees.getCarte());
-	dessineIncendies(donnees.getIncendies());
-	dessineRobots(donnees.getRobots());
     }
 }
 
