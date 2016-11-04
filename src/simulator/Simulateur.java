@@ -21,7 +21,6 @@ import gui.Text;
 
 
 public class Simulateur implements Simulable {
-    /** L'interface graphique associée */
     private GUISimulator gui;
 
     private DonneesSimulation donnees;
@@ -221,12 +220,10 @@ public class Simulateur implements Simulable {
     }
     
     @Override
-    public void next() {
-	
+    public void next() {	
 	incrementeDate();
 	System.out.println(dateSimulation);
-	System.out.println("width" + 800);
-	System.out.println("height" + 600);
+
 	while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
 	    ((Evenement)  Evenements.get(0)).execute();
 	    Evenements.remove(0);
