@@ -95,9 +95,8 @@ public class Simulateur implements Simulable {
 	gui.addGraphicalElement(new ImageElement(x - 50, y - 50, "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/free.png", tailleCase, tailleCase, null));
 	*/ 
 
-	NatureTerrain nature = pCase.getNature();
-	String cheminImage = "/user/6/ranaivmi/2A/Projets/POO/tpl_poo_robots/src/images/";	
-	// String cheminImage = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/";
+	NatureTerrain nature = pCase.getNature();	
+	String cheminImage = System.getProperty("user.dir") + "/src/images/";	
 
 	switch (nature) {
 	case EAU :
@@ -118,7 +117,7 @@ public class Simulateur implements Simulable {
 	default :
 	    break;
 	}
-	// Ajout pour controle chemin image ?
+
 	gui.addGraphicalElement(new ImageElement(x, y, cheminImage, tailleCase, tailleCase, null)); // Ajout controle chargement image ?
 	
 
@@ -140,12 +139,12 @@ public class Simulateur implements Simulable {
 	int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
 	int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
 
-	String cheminImage = "/user/6/ranaivmi/2A/Projets/POO/tpl_poo_robots/src/images/fire.png";
-
+	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
+	
 	for (int i = 0; i < nb_incendies; i++) {
 	    if (!incendies[i].estEteint()) {
-		x = tailleCases * incendies[i].getPosition().getColonne(); //+ tailleCases / 8 ?;
-		y = tailleCases * incendies[i].getPosition().getLigne(); // + tailleCases / 8 ?;
+		x = tailleCases * incendies[i].getPosition().getColonne();
+		y = tailleCases * incendies[i].getPosition().getLigne();
 		gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases, tailleCases, null));
 		//gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
 	    }
@@ -168,8 +167,8 @@ public class Simulateur implements Simulable {
 	/* Calcul du décalage */
 	int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
 	int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
-	String cheminDossier = "/user/6/ranaivmi/2A/Projets/POO/tpl_poo_robots/src/images/"; 
-	// String cheminDossier = "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/"
+	
+	String cheminDossierImages = System.getProperty("user.dir") + "/src/images/";
 	String cheminImage;
 	String typeRobot;
 
@@ -180,13 +179,13 @@ public class Simulateur implements Simulable {
 	    typeRobot = robots[i].toString();
 	    switch (typeRobot) { // Autres robots a Ajouter
 	    case "Drone" :
-		cheminImage = cheminDossier + "drone.png";
+		cheminImage = cheminDossierImages + "drone.png";
 		break;
 	    case "Roues" :
-		cheminImage = cheminDossier + "roues.png";
+		cheminImage = cheminDossierImages + "roues.png";
 		break;
 	    default :
-		cheminImage = cheminDossier + "roues.png";
+		cheminImage = cheminDossierImages + "roues.png";
 		break;
 	    }
 	    gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases / 2, tailleCases / 2, null));
