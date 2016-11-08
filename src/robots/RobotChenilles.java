@@ -72,4 +72,9 @@ public class RobotChenilles extends Robot {
 			throw new IllegalArgumentException("Impossible de remplir le reservoir : la case ne contient pas d'eau.");
 	}
 
+    @Override
+    public String toString() {
+	return "Chenille";
+    }
+
 }

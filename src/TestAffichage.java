@@ -34,13 +34,12 @@ public class TestAffichage {
 	// chargement des donnees 
 	DonneesSimulation donnees = LecteurDonnees.creeDonnees(args[0]);
 	
-	int largeur = donnees.getCarte().getNbColonnes() * donnees.getCarte().getTailleCases() / 100;
+
+	int largeur = 800;
+	int hauteur = 600;
 	
-	int hauteur = donnees.getCarte().getNbLignes() * donnees.getCarte().getTailleCases() / 100;
-
-
 	// crée la fenêtre graphique dans laquelle dessiner
-        GUISimulator gui = new GUISimulator(largeur, hauteur + 50, Color.WHITE);
+        GUISimulator gui = new GUISimulator(largeur, hauteur, Color.WHITE);
 
 	Simulateur simulateur = new Simulateur(gui, donnees);
 	
@@ -52,13 +51,23 @@ public class TestAffichage {
 
 	Deplacement2 d1 = new Deplacement2(10, donnees.getRobots()[0], Direction.SUD, donnees.getCarte());
 	Deplacement2 d2 = new Deplacement2(15, donnees.getRobots()[0], Direction.SUD, donnees.getCarte());
-        Deplacement2 d3 = new Deplacement2(20, donnees.getRobots()[0], Direction.EST, donnees.getCarte());
-	Eteindre e1 = new Eteindre(30, donnees.getRobots()[0], donnees.getIncendies()[4], donnees.getCarte());
+        Deplacement2 d3 = new Deplacement2(20, donnees.getRobots()[0], Direction.SUD, donnees.getCarte());
+
+	Deplacement2 d4 = new Deplacement2(25, donnees.getRobots()[0], Direction.SUD, donnees.getCarte());
+	Deplacement2 d5 = new Deplacement2(27, donnees.getRobots()[0], Direction.OUEST, donnees.getCarte());
+      
+
+	Eteindre e1 = new Eteindre(30, donnees.getRobots()[0], donnees.getIncendies()[1], donnees.getCarte());
+	Recharger r1 = new Recharger(40, donnees.getRobots()[0], donnees.getCarte());
+	
 	
 	simulateur.ajouteEvenement(d1);
 	simulateur.ajouteEvenement(d2);
 	simulateur.ajouteEvenement(d3);
+	simulateur.ajouteEvenement(d4);
+	simulateur.ajouteEvenement(d5);
 	simulateur.ajouteEvenement(e1);
+	simulateur.ajouteEvenement(r1);
 	
 
     }
