@@ -11,8 +11,8 @@ public class Incendie {
 	if (pIntensite < 0) throw new IllegalArgumentException("Argument invalide : intensité négative.");
 
 	this.position = pPosition;
-	this.intensite_initiale = pIntensite;
-	this.intensite = pIntensite;
+	this.intensite_initiale = pIntensite -1;
+	this.intensite = pIntensite -1;
     }
 
     public void eteindre(int nbLitres) {

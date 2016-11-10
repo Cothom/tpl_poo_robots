@@ -56,7 +56,7 @@ public class Carte {
 	    if (colonne <= 0) return false;
 	    break;
 	case EST :
-	    if (ligne >= this.nbColonnes - 1) return false;
+	    if (colonne >= this.nbColonnes - 1) return false;
 	    break;
 	default :
 	    throw new IllegalArgumentException("Argument invalide : cette direction n'existe pas.");
