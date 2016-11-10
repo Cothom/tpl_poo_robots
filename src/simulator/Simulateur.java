@@ -139,6 +139,8 @@ public class Simulateur implements Simulable {
 	int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
 
 	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
+	//int numero_image = ((int) dateSimulation % 8) + 1;
+	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
 	
 	for (int i = 0; i < nb_incendies; i++) {
 	    if (!incendies[i].estEteint()) {
