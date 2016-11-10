@@ -25,8 +25,8 @@ public class Eteindre extends Evenement {
 		} else { 
 			System.out.println("Intensite : " + incendie.getIntensite());
 			System.out.println(robot.toString() + " Volume avant deversement  : " + robot.getVolumeDisponible());
-			robot.deverserEau(); // A changer
-			incendie.eteindre(robot.getVolumeDeversUnitaire()); // IDEM  	
+			robot.deverserEau();
+			incendie.eteindre(robot.getVolumeDeversUnitaire());
 			System.out.println(robot.toString() + "Volume apres deversement : " + robot.getVolumeDisponible());
 			System.out.println("Intensite : " + incendie.getIntensite());
 		}
