@@ -120,9 +120,20 @@ public class TestAffichage {
 	simulateur.ajouteEvenement(d4);
 	simulateur.ajouteEvenement(d5);
 	simulateur.ajouteEvenement(e1);
-	simulateur.ajouteEvenement(r1);
+	//simulateur.ajouteEvenement(r1);
+	
 
+	/* Test Robot 2 */
+	Deplacement2 d6 = new Deplacement2(10, donnees.getRobots()[1], Direction.SUD, donnees.getCarte());
+	//Deplacement2 d7 = new Deplacement2(15, donnees.getRobots()[1], Direction.EST, donnees.getCarte());
+        Deplacement2 d8 = new Deplacement2(20, donnees.getRobots()[1], Direction.EST, donnees.getCarte());	
+	Eteindre e2 = new Eteindre(30, donnees.getRobots()[1], donnees.getIncendies()[5], donnees.getCarte());	
+	simulateur.ajouteEvenement(d6);
+	//simulateur.ajouteEvenement(d7);
+	simulateur.ajouteEvenement(d8);
+	simulateur.ajouteEvenement(e2);
 
+    }
 }
 
 

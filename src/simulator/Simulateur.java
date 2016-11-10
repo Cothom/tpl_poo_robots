@@ -150,45 +150,17 @@ public class Simulateur implements Simulable {
 		}
 	}
 
-	private void dessineRobots() {
-		Robot[] robots = donnees.getRobots();
-
-		int nb_robots = donnees.getIndiceRobots(); // Voir si on garde cet attribut ou non avec le groupe.
-
-		/* Changement d'échelle */
-		int a = gui.getPanelWidth() / donnees.getCarte().getNbColonnes();
-		int b = gui.getPanelHeight() / donnees.getCarte().getNbLignes();
-		int tailleCases = (a < b) ? a : b;
-
-		int x;
-		int y;	
-
-		/* Calcul du décalage */
-		int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
-		int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
-
-		String cheminDossierImages = System.getProperty("user.dir") + "/src/images/";
-		String cheminImage;
-		String typeRobot;
-
-		for (int i = 0; i < nb_robots; i++) {
-			x = tailleCases * robots[i].getPosition().getColonne() + tailleCases / 4;
-			y = tailleCases * robots[i].getPosition().getLigne() + tailleCases / 4;
-
-			typeRobot = robots[i].toString();
-			switch (typeRobot) { // Autres robots a Ajouter
-				case "Drone" :
-					cheminImage = cheminDossierImages + "drone.png";
-					break;
-				case "Roues" :
-					cheminImage = cheminDossierImages + "roues.png";
-					break;
-				default :
-					cheminImage = cheminDossierImages + "roues.png";
-					break;
-			}
-			gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases / 2, tailleCases / 2, null));
-		}
+	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
+	//int numero_image = ((int) dateSimulation % 8) + 1;
+	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
+	
+	for (int i = 0; i < nb_incendies; i++) {
+	    if (!incendies[i].estEteint()) {
+		x = tailleCases * incendies[i].getPosition().getColonne();
+		y = tailleCases * incendies[i].getPosition().getLigne();
+		gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases, tailleCases, null));
+		//gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
+	    }
 	}
 
 	public void ajouteEvenement(Evenement e) {
