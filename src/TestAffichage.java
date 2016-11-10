@@ -77,7 +77,7 @@ public class TestAffichage {
 	Eteindre e2 = new Eteindre(30, donnees.getRobots()[1], donnees.getIncendies()[5], donnees.getCarte());	
 	simulateur.ajouteEvenement(d6);
 	//simulateur.ajouteEvenement(d7);
-	simulateur.ajouteEvenement(d8);
+	//simulateur.ajouteEvenement(d8);
 	simulateur.ajouteEvenement(e2);
 
     }
