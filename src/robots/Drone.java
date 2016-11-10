@@ -28,8 +28,11 @@ public class Drone extends Robot {
 		return this.vitesse;
 	}
 
-	public void deverserEau(int volume) {
-		this.volumeDisponible = 0;
+	public void deverserEau() {
+	        if (this.volumeDisponible == 0) 
+		throw new IllegalArgumentException("Impossible de deverser de l'eau : réservoir vide.");
+	     else  
+		 this.volumeDisponible -= this.volumeDeversUnitaire;	    
 	}
 
     public void remplirReservoir() {

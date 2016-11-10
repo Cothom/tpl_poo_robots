@@ -50,7 +50,11 @@ public class RobotPattes extends Robot {
 		return vitesse;
 	}
 
-	public void deverserEau(int volume) {
+	public void deverserEau() {
+	    if (this.volumeDisponible == 0) 
+		throw new IllegalArgumentException("Impossible de deverser de l'eau : réservoir vide.");
+	    else  
+		this.volumeDisponible -= this.volumeDeversUnitaire;
 	}
 
 	public void remplirReservoir() {

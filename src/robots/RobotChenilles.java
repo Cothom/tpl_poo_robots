@@ -58,11 +58,12 @@ public class RobotChenilles extends Robot {
 		return vitesse;
 	}
 
-	public void deverserEau(int volume) {
-		if (volume >= this.volumeDisponible)
-			this.volumeDisponible = 0;
-		else 
-			this.volumeDisponible -= this.volumeDeversUnitaire;
+	public void deverserEau() {
+	    if (this.volumeDisponible == 0) 
+		throw new IllegalArgumentException("Impossible de deverser de l'eau : réservoir vide.");
+	     else  
+		 this.volumeDisponible -= this.volumeDeversUnitaire;
+	    
 	}
 
 	public void remplirReservoir() {
