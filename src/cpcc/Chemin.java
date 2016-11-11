@@ -9,23 +9,31 @@ public class Chemin {
 
 	private Robot robot;
 	private double tempsParcours;
-	private int nombreCases;
-	private Vector tabCases;
+	private int nbSommets;
+	private Vector tabSommets;
 
 	public Chemin(Robot pRobot) {
 		this.robot = pRobot;
 		this.tempsParcours = 0;
-		this.nombreCases = 0;
-		this.tabCases = new Vector();
+		this.nombreSommets = 0;
+		this.tabSommets = new Vector();
 	}
 
 	public void ajouterSommet(Sommet s) {
-		this.tabCases.add(s);
-		this.nombreCases++;
+		this.tabSommets.add(s);
+		this.nbSommets++;
 		this.tempsParcours += CalculChemin.tempsTraverse(s.getCase(), this.robot);
 	}
 
 	public double getTempsParcours() {
 		return this.tempsParcours;
+	}
+
+	public int getNbSommets() {
+		return this.nbSommets;
+	}
+
+	public Sommet getSommet(int i) {
+		return this.tabSommets;
 	}
 }

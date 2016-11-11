@@ -85,13 +85,22 @@ public class CalculChemin {
 		return this.sommets[x][y];
 	}
 
-	private void majDistances(Sommet s, Chemin c) {
+	private void majDistances(Sommet s) {
 		for (Sommet v : s.getVoisins()) {
 			if (s.getPoids() + s.getDistanceSource() < v.getDistanceSource()) {
 				v.setDistanceSource(s.getPoids() + s.getDistanceSource());
 				v.setVoisinVersSource(s);
 			}
 		}
+	}
+
+	private Chemin renverserChemin(Chemin c) {
+		Chemin r = new Chemin(this.robot);
+		len_chemin = c.getNbSommets();
+		for (int i = 0; i < c.getNbSommets(); i++) {
+			r.ajouterSommet(c.getSommet(c.getNbSommets() - i));
+		}
+		return r;
 	}
 
 	private Chemin cheminComplet(Sommet src, Sommet dest) {
@@ -101,19 +110,19 @@ public class CalculChemin {
 			chemin.ajouterSommet(tmp);
 			tmp = tmp.getVoisinVersSource();
 		}
-		return chemin;
+		return renverserChemin(chemin);
 	}
 
-	public Chemin dijkstra(Case src, Case dest) {
+	public Chemin dijkstra(Case src, Case dst) {
 		Sommet source = this.sommets[src.getLigne()][src.getColonne()];
-		Sommet destin = this.sommets[dest.getLigne()][dest.getColonne()];
+		Sommet destin = this.sommets[dst.getLigne()][dst.getColonne()];
 		Sommet courant;
 		source.setDistanceSource(0);
 		
 		while (!this.tousMarques()) {
 			courant = this.sommetMin();
 			courant.setEstMarque(true);
-			this.majDistances(courant, chemin);
+			this.majDistances(courant);
 		}
 		return cheminComplet(source, destin);
 	}
