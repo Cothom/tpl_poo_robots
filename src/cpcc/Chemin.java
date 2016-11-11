@@ -7,22 +7,21 @@ import maps.*;
 
 public class Chemin {
 
+	private Carte carte;
 	private Robot robot;
 	private double tempsParcours;
-	private int nbSommets;
 	private Vector tabSommets;
 
-	public Chemin(Robot pRobot) {
+	public Chemin(Carte pCarte, Robot pRobot) {
+		this.carte = pCarte;
 		this.robot = pRobot;
 		this.tempsParcours = 0;
-		this.nombreSommets = 0;
 		this.tabSommets = new Vector();
 	}
 
 	public void ajouterSommet(Sommet s) {
 		this.tabSommets.add(s);
-		this.nbSommets++;
-		this.tempsParcours += CalculChemin.tempsTraverse(s.getCase(), this.robot);
+		this.tempsParcours += CalculChemin.tempsTraverse(this.carte, s.getCase(), this.robot);
 	}
 
 	public double getTempsParcours() {
@@ -30,10 +29,10 @@ public class Chemin {
 	}
 
 	public int getNbSommets() {
-		return this.nbSommets;
+		return this.tabSommets.size();
 	}
 
 	public Sommet getSommet(int i) {
-		return this.tabSommets;
+		return (Sommet) this.tabSommets.get(i);
 	}
 }

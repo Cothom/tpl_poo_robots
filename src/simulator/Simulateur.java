@@ -36,8 +36,8 @@ public class Simulateur implements Simulable {
 		this.donnees = pDonnees;
 		this.donneesInitiales = pDonnees;
 
-		for (int i = 0; i < this.donnees.getIndiceRobots; i++) {
-			this.donnees.getRobots(i).setSimulateur(this);
+		for (int i = 0; i < this.donnees.getIndiceRobots(); i++) {
+			this.donnees.getRobot(i).setSimulateur(this);
 		}
 
 		draw();
@@ -48,7 +48,7 @@ public class Simulateur implements Simulable {
 	private void draw() {
 		dessineCarte();
 		dessineIncendies();
-		dessineRobots();
+		//dessineRobots();
 	}
 
 	private void dessineCarte() {
@@ -154,18 +154,18 @@ public class Simulateur implements Simulable {
 		}
 	}
 
-	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
-	//int numero_image = ((int) dateSimulation % 8) + 1;
-	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
-	
-	for (int i = 0; i < nb_incendies; i++) {
-	    if (!incendies[i].estEteint()) {
-		x = tailleCases * incendies[i].getPosition().getColonne();
-		y = tailleCases * incendies[i].getPosition().getLigne();
-		gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases, tailleCases, null));
-		//gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
-	    }
-	}
+//	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
+//	//int numero_image = ((int) dateSimulation % 8) + 1;
+//	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
+//	
+//	for (int i = 0; i < nb_incendies; i++) {
+//	    if (!incendies[i].estEteint()) {
+//		x = tailleCases * incendies[i].getPosition().getColonne();
+//		y = tailleCases * incendies[i].getPosition().getLigne();
+//		gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases, tailleCases, null));
+//		//gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
+//	    }
+//	}
 
 	public void ajouteEvenement(Evenement e) {
 		long date = e.getDate();

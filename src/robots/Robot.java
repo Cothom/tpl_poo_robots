@@ -1,6 +1,7 @@
 package robots;
 
 import maps.*;
+import simulator.*;
 
 public abstract class Robot {
 
