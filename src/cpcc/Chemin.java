@@ -39,4 +39,8 @@ public class Chemin {
 	public Vector getTabSommets() {
 		return this.tabSommets;
 	}
+
+	public boolean estVide() {
+		return (this.tabSommets.size() > 0) ? true : false;
+	}
 }

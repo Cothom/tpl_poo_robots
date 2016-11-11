@@ -139,6 +139,8 @@ public class CalculChemin {
 
 	public void afficherChemin(Chemin c) {
 		System.out.println("Chemin le plus court entre "+ c.getSommet(0).getCase().getLigne() + ", " + c.getSommet(0).getCase().getColonne() + " et " + c.getSommet(c.getNbSommets()-1).getCase().getLigne() + ", " + c.getSommet(c.getNbSommets()-1).getCase().getColonne() + " pour le robot " + this.robot.toString());
+		System.out.println("Tailles des cases : " + this.carte.getTailleCases());
+		System.out.println("Temps de parcours du chemin : " + c.getTempsParcours());
 		for (int i = 0; i < c.getNbSommets(); i++) {
 			System.out.print("(" + c.getSommet(i).getCase().getLigne() + ", " + c.getSommet(i).getCase().getColonne() + ") ");
 		}
