@@ -4,6 +4,7 @@ import maps.*;
 
 public abstract class Robot {
 
+	protected Simulateur simulateur;
 	protected Case position;
 	protected double vitesse;
 	protected int volumeReservoir;
@@ -43,6 +44,10 @@ public abstract class Robot {
 
 	public int getTempsDeversUnitaire() {
 		return this.tempsDeversUnitaire;
+	}
+
+	public void setSimulateur(Simulateur s) {
+		this.simulateur = s;
 	}
 
 }

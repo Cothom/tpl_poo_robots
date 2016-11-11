@@ -1,5 +1,5 @@
 package robots;
- 
+
 import maps.*;
 
 public class Drone extends Robot {
@@ -7,7 +7,7 @@ public class Drone extends Robot {
 	private static double vitesseMaximale = 150;
 
 	public Drone(Case pPosition) {
-	    this(pPosition, 100);
+		this(pPosition, 100);
 	}
 
 	public Drone(Case pPosition, double pVitesse) {
@@ -29,22 +29,22 @@ public class Drone extends Robot {
 	}
 
 	public void deverserEau() {
-	        if (this.volumeDisponible == 0) 
-		throw new IllegalArgumentException("Impossible de deverser de l'eau : réservoir vide.");
-	     else  
-		 this.volumeDisponible -= this.volumeDeversUnitaire;	    
+		if (this.volumeDisponible == 0) 
+			throw new IllegalArgumentException("Impossible de deverser de l'eau : réservoir vide.");
+		else  
+			this.volumeDisponible -= this.volumeDeversUnitaire;	    
 	}
 
-    public void remplirReservoir() {
+	public void remplirReservoir() {
 		if (this.position.getNature() == NatureTerrain.EAU)
 			this.volumeDisponible = this.volumeReservoir;
 		else 
 			throw new IllegalArgumentException("Impossible de remplir le reservoir : la case ne contient pas d'eau.");
 	}
 
-    @Override
-    public String toString() {
-	return "Drone";
-    }
+	@Override
+	public String toString() {
+		return "Drone";
+	}
 
 }

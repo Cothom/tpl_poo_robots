@@ -36,6 +36,10 @@ public class Simulateur implements Simulable {
 		this.donnees = pDonnees;
 		this.donneesInitiales = pDonnees;
 
+		for (int i = 0; i < this.donnees.getIndiceRobots; i++) {
+			this.donnees.getRobots(i).setSimulateur(this);
+		}
+
 		draw();
 		dateSimulation = 0;
 		Evenements = new ArrayList();
@@ -206,6 +210,10 @@ public class Simulateur implements Simulable {
 
 	@Override
 	public void restart() {
+	}
+
+	public DonneesSimulation getDonnees() {
+		return this.donnees;
 	}
 }
 

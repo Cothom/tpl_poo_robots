@@ -25,6 +25,10 @@ public class DonneesSimulation {
 		return this.robots;
 	}
 
+	public Robot getRobot(int i) {
+		return this.robots[i];
+	}
+
 	public Incendie[] getIncendies() {
 		return this.incendies;
 	}
