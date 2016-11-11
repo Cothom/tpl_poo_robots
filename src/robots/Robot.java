@@ -1,5 +1,6 @@
 package robots;
 
+import chef.EtatRobot;
 import maps.*;
 import simulator.*;
 
@@ -13,6 +14,8 @@ public abstract class Robot {
 	protected int tempsRemplissage;
 	protected int volumeDeversUnitaire;
 	protected int tempsDeversUnitaire;
+
+        protected EtatRobot etat = EtatRobot.LIBRE; // ? Rana
 
 	public abstract void setPosition(Case pCase);
 	public abstract double getVitesse(NatureTerrain nature);
@@ -51,5 +54,13 @@ public abstract class Robot {
 		this.simulateur = s;
 	}
 
+        public boolean estOccupe() {
+	    return (this.etat == EtatRobot.LIBRE) ? false : true; // A Modifier
+	}
+
+
+        public boolean cheminExiste(Case pCase) {
+	    return true; // A Modifier
+	}
 }
 

@@ -1,6 +1,7 @@
 package simulator;
 
 import io.LecteurDonnees;
+import chef.*;
 import data.*;
 import events.*;
 import maps.*;
@@ -29,6 +30,8 @@ public class Simulateur implements Simulable {
 	private long dateSimulation;
 	private ArrayList Evenements;
 
+        private ChefPompier chefPompier;
+
 	public Simulateur(GUISimulator pGui, DonneesSimulation pDonnees) {
 		this.gui = pGui;
 		gui.setSimulable(this);
@@ -43,12 +46,14 @@ public class Simulateur implements Simulable {
 		draw();
 		dateSimulation = 0;
 		Evenements = new ArrayList();
+
+		chefPompier = new ChefPompier(donnees);
 	}
 
 	private void draw() {
 		dessineCarte();
 		dessineIncendies();
-		//dessineRobots();
+		dessineRobots();
 	}
 
 	private void dessineCarte() {
@@ -72,31 +77,6 @@ public class Simulateur implements Simulable {
 	}
 
 	private void dessineCase(int x, int y, Case pCase, int tailleCase) {
-		/*
-		   Color couleur;
-		   switch (nature) {
-		   case EAU :
-		   couleur = Color.decode("#0099ff");
-		   break;	    
-		   case ROCHE :
-		   couleur = Color.decode("#91541e");
-		   break;	    
-		   case FORET :
-		   couleur = Color.decode("#006600");
-		   break;
-		   case TERRAIN_LIBRE :
-		   couleur = Color.decode("#ffffcc");
-		   break;
-		   case HABITAT :
-		   couleur = Color.RED;
-		   break;
-		   default :
-		   couleur = Color.BLACK;
-		   break;
-		   }
-		   gui.addGraphicalElement(new Rectangle(x, y, couleur, couleur, tailleCase));
-		   gui.addGraphicalElement(new ImageElement(x - 50, y - 50, "/root/Ensimag/Projets/POO/tpl_poo_robots/src/images/free.png", tailleCase, tailleCase, null));
-		   */ 
 
 		NatureTerrain nature = pCase.getNature();	
 		String cheminImage = System.getProperty("user.dir") + "/src/images/";	
@@ -157,15 +137,50 @@ public class Simulateur implements Simulable {
 //	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
 //	//int numero_image = ((int) dateSimulation % 8) + 1;
 //	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
-//	
-//	for (int i = 0; i < nb_incendies; i++) {
-//	    if (!incendies[i].estEteint()) {
-//		x = tailleCases * incendies[i].getPosition().getColonne();
-//		y = tailleCases * incendies[i].getPosition().getLigne();
-//		gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases, tailleCases, null));
-//		//gui.addGraphicalElement(new Rectangle(x, y, Color.YELLOW, Color.YELLOW, tailleCases / 2));
-//	    }
-//	}
+
+
+
+
+    private void dessineRobots() {
+	Robot[] robots = donnees.getRobots();
+
+	int nb_robots = donnees.getIndiceRobots(); // Voir si on garde cet attribut ou non avec le groupe.
+
+	/* Changement d'échelle */
+	int a = gui.getPanelWidth() / donnees.getCarte().getNbColonnes();
+	int b = gui.getPanelHeight() / donnees.getCarte().getNbLignes();
+	int tailleCases = (a < b) ? a : b;
+
+	int x;
+	int y;	
+	/* Calcul du décalage */
+	int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
+	int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
+
+	String cheminDossierImages = System.getProperty("user.dir") + "/src/images/";
+	String cheminImage;
+	String typeRobot;
+
+	for (int i = 0; i < nb_robots; i++) {
+	    x = tailleCases * robots[i].getPosition().getColonne() + tailleCases / 4;
+	    y = tailleCases * robots[i].getPosition().getLigne() + tailleCases / 4;
+
+	    typeRobot = robots[i].toString();
+	    switch (typeRobot) { // Autres robots a Ajouter
+	    case "Drone" :
+		cheminImage = cheminDossierImages + "drone.png";
+		break;
+	    case "Roues" :
+		cheminImage = cheminDossierImages + "roues.png";
+		break;
+	    default :
+		cheminImage = cheminDossierImages + "roues.png";
+		break;
+	    }
+	    gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases / 2, tailleCases / 2, null));
+	}
+    }
+ 
 
 	public void ajouteEvenement(Evenement e) {
 		long date = e.getDate();
@@ -200,6 +215,9 @@ public class Simulateur implements Simulable {
 		incrementeDate();
 		System.out.println(dateSimulation);
 
+		if (dateSimulation%10 == 0) {
+		    chefPompier.afficheIncendies();
+		}
 		while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
 			((Evenement)  Evenements.get(0)).execute();
 			Evenements.remove(0);
