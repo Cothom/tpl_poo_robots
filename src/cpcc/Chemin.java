@@ -35,4 +35,8 @@ public class Chemin {
 	public Sommet getSommet(int i) {
 		return (Sommet) this.tabSommets.get(i);
 	}
+
+	public Vector getTabSommets() {
+		return this.tabSommets;
+	}
 }

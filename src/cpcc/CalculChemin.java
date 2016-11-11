@@ -1,5 +1,7 @@
 package cpcc;
 
+import java.util.Collections;
+
 import robots.*;
 import maps.*;
 
@@ -17,11 +19,9 @@ public class CalculChemin {
 		this.nbLignes = pCarte.getNbLignes();
 		this.nbColonnes = pCarte.getNbColonnes();
 		this.sommets = new Sommet[pCarte.getNbLignes()][pCarte.getNbColonnes()];
-//		System.out.println("\t\tInitialisation des sommets dans CC : \n\n");
 		for (int i = 0; i < pCarte.getNbLignes(); i++) {
 			for (int j = 0; j < pCarte.getNbColonnes(); j++) {
 				this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j), CalculChemin.tempsTraverse(pCarte, pCarte.getCase(i, j), pRobot));
-//				System.out.println(this.sommets[i][j].toString());
 			}
 		}
 		for (int i = 0; i < pCarte.getNbLignes(); i++) {
@@ -35,14 +35,14 @@ public class CalculChemin {
 		return (double) pCarte.getTailleCases() / r.getVitesse(c.getNature());
 	}
 
-	public static int getDeltaX(Direction d) {
+	public static int getDeltaC(Direction d) {
 		if (d == Direction.NORD || d == Direction.SUD) return 0;
 		if (d == Direction.OUEST) return -1;
 		if (d == Direction.EST) return 1;
 		return 0;
 	}
 
-	public static int getDeltaY(Direction d) {
+	public static int getDeltaL(Direction d) {
 		if (d == Direction.OUEST || d == Direction.EST) return 0;
 		if (d == Direction.NORD) return -1;
 		if (d == Direction.SUD) return 1;
@@ -89,12 +89,10 @@ public class CalculChemin {
 	}
 
 	private void majDistances(Sommet s) {
-		Sommet v;
-		for (int i = 0; i < s.getNbVoisins(); i++) {
-			v = s.getVoisin(i);
-//			System.out.println("s : " + s.toString());
-//			System.out.println("sgvi : " + s.getVoisin(i).toString());
-//			System.out.println("v : " + v.toString());
+//		Sommet v;
+//		for (int i = 0; i < s.getNbVoisins(); i++) {
+//			v = s.getVoisin(i);
+		for(Sommet v : s.getVoisins()) {
 			if (s.getPoids() + s.getDistanceSource() < v.getDistanceSource()) {
 				v.setDistanceSource(s.getPoids() + s.getDistanceSource());
 				v.setVoisinVersSource(s);
@@ -104,8 +102,8 @@ public class CalculChemin {
 
 	private Chemin renverserChemin(Chemin c) {
 		Chemin r = new Chemin(this.carte, this.robot);
-		for (int i = 0; i < c.getNbSommets(); i++) {
-			r.ajouterSommet(c.getSommet(c.getNbSommets() - i - 1));
+		for (int i = c.getNbSommets()-1; i >= 0; i--) {
+			r.ajouterSommet(c.getSommet(i));
 		}
 		return r;
 	}
@@ -117,7 +115,8 @@ public class CalculChemin {
 			chemin.ajouterSommet(tmp);
 			tmp = tmp.getVoisinVersSource();
 		}
-		return renverserChemin(chemin);
+		Collections.reverse(chemin.getTabSommets());
+		return chemin;
 	}
 
 	public Chemin dijkstra(Case src, Case dst) {
@@ -141,8 +140,8 @@ public class CalculChemin {
 	public void afficherChemin(Chemin c) {
 		System.out.println("Chemin le plus court entre "+ c.getSommet(0).getCase().getLigne() + ", " + c.getSommet(0).getCase().getColonne() + " et " + c.getSommet(c.getNbSommets()-1).getCase().getLigne() + ", " + c.getSommet(c.getNbSommets()-1).getCase().getColonne() + " pour le robot " + this.robot.toString());
 		for (int i = 0; i < c.getNbSommets(); i++) {
-			System.out.print(c.getSommet(i).getCase().getLigne() + ", " + c.getSommet(i).getCase().getColonne() + " ");
+			System.out.print("(" + c.getSommet(i).getCase().getLigne() + ", " + c.getSommet(i).getCase().getColonne() + ") ");
 		}
-		System.out.println("");
+		System.out.println();
 	}
 }

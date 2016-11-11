@@ -45,14 +45,14 @@ public class Carte {
 	}
 
 	public boolean voisinExiste(Case src, Direction dir) {
-		int dx = CalculChemin.getDeltaX(dir);
-		int dy = CalculChemin.getDeltaY(dir);
+		int dl = CalculChemin.getDeltaL(dir);
+		int dc = CalculChemin.getDeltaC(dir);
 		int l = src.getLigne();
 		int c = src.getColonne();
 		//System.out.println("(" + c + ", " + l + ") , Direction : " + dir.toString() + "  (" + dx + ", " + dy + ")");
 		boolean r = true;
-		if (l + dy < 0 || l + dy >= this.nbLignes)   r = false;
-		if (c + dx < 0 || c + dx >= this.nbColonnes) r = false;
+		if (l + dl < 0 || l + dl >= this.nbLignes)   r = false;
+		if (c + dc < 0 || c + dc >= this.nbColonnes) r = false;
 		//System.out.println(" " + ((r) ? "true\n\n" : "false\n\n"));
 		return r;
 	}

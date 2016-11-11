@@ -62,8 +62,8 @@ public class TestAffichage {
 		Eteindre e1 = new Eteindre(30, donnees.getRobots()[0], donnees.getIncendies()[1], donnees.getCarte());
 		//Recharger r1 = new Recharger(40, donnees.getRobots()[0], donnees.getCarte());
 
-		CalculChemin cc = new CalculChemin(donnees.getCarte(), donnees.getRobots()[0]);
-		Chemin c1 = cc.dijkstra(donnees.getCarte().getCase(0, 0), donnees.getCarte().getCase(5, 5));
+		CalculChemin cc = new CalculChemin(donnees.getCarte(), donnees.getRobots()[1]);
+		Chemin c1 = cc.dijkstra(donnees.getCarte().getCase(1, 1), donnees.getCarte().getCase(5, 5));
 		cc.afficherChemin(c1);
 
 		simulateur.ajouteEvenement(d1);

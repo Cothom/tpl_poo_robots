@@ -22,17 +22,12 @@ public class Sommet {
 		this.tabVoisins = new Vector();
 		this.estMarque = false;
 		this.distanceSource = Double.POSITIVE_INFINITY;
-//		this.voisinVersSource = new Sommet(pCarte, pCase, pPoids);
-//		this.ajouterVoisins();
 	}
 
 	public void ajouterVoisins() {
-//		System.out.println("\t\tInitialisation des voisins dans Sommet.ajouterVoisins : \n\n");
 		for (Direction d : Direction.values()) {
 			if (this.cc.getCarte().voisinExiste(this.position, d)) {
-				this.tabVoisins.add(this.cc.getSommet(this.position.getColonne() + CalculChemin.getDeltaX(d), this.position.getLigne() + CalculChemin.getDeltaY(d)));
-//				System.out.println();
-//				System.out.println(((Sommet) this.tabVoisins.get(this.tabVoisins.size()-1)).toString());
+				this.tabVoisins.add(this.cc.getSommet(this.position.getLigne() + CalculChemin.getDeltaL(d), this.position.getColonne() + CalculChemin.getDeltaC(d)));
 			}
 		}
 	}
