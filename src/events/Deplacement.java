@@ -1,5 +1,6 @@
 package events;
 
+import chef.EtatRobot;
 import maps.*;
 import robots.*;
 
@@ -8,8 +9,9 @@ public class Deplacement extends Evenement {
 	private Robot robot;
 	private Case caseDestination;
 	private Carte carte;
-	private int temps;
+    // private int temps; INUTILE ?
 
+    
 	public Deplacement(long pDate, Robot pRobot, Case pCaseDestination, Carte pCarte) {
 		super(pDate);
 		this.robot = pRobot;
@@ -37,7 +39,7 @@ public class Deplacement extends Evenement {
 				break;
 		}		
 	}
-
+    
 	@Override
 	public void execute() { // Prendre en compte la vitesse de Deplacement
 	    int d_x = caseDestination.getColonne() - robot.getPosition().getColonne();
