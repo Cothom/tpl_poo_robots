@@ -21,7 +21,7 @@ public class Chemin {
 
 	public void ajouterSommet(Sommet s) {
 		this.tabSommets.add(s);
-		this.tempsParcours += CalculChemin.tempsTraverse(this.carte, s.getCase(), this.robot);
+		this.tempsParcours += CalculChemin.calculPoidsArc(this.carte, this.tabSommets.get(this.tabSommets.size()-1), s.getCase(), this.robot);
 	}
 
 	public double getTempsParcours() {
@@ -41,6 +41,6 @@ public class Chemin {
 	}
 
 	public boolean estVide() {
-		return (this.tabSommets.size() > 0) ? true : false;
+	    return (this.tabSommets.size() > 0) ? false : true; // Tu as inverse et j'ai corrige (Rana) ? OK ? ok
 	}
 }

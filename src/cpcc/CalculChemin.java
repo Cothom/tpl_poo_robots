@@ -93,15 +93,20 @@ public class CalculChemin {
 	}
 
 	private void majDistances(Sommet s) {
-//		Sommet v;
-//		for (int i = 0; i < s.getNbVoisins(); i++) {
-//			v = s.getVoisin(i);
-		for(Sommet v : s.getVoisins()) {
-			if (s.getPoids() + s.getDistanceSource() < v.getDistanceSource()) {
-				v.setDistanceSource(s.getPoids() + s.getDistanceSource());
+		Sommet v;
+		for (int i = 0; i < s.getNbVoisins(); i++) {
+			v = s.getVoisin(i);
+			if (s.getPoids(i) + s.getDistanceSource() < v.getDistanceSource()) {
+				v.setDistanceSource(s.getPoids(i) + s.getDistanceSource());
 				v.setVoisinVersSource(s);
 			}
 		}
+//		for(Sommet v : s.getVoisins()) {
+//			if (s.getPoids() + s.getDistanceSource() < v.getDistanceSource()) {
+//				v.setDistanceSource(s.getPoids() + s.getDistanceSource());
+//				v.setVoisinVersSource(s);
+//			}
+//		}
 	}
 
 	private Chemin renverserChemin(Chemin c) {
@@ -113,12 +118,14 @@ public class CalculChemin {
 	}
 
 	private Chemin cheminComplet(Sommet src, Sommet dest) {
+	    System.out.println("RANA Chemin entre " + src.getCase().getLigne() + "," + src.getCase().getColonne() + " et " + dest.getCase().getLigne() + "," + dest.getCase().getColonne());
 		Chemin chemin = new Chemin(this.carte, this.robot);
 		Sommet tmp = dest;
-		while (!tmp.getVoisinVersSource().equals(src)) {
+		while (!tmp.equals(src)) {
 			chemin.ajouterSommet(tmp);
 			tmp = tmp.getVoisinVersSource();
 		}
+		System.out.println("RANA Dernier Voisin " + tmp.getCase().getLigne() + "," + tmp.getCase().getColonne());
 		chemin.ajouterSommet(tmp);
 		Collections.reverse(chemin.getTabSommets());
 		return chemin;
@@ -131,17 +138,18 @@ public class CalculChemin {
 		int yDestin = destin.getCase().getLigne();
 		Sommet courant = source;
 		source.setDistanceSource(0);
-		
+
 //		while (!this.tousMarques()) {
 		while (!(courant.getCase().getColonne() == xDestin &&
 				 courant.getCase().getLigne()   == yDestin)) {
-			courant = this.sommetMin();
-			courant.setEstMarque(true);
-			this.majDistances(courant);
+		        this.majDistances(courant); // Modif Rana
+		        courant = this.sommetMin();
+				courant.setEstMarque(true);
+			// this.majDistances(courant); // Version Conte
 		}
 		return cheminComplet(source, destin);
 	}
-
+ 
 	public void afficherChemin(Chemin c) {
 		System.out.println("Chemin le plus court entre "+ c.getSommet(0).getCase().getLigne() + ", " + c.getSommet(0).getCase().getColonne() + " et " + c.getSommet(c.getNbSommets()-1).getCase().getLigne() + ", " + c.getSommet(c.getNbSommets()-1).getCase().getColonne() + " pour le robot " + this.robot.toString());
 		System.out.println("Tailles des cases : " + this.carte.getTailleCases());

@@ -9,7 +9,7 @@ public class Sommet {
 
 	private CalculChemin cc;
 	private Case position;
-	private double poids;
+//	private double poids;
 	private Vector tabVoisins;
 	private Vector poidsVoisins;
 	private boolean estMarque;
@@ -33,7 +33,7 @@ public class Sommet {
 				lVoisin = this.position.getLigne() + CalculChemin.getDeltaL(d);
 				cVoisin = this.position.getColonne() + CalculChemin.getDeltaC(d);
 				this.tabVoisins.add(this.cc.getSommet(lVoisin, cVoisin));
-				this.poidsVoisins.add(this.cc.calculPoidsArc(this.cc.getCarte(), this.position, this.cc.getCarte().getCase(xVoisin, yVoisin), this.cc.getRobot()));
+				this.poidsVoisins.add(this.cc.calculPoidsArc(this.cc.getCarte(), this.position, this.cc.getCarte().getCase(lVoisin, cVoisin), this.cc.getRobot()));
 			}
 		}
 	}
@@ -62,8 +62,8 @@ public class Sommet {
 		return this.tabVoisins.size();
 	}
 
-	public double getPoids() {
-		return this.poids;
+	public double getPoids(int i) {
+		return this.poidsVoisins.get(i);
 	}
 
 	public void setDistanceSource(double d) {
