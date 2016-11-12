@@ -63,7 +63,7 @@ public class TestAffichage {
 		//Recharger r1 = new Recharger(40, donnees.getRobots()[0], donnees.getCarte());
 
 		CalculChemin cc = new CalculChemin(donnees.getCarte(), donnees.getRobots()[1]);
-		Chemin c1 = cc.dijkstra(donnees.getCarte().getCase(1, 0), donnees.getCarte().getCase(7, 7));
+		Chemin c1 = cc.dijkstra(donnees.getCarte().getCase(0, 0), donnees.getCarte().getCase(5, 5));
 		cc.afficherChemin(c1);
 
 		simulateur.ajouteEvenement(d1);
