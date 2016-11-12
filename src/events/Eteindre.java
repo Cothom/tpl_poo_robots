@@ -1,5 +1,6 @@
 package events;
 
+import chef.EtatRobot;
 import maps.*;
 import robots.*;
 
@@ -20,8 +21,12 @@ public class Eteindre extends Evenement {
 	public void execute() {
 		int d_x = incendie.getPosition().getColonne() - robot.getPosition().getColonne();
 		int d_y = incendie.getPosition().getLigne() - robot.getPosition().getLigne();
-		if (Math.abs(d_x) > 1 || Math.abs(d_y) > 1 || (Math.abs(d_x) == 1 && Math.abs(d_y) == 1) || (Math.abs(d_x) == 0 && Math.abs(d_y) == 0)) {
-			throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le robot n'est pas a coté de celui-ci.");
+		System.out.println("("+d_x+","+d_y+")");
+
+    if (robot.toString() == "Drone" && (d_x != 0 || d_y != 0)) {
+		    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le Drone n'est pas au-dessus celui-ci.");
+    } else if (robot.toString() != "Drone" && (Math.abs(d_x) > 1 || Math.abs(d_y) > 1 || (Math.abs(d_x) == 1 && Math.abs(d_y) == 1) || (Math.abs(d_x) == 0 && Math.abs(d_y) == 0))) {
+		    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le robot ("+ robot.toString() +") n'est pas a coté de celui-ci.");
 		} else { 
 			System.out.println("Intensite : " + incendie.getIntensite());
 			System.out.println(robot.toString() + " Volume avant deversement  : " + robot.getVolumeDisponible());
@@ -29,6 +34,10 @@ public class Eteindre extends Evenement {
 			incendie.eteindre(robot.getVolumeDeversUnitaire());
 			System.out.println(robot.toString() + "Volume apres deversement : " + robot.getVolumeDisponible());
 			System.out.println("Intensite : " + incendie.getIntensite());
+			if (robot.getVolumeDisponible() == 0) {
+			    robot.setEtatRobot(EtatRobot.RESERVOIR_VIDE);
+			    robot.seRecharger();
+			}
 		}
 	}	
 }

@@ -190,14 +190,14 @@ public class Simulateur implements Simulable {
 		long date = e.getDate();
 		if (date < this.dateSimulation)
 			throw new IllegalArgumentException("Impossible d'ajouter un évènement antérieur à la date courante de simulation.");
-		System.out.println(Evenements.size());
+	        
 		if (Evenements.size() == 0) {
 			Evenements.add(e);
 			return;
 		}
 
 		int i = 0;
-		while (i != Evenements.size() && ((Evenement) Evenements.get(i)).getDate() < date) {
+		while (i != Evenements.size() && ((Evenement) Evenements.get(i)).getDate() <= date) {
 			i++;
 		}
 		Evenements.add(i, e);
@@ -220,7 +220,7 @@ public class Simulateur implements Simulable {
 		System.out.println(dateSimulation);
 
 		if (dateSimulation%10 == 0) {
-		    chefPompier.afficheIncendies();
+		    chefPompier.strategieElementaire();
 		}
 		
 		while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
@@ -228,7 +228,7 @@ public class Simulateur implements Simulable {
 			Evenements.remove(0);
 		}
 		
-		System.out.println("Etat Robot : " +  donnees.getRobot(1).getEtatRobot());
+		System.out.println("Etat Robot : " +  donnees.getRobot(0).getEtatRobot());
 		gui.reset();
 		draw();	      	
 	}
