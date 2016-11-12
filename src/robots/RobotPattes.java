@@ -9,7 +9,7 @@ public class RobotPattes extends Robot {
 
 	public RobotPattes(Case pPosition) {
 		this.vitesse = 30;
-		this.volumeReservoir = 0;
+		this.volumeReservoir = (int) Double.POSITIVE_INFINITY;
 		this.volumeDisponible = this.volumeReservoir;
 		this.tempsRemplissage = 300;
 		this.volumeDeversUnitaire = 10;
@@ -51,10 +51,6 @@ public class RobotPattes extends Robot {
 	}
 
 	public void deverserEau() {
-	    if (this.volumeDisponible == 0) 
-		throw new IllegalArgumentException("Impossible de deverser de l'eau : réservoir vide.");
-	    else  
-		this.volumeDisponible -= this.volumeDeversUnitaire;
 	}
 
 	public void remplirReservoir() {

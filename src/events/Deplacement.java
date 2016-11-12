@@ -54,12 +54,13 @@ public class Deplacement extends Evenement {
 	    } else if (d_x == 1) {
 		direction = Direction.EST;
 	    } else if (d_y == -1) {
-		direction = Direction.SUD;
-	    } else { // (d_y == 1)
 		direction = Direction.NORD;
+	    } else { // (d_y == 1)
+		direction = Direction.SUD;
 	    }
 
 	    if (!carte.voisinExiste(robot.getPosition(), direction)) {
+		System.out.println(robot.toString()+" ("+d_x+", "+d_y+")");
 		throw new IllegalArgumentException("Argument invalide : Déplacement impossible dans cette direction, sortie de carte.");
 		}
 	    robot.setPosition(caseDestination);
