@@ -50,6 +50,10 @@ public class Simulateur implements Simulable {
 		chefPompier = new ChefPompier(donnees);
 	}
 
+        public long getDateSimulation() {
+	    return this.dateSimulation;
+	}
+
 	private void draw() {
 		dessineCarte();
 		dessineIncendies();
@@ -218,10 +222,13 @@ public class Simulateur implements Simulable {
 		if (dateSimulation%10 == 0) {
 		    chefPompier.afficheIncendies();
 		}
+		
 		while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
 			((Evenement)  Evenements.get(0)).execute();
 			Evenements.remove(0);
 		}
+		
+		System.out.println("Etat Robot : " +  donnees.getRobot(1).getEtatRobot());
 		gui.reset();
 		draw();	      	
 	}
