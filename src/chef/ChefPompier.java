@@ -61,6 +61,7 @@ public class ChefPompier {
 	       robot = ((Robot) robots.get(j));
 	       if (proposition(robot , (Case)incendiesNonAffectes.get(i))) { // Proposition acceptee
 		   incendiesNonAffectes.remove(i);
+		   break;
 	       }
 	   }
 	    
