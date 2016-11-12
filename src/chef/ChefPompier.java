@@ -50,8 +50,8 @@ public class ChefPompier {
 	}
     }
 
-    public boolean proposition(Robot robot, Case caseIncendie) {
-	return !robot.estOccupe() && robot.cheminExiste(caseIncendie);
+    public boolean proposition(Robot robot, Case caseIncendie, Carte carte) {
+	return !robot.estOccupe() && robot.cheminExiste(caseIncendie, carte);
     }
     
     public void strategieElementaire() {
@@ -59,7 +59,7 @@ public class ChefPompier {
 	for (int i=0; i < incendiesNonAffectes.size(); i++) {
 	   for (int j=0; j < robots.size(); i++) {
 	       robot = ((Robot) robots.get(j));
-	       if (proposition(robot , (Case)incendiesNonAffectes.get(i))) { // Proposition acceptee
+	       if (proposition(robot , (Case)incendiesNonAffectes.get(i), this.carte)) { // Proposition acceptee
 		   incendiesNonAffectes.remove(i);
 		   break;
 	       }

@@ -61,10 +61,16 @@ public class TestAffichage {
 
 		Eteindre e1 = new Eteindre(30, donnees.getRobots()[0], donnees.getIncendies()[1], donnees.getCarte());
 		//Recharger r1 = new Recharger(40, donnees.getRobots()[0], donnees.getCarte());
-
+		/*
 		CalculChemin cc = new CalculChemin(donnees.getCarte(), donnees.getRobots()[1]);
-		Chemin c1 = cc.dijkstra(donnees.getCarte().getCase(0, 0), donnees.getCarte().getCase(5, 5));
+		Chemin c1 = cc.dijkstra(donnees.getRobots()[1].getPosition(), donnees.getCarte().getCase(0, 0));
 		cc.afficherChemin(c1);
+	      	 
+		for (int i=1; i < c1.getNbSommets(); i++) {
+		    simulateur.ajouteEvenement(new Deplacement(i*10, donnees.getRobots()[1], c1.getSommet(i).getCase(), donnees.getCarte()));
+		    
+		    }*/
+		donnees.getRobots()[1].ajouteDeplacementsVersDest(donnees.getCarte().getCase(3,4), donnees.getCarte());
 
 		simulateur.ajouteEvenement(d1);
 		simulateur.ajouteEvenement(d2);
@@ -76,14 +82,14 @@ public class TestAffichage {
 
 
 		/* Test Robot 2 */
-		Deplacement2 d6 = new Deplacement2(10, donnees.getRobots()[1], Direction.SUD, donnees.getCarte());
-		//Deplacement2 d7 = new Deplacement2(15, donnees.getRobots()[1], Direction.EST, donnees.getCarte());
+		/*	Deplacement2 d6 = new Deplacement2(10, donnees.getRobots()[1], Direction.SUD, donnees.getCarte());
+		Deplacement2 d7 = new Deplacement2(15, donnees.getRobots()[1], Direction.EST, donnees.getCarte());
 		Deplacement2 d8 = new Deplacement2(20, donnees.getRobots()[1], Direction.EST, donnees.getCarte());	
 		Eteindre e2 = new Eteindre(30, donnees.getRobots()[1], donnees.getIncendies()[5], donnees.getCarte());	
 		simulateur.ajouteEvenement(d6);
-		//simulateur.ajouteEvenement(d7);
+		simulateur.ajouteEvenement(d7);
 		simulateur.ajouteEvenement(d8);
-		simulateur.ajouteEvenement(e2);
+		simulateur.ajouteEvenement(e2); */
 
 	}
 //	/* Version initiale Sujet :

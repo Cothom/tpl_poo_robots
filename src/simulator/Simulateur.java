@@ -50,6 +50,10 @@ public class Simulateur implements Simulable {
 		chefPompier = new ChefPompier(donnees);
 	}
 
+        public long getDateSimulation() {
+	    return this.dateSimulation;
+	}
+
 	private void draw() {
 		dessineCarte();
 		dessineIncendies();
