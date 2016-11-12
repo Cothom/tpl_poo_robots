@@ -55,40 +55,9 @@ public abstract class Robot {
 		this.simulateur = s;
 	}
 
-	<<<<<<< HEAD
-		public EtatRobot getEtatRobot() {
-			return this.etatRobot;
-		}
-
-	public void setEtatRobot(EtatRobot etat) {
-		this.etatRobot = etat;
+	public EtatRobot getEtatRobot() {
+		return this.etatRobot;
 	}
-
-	public void ajouteDeplacementsVersDest(Case dest, Carte carte) {
-		CalculChemin cc = new CalculChemin(carte, this);
-		Chemin chemin = cc.dijkstra(this.getPosition(), dest);
-		if (chemin.getTempsParcours() == Double.POSITIVE_INFINITY) {
-			throw new IllegalArgumentException("Ce robot (" + this.toString() + ") ne peut pas se rendre sur cette case.");
-		}
-		cc.afficherChemin(chemin);
-		long dateEvenement = simulateur.getDateSimulation();
-		for (int i=1; i < chemin.getNbSommets(); i++) {
-			dateEvenement += (long) chemin.getSommet(i).getTempsTraverse();
-			simulateur.ajouteEvenement(new Deplacement(dateEvenement, this, chemin.getSommet(i).getCase(), carte));		    
-		}
-
-		simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation(), this, EtatRobot.DEPLACEMENT));
-		simulateur.ajouteEvenement(new Etat(dateEvenement, this, EtatRobot.LIBRE));
-	}
-
-	public boolean estOccupe() {
-		return (this.etatRobot == EtatRobot.LIBRE) ? false : true; // A Modifier
-	}
-	=======
-
-		public EtatRobot getEtatRobot() {
-			return this.etatRobot;
-		}
 
 	public void setEtatRobot(EtatRobot etat) {
 		this.etatRobot = etat;
@@ -112,7 +81,7 @@ public abstract class Robot {
 		cc.afficherChemin(chemin);
 		long dateEvenement = simulateur.getDateSimulation();
 		for (int i=1; i < chemin.getNbSommets(); i++) {
-			dateEvenement += (long) chemin.getSommet(i).getPoids();
+			dateEvenement += (long) chemin.getSommet(i).getTempsTraverse();
 			simulateur.ajouteEvenement(new Deplacement(dateEvenement, this, chemin.getSommet(i).getCase(), carte));		    
 		}
 
@@ -132,16 +101,14 @@ public abstract class Robot {
 	public boolean estOccupe() {
 		return (this.etatRobot == EtatRobot.LIBRE) ? false : true; // A Modifier
 	}
-	>>>>>>> 26e72dc0b0e4abbe1a54543727db40cb5c195138
 
-
-		public boolean cheminExiste(Case dest, Carte carte) {
-			CalculChemin cc = new CalculChemin(carte, this);
-			Chemin chemin = cc.dijkstra(this.getPosition(), dest);
-			if (chemin.getTempsParcours() == Double.POSITIVE_INFINITY) {
-				return false;
-			}
-			return true;
+	public boolean cheminExiste(Case dest, Carte carte) {
+		CalculChemin cc = new CalculChemin(carte, this);
+		Chemin chemin = cc.dijkstra(this.getPosition(), dest);
+		if (chemin.getTempsParcours() == Double.POSITIVE_INFINITY) {
+			return false;
 		}
+		return true;
+	}
 }
 
