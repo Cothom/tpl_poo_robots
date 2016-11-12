@@ -21,7 +21,7 @@ public class CalculChemin {
 		this.sommets = new Sommet[pCarte.getNbLignes()][pCarte.getNbColonnes()];
 		for (int i = 0; i < pCarte.getNbLignes(); i++) {
 			for (int j = 0; j < pCarte.getNbColonnes(); j++) {
-				this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j), CalculChemin.tempsTraverse(pCarte, pCarte.getCase(i, j), pRobot));
+				this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j));
 			}
 		}
 		for (int i = 0; i < pCarte.getNbLignes(); i++) {

@@ -11,17 +11,21 @@ public class Chemin {
 	private Robot robot;
 	private double tempsParcours;
 	private Vector tabSommets;
+	private Vector tabTemps;
 
 	public Chemin(Carte pCarte, Robot pRobot) {
 		this.carte = pCarte;
 		this.robot = pRobot;
 		this.tempsParcours = 0;
 		this.tabSommets = new Vector();
+		this.tabTemps = new Vector();
 	}
 
 	public void ajouterSommet(Sommet s) {
+		int temps = CalculChemin.calculPoidsArc(this.carte, this.tabSommets.get(this.tabSommets.size()-1), s.getCase(), this.robot);
 		this.tabSommets.add(s);
-		this.tempsParcours += CalculChemin.calculPoidsArc(this.carte, this.tabSommets.get(this.tabSommets.size()-1), s.getCase(), this.robot);
+		this.tabTemps.add(temps);
+		this.tempsParcours += temps;
 	}
 
 	public double getTempsParcours() {

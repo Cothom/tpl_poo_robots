@@ -9,17 +9,17 @@ public class Sommet {
 
 	private CalculChemin cc;
 	private Case position;
-//	private double poids;
+	private double tempsTraverseFinal;
 	private Vector tabVoisins;
 	private Vector poidsVoisins;
 	private boolean estMarque;
 	private double distanceSource;
 	private Sommet voisinVersSource;
 
-	public Sommet(CalculChemin pCc, Case pCase, double pPoids) {
+	public Sommet(CalculChemin pCc, Case pCase) {
 		this.cc = pCc;
 		this.position = pCase;
-		this.poids = pPoids;
+//		this.poids = pPoids;
 		this.tabVoisins = new Vector();
 		this.estMarque = false;
 		this.distanceSource = Double.POSITIVE_INFINITY;
@@ -66,6 +66,10 @@ public class Sommet {
 		return this.poidsVoisins.get(i);
 	}
 
+	public double getTempsTraverse() {
+		return this.tempsTraverseFinal;
+	}
+
 	public void setDistanceSource(double d) {
 		this.distanceSource = d;
 	}
@@ -76,6 +80,7 @@ public class Sommet {
 
 	public void setVoisinVersSource(Sommet v) {
 		this.voisinVersSource = v;
+		this.tempsTraverseFinal = calculPoidsArc(this.cc.getCarte(), this.position, v.getCase(), this.cc.getRobot());
 	}
 
 	public void setEstMarque(boolean b) {
