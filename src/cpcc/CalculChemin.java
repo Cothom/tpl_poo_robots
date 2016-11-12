@@ -35,6 +35,10 @@ public class CalculChemin {
 		return (double) pCarte.getTailleCases() / r.getVitesse(c.getNature());
 	}
 
+	public static double calculPoidsArc(Carte pCarte, Case src, Case dst, Robot r) {
+		return (double) pCarte.getTailleCases() / ((r.getVitesse(src.getNature()) + r.getVitesse(dst.getNature())) / 2);
+	}
+
 	public static int getDeltaC(Direction d) {
 		if (d == Direction.NORD || d == Direction.SUD) return 0;
 		if (d == Direction.OUEST) return -1;
@@ -115,6 +119,7 @@ public class CalculChemin {
 			chemin.ajouterSommet(tmp);
 			tmp = tmp.getVoisinVersSource();
 		}
+		chemin.ajouterSommet(tmp);
 		Collections.reverse(chemin.getTabSommets());
 		return chemin;
 	}

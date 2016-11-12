@@ -11,6 +11,7 @@ public class Sommet {
 	private Case position;
 	private double poids;
 	private Vector tabVoisins;
+	private Vector poidsVoisins;
 	private boolean estMarque;
 	private double distanceSource;
 	private Sommet voisinVersSource;
@@ -25,9 +26,14 @@ public class Sommet {
 	}
 
 	public void ajouterVoisins() {
+		int lVoisin = 0;
+		int cVoisin = 0;
 		for (Direction d : Direction.values()) {
 			if (this.cc.getCarte().voisinExiste(this.position, d)) {
-				this.tabVoisins.add(this.cc.getSommet(this.position.getLigne() + CalculChemin.getDeltaL(d), this.position.getColonne() + CalculChemin.getDeltaC(d)));
+				lVoisin = this.position.getLigne() + CalculChemin.getDeltaL(d);
+				cVoisin = this.position.getColonne() + CalculChemin.getDeltaC(d);
+				this.tabVoisins.add(this.cc.getSommet(lVoisin, cVoisin));
+				this.poidsVoisins.add(this.cc.calculPoidsArc(this.cc.getCarte(), this.position, this.cc.getCarte().getCase(xVoisin, yVoisin), this.cc.getRobot()));
 			}
 		}
 	}
