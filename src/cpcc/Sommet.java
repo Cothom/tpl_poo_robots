@@ -21,6 +21,7 @@ public class Sommet {
 		this.position = pCase;
 //		this.poids = pPoids;
 		this.tabVoisins = new Vector();
+		this.poidsVoisins = new Vector();
 		this.estMarque = false;
 		this.distanceSource = Double.POSITIVE_INFINITY;
 	}

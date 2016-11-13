@@ -120,10 +120,29 @@ public abstract class Robot {
     }
 
     public void eteindreIncendie(long date, Incendie incendie, Carte carte) {
-	
+
+	System.out.println("Avant eteindre " + this.toString());
 	simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date, this, EtatRobot.ETEINDRE));
-	simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, EtatRobot.LIBRE));
-	simulateur.ajouteEvenement(new Eteindre(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, incendie, carte));
+	int intensite = incendie.getIntensite();
+	int nbDeversUnitaire;
+	if (this.toString() == "Drone") {
+	    nbDeversUnitaire = 1;
+	} else if (this.toString() == "Pattes") {
+	    nbDeversUnitaire = intensite / volumeDeversUnitaire;
+	} else {
+	    nbDeversUnitaire = (intensite > this.volumeDisponible) ? (volumeDisponible / volumeDeversUnitaire) : (intensite / volumeDeversUnitaire);
+	}
+	
+	System.out.println(" Test  eteindre " + this.toString() + " nbDeversUnitaire " + nbDeversUnitaire );
+	System.out.println("Intensite " + incendie.getIntensite() + "volumeDeversUnitaire " + volumeDeversUnitaire + " volumeDisponible " + this.volumeDisponible);
+	
+	simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date + (nbDeversUnitaire)*tempsDeversUnitaire, this, EtatRobot.LIBRE));
+	System.out.println(" Test  avant boucle " + this.toString());
+	for (int i=1; i <= nbDeversUnitaire; i++) {
+	    simulateur.ajouteEvenement(new Eteindre(simulateur.getDateSimulation() + date + i*tempsDeversUnitaire, this, incendie, carte));
+	}
+	System.out.println("Apres eteindre " + this.toString());
+     
 	
     }
 
