@@ -51,14 +51,22 @@ public class ChefPompier {
 		return this.incendies;
 	}
 
+	public ArrayList getIncendiesNonAffectes() {
+		return this.incendiesNonAffectes;
+	}
+
+	public ArrayList getPointsEau() {
+		return this.pointsEau;
+	}
+
 	public ArrayList getRobots() {
 		return this.robots;
 	}
 
 	public void afficheIncendies() {
-		System.out.println("Liste incendies :");
-		for (int i=0; i < incendies.size(); i++) {
-			System.out.println("(" + ((Incendie) incendies.get(i)).getPosition().getLigne() + "," + ((Incendie) incendies.get(i)).getPosition().getColonne() + ")");
+		System.out.println("Liste incendies non affectes:");
+		for (int i=0; i < incendiesNonAffectes.size(); i++) {
+			System.out.println("(" + ((Incendie) incendiesNonAffectes.get(i)).getPosition().getLigne() + "," + ((Incendie) incendiesNonAffectes.get(i)).getPosition().getColonne() + ")");
 		}
 	}
 
@@ -69,35 +77,46 @@ public class ChefPompier {
 	public void strategieElementaire() {
 		Incendie incendie;
 		Case positionIncendie;
+		Case dest;
 		Robot robot;
-		ArrayList indicesIncendiesAffectes = new ArrayList();
+		ArrayList incendiesAffectes = new ArrayList();
+		//afficheIncendies();
 		for (int i=0; i < incendiesNonAffectes.size(); i++) {
 			incendie = (Incendie)incendiesNonAffectes.get(i);
 			positionIncendie = incendie.getPosition();
 			for (int j=0; j < robots.size(); j++) {
 				robot = ((Robot) robots.get(j));
-				if (proposition(robot , positionIncendie, this.carte)) { // Proposition acceptee
-					robot.ajouteDeplacementsVersDest(positionIncendie, carte); // Ou venir a cote pour autres que drones, a gérer
+				if (proposition(robot , positionIncendie, this.carte)) {
+					if (robot.toString() == "Drone") {
+						dest = positionIncendie;
+					} else {
+						dest = robot.caseLaPlusProcheAutour(positionIncendie, carte);
+					}
+
+					robot.ajouteDeplacementsVersDest(dest, carte);
+
 					long date = 0;
 					CalculChemin cc = new CalculChemin(carte, robot);
-					Chemin chemin = cc.dijkstra(robot.getPosition(), positionIncendie);
+					Chemin chemin = cc.dijkstra(robot.getPosition(), dest);
 					for (int k=1; k < chemin.getNbSommets(); k++) {
 						date += (long) chemin.getSommet(k).getTempsTraverse();
 					}
-					robot.eteindreIncendie(date, incendie, carte);
 
-					indicesIncendiesAffectes.add(i);    
+					robot.eteindreIncendie(date, incendie, carte);	   
+					incendiesAffectes.add(incendie);    
 					break;
 				}
 			}
 
 		}
-		for (int i=0; i < indicesIncendiesAffectes.size(); i++) {
-			incendiesNonAffectes.remove((int) indicesIncendiesAffectes.get(i));
-		}
 
+		for (int i=0; i < incendiesAffectes.size(); i++) {
+			int indice = incendiesNonAffectes.indexOf(incendiesAffectes.get(i));
+			incendiesNonAffectes.remove(indice);
+		}	
 	}
 
 
+	>>>>>>> 789a66cd6624075f25cd5001a0287cd11dd915c7
 }
 

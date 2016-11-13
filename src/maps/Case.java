@@ -1,5 +1,7 @@
 package maps;
 
+import robots.Robot;
+
 public class Case {
 	private int ligne;
 	private int colonne;

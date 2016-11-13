@@ -1,5 +1,6 @@
 package events;
 
+import chef.EtatRobot;
 import maps.*;
 import robots.*;
 
@@ -19,6 +20,7 @@ public class Recharger extends Evenement {
 	public void execute() {
 		robot.remplirReservoir();
 		System.out.println("Volume apres Rechargement : " + robot.getVolumeDisponible());
+		robot.setEtatRobot(EtatRobot.LIBRE);
 	}	
 }
 
