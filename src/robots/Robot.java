@@ -16,10 +16,8 @@ public abstract class Robot {
     protected int tempsRemplissage;
     protected int volumeDeversUnitaire;
     protected int tempsDeversUnitaire;
-
     protected EtatRobot etatRobot = EtatRobot.LIBRE; // ? Rana
     protected ChefPompier chefPompier;
-
     public abstract void setPosition(Case pCase);
     public abstract double getVitesse(NatureTerrain nature);
     public abstract void deverserEau();
@@ -56,8 +54,7 @@ public abstract class Robot {
     public void setSimulateur(Simulateur s) {
 	this.simulateur = s;
     }
-
-       
+    
     public EtatRobot getEtatRobot() {
 	return this.etatRobot;
     }
@@ -114,7 +111,7 @@ public abstract class Robot {
 	
 	long dateEvenement = simulateur.getDateSimulation();
 	for (int i=1; i < chemin.getNbSommets(); i++) {
-	    dateEvenement += (long) chemin.getSommet(i).getPoids();
+	    dateEvenement += (long) chemin.getSommet(i).getTempsTraverse();
 	    simulateur.ajouteEvenement(new Deplacement(dateEvenement, this, chemin.getSommet(i).getCase(), carte));		    
 	}
 
@@ -157,7 +154,7 @@ public abstract class Robot {
 	long dateRechargement = simulateur.getDateSimulation();
 
 	for (int i=1; i < cheminVersDest.getNbSommets(); i++) {
-	    dateRechargement += (long) cheminVersDest.getSommet(i).getPoids();
+	    dateRechargement += (long) cheminVersDest.getSommet(i).getTempsTraverse();
 	}
        
 	simulateur.ajouteEvenement(new Etat(dateRechargement, this, EtatRobot.RECHARGEMENT));
@@ -178,5 +175,51 @@ public abstract class Robot {
 	}
 	return true;
     }
+
+    /*
+    public void ajouteDeplacementChemin(Chemin chemin) {
+	long dateEvenement = simulateur.getDateSimulation();
+	for (int i=1; i < chemin.getNbSommets(); i++) {
+	    dateEvenement += (long) chemin.getSommet(i).getTempsTraverse();
+	    simulateur.ajouteEvenement(new Deplacement(dateEvenement, this, chemin.getSommet(i).getCase(), carte));		    
+	}
+
+	this.etatRobot = EtatRobot.DEPLACEMENT;
+	simulateur.ajouteEvenement(new Etat(dateEvenement, this, EtatRobot.LIBRE));
+    }
+
+    public Chemin trouverCheminRechargement() {
+	Vector caseEau = new Vector();
+	Carte carte = this.simulateur.getCarte();
+	CalculChemin cc = new CalculChemin(carte, this);
+	Chemin chemin;
+	double tempsMin = Double.POSITIVE_INFINITY;
+	Case caseCourante;
+	Chemin meilleurChemin;
+
+	for (int i = 0; i < carte.getNbLignes(); i++) {
+	    for (int j = 0; j < carte.getNbColonnes(); j++) {
+		if (carte.getCase(i, j).getNature() == NatureTerrain.EAU) {
+		    caseEau.add(carte.getCase(i, j));
+		}
+	    }
+	}
+	for (Case cr : casesEau) {
+	    for (Direction d : Direction.values()) {
+		if (carte.voisinExiste(cr, d) && carte.getVoisin(cr, d).estAccessible(this)) {
+		    caseCourante = carte.getCase(cr.getLigne() + CalculChemin.getDeltaL(d), cr.getColonne() + CalculChemin.getDeltaC(d));
+		    chemin = cc.dijsktra(this.position, caseCourante);
+		    if (chemin.getTempsParcours() < tempsMin) {
+			tempsMin = chemin.getTempsParcours();
+			meilleurChemin = chemin;
+		    }
+		    //					this.casesRechargement.add(carte.getCase(cr.getLigne() + CalculChemin.getDeltaL(d), cr.getColonne() + CalculChemin.getDeltaC(d)));
+		}
+	    }
+	}
+	return meilleurChemin;
+    }
+
+    */
 }
 

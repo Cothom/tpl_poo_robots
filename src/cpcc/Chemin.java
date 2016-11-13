@@ -11,17 +11,21 @@ public class Chemin {
 	private Robot robot;
 	private double tempsParcours;
 	private Vector tabSommets;
+	private Vector tabTemps;
 
 	public Chemin(Carte pCarte, Robot pRobot) {
 		this.carte = pCarte;
 		this.robot = pRobot;
 		this.tempsParcours = 0;
 		this.tabSommets = new Vector();
+		this.tabTemps = new Vector();
 	}
 
 	public void ajouterSommet(Sommet s) {
+		double temps = CalculChemin.calculPoidsArc(this.carte, ((Sommet) this.tabSommets.get(this.tabSommets.size()-1)).getCase(), s.getCase(), this.robot);
 		this.tabSommets.add(s);
-		this.tempsParcours += CalculChemin.tempsTraverse(this.carte, s.getCase(), this.robot);
+		this.tabTemps.add(temps);
+		this.tempsParcours += temps;
 	}
 
 	public double getTempsParcours() {
@@ -41,6 +45,6 @@ public class Chemin {
 	}
 
 	public boolean estVide() {
-	    return (this.tabSommets.size() > 0) ? false : true; // Tu as inverse et j'ai corrige (Rana) ? OK ?
+	    return (this.tabSommets.size() > 0) ? false : true; // Tu as inverse et j'ai corrige (Rana) ? OK ? ok
 	}
 }

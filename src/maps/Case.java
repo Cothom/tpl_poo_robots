@@ -1,5 +1,7 @@
 package maps;
 
+import robots.Robot;
+
 public class Case {
 	private int ligne;
 	private int colonne;
@@ -31,5 +33,9 @@ public class Case {
 
 	public void setNature(NatureTerrain pNature) {
 		this.nature = pNature;
+	}
+
+	public boolean estAccessible(Robot r) {
+		return (r.getVitesse(this.nature) > 0) ? true : false;
 	}
 }

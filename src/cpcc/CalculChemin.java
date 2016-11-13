@@ -21,7 +21,7 @@ public class CalculChemin {
 	this.sommets = new Sommet[pCarte.getNbLignes()][pCarte.getNbColonnes()];
 	for (int i = 0; i < pCarte.getNbLignes(); i++) {
 	    for (int j = 0; j < pCarte.getNbColonnes(); j++) {
-		this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j), CalculChemin.tempsTraverse(pCarte, pCarte.getCase(i, j), pRobot));
+		this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j));
 	    }
 	}
 	for (int i = 0; i < pCarte.getNbLignes(); i++) {
@@ -33,6 +33,10 @@ public class CalculChemin {
 
     public static double tempsTraverse(Carte pCarte, Case c, Robot r) {
 	return (double) pCarte.getTailleCases() / r.getVitesse(c.getNature());
+    }
+
+    public static double calculPoidsArc(Carte pCarte, Case src, Case dst, Robot r) {
+	return (double) pCarte.getTailleCases() / ((r.getVitesse(src.getNature()) + r.getVitesse(dst.getNature())) / 2);
     }
 
     public static int getDeltaC(Direction d) {
@@ -56,9 +60,19 @@ public class CalculChemin {
 	    throw new IllegalArgumentException("Argument invalide: coordonnée hors de la carte.");
 	return this.sommets[i][j];
     }
+    /*
+    for (int i = 0; i < pCarte.getNbLignes(); i++) {
+	for (int j = 0; j < pCarte.getNbColonnes(); j++) {
+	    this.sommets[i][j].ajouterVoisins();
+	    } 
+	    } */
 
     public Carte getCarte() {
 	return this.carte;
+    }
+    
+    public Robot getRobot() {
+	return this.robot;
     }
 
     //	private boolean tousMarques() {
@@ -79,15 +93,12 @@ public class CalculChemin {
 	for (int i = 0; i < this.nbLignes; i++) {
 	    for (int j = 0; j < this.nbColonnes; j++) {
 		if (this.sommets[i][j].getDistanceSource() < min && !this.sommets[i][j].getEstMarque()) {
-		//if ((this.sommets[i][j].getDistanceSource() < min && !this.sommets[i][j].getEstMarque()) ||
-		//    (this.sommets[i][j].getEstMarque() && this.sommets[i][j].getDistanceSource() <= min)) {
-		
 		    min = this.sommets[i][j].getDistanceSource();
 		    x = i;
 		    y = j;
 		}
 	    }
-	}
+	}	
 	return this.sommets[x][y];
     }
 
@@ -96,10 +107,11 @@ public class CalculChemin {
 	//		for (int i = 0; i < s.getNbVoisins(); i++) {
 	//			v = s.getVoisin(i);
 	for(Sommet v : s.getVoisins()) {
-	    if (s.getPoids() + s.getDistanceSource() < v.getDistanceSource()) {
-		v.setDistanceSource(s.getPoids() + s.getDistanceSource());
+	    if (s.getTempsTraverse() + s.getDistanceSource() < v.getDistanceSource()) {
+		v.setDistanceSource(s.getTempsTraverse() + s.getDistanceSource());
 		v.setVoisinVersSource(s);
 	    }
+
 	}
     }
 
@@ -142,6 +154,7 @@ public class CalculChemin {
 	    courant.setEstMarque(true);
 	    //afficheSommetsNonMarques();
 	    this.majDistances(courant); // Version Conte
+
 	}
 
 	return cheminComplet(source, destin);
@@ -150,20 +163,18 @@ public class CalculChemin {
     public void afficherChemin(Chemin c) {
 	System.out.println("Chemin le plus court entre "+ c.getSommet(0).getCase().getLigne() + ", " + c.getSommet(0).getCase().getColonne() + " et " + c.getSommet(c.getNbSommets()-1).getCase().getLigne() + ", " + c.getSommet(c.getNbSommets()-1).getCase().getColonne() + " pour le robot " + this.robot.toString());
 	System.out.println("Tailles des cases : " + this.carte.getTailleCases());
-	double temps = c.getTempsParcours()-c.getSommet(0).getPoids();
+	double temps = c.getTempsParcours()-c.getSommet(0).getTempsTraverse();
 	System.out.println("Temps de parcours du chemin : (RANA) " + temps);
 	for (int i = 0; i < c.getNbSommets(); i++) {
 	    System.out.print("(" + c.getSommet(i).getCase().getLigne() + ", " + c.getSommet(i).getCase().getColonne() + ") ");
 	}
-	System.out.println();
-    }
     
-    
+    }    
     private void afficheSommetsNonMarques() {
 	for (int i = 0; i < this.nbLignes; i++) {
 	    for (int j = 0; j < this.nbColonnes; j++) {
 		if (!this.sommets[i][j].getEstMarque()) {
-		   System.out.print("(" + this.sommets[i][j].getCase().getLigne() + ", " + this.sommets[i][j].getCase().getColonne() + ") ");
+		    System.out.print("(" + this.sommets[i][j].getCase().getLigne() + ", " + this.sommets[i][j].getCase().getColonne() + ") ");
 		}
 	    }
 	}

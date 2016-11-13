@@ -240,6 +240,10 @@ public class Simulateur implements Simulable {
 	public DonneesSimulation getDonnees() {
 		return this.donnees;
 	}
+
+    /*public Carte getCarte() {
+		return this.carte;
+		} */
 }
 
 
