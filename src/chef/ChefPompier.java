@@ -86,25 +86,25 @@ public class ChefPompier {
 			positionIncendie = incendie.getPosition();
 			for (int j=0; j < robots.size(); j++) {
 				robot = ((Robot) robots.get(j));
-				if (proposition(robot , positionIncendie, this.carte)) {
-					if (robot.toString() == "Drone") {
-						dest = positionIncendie;
-					} else {
-						dest = robot.caseLaPlusProcheAutour(positionIncendie, carte);
-					}
+				//if (proposition(robot , positionIncendie, this.carte)) {
+				if (robot.toString() == "Drone") {
+				    dest = positionIncendie;
+				} else {
+				    dest = robot.caseLaPlusProcheAutour(positionIncendie, carte);
+				}
+				if (proposition(robot , dest, this.carte)) { //
+				    robot.ajouteDeplacementsVersDest(dest, carte);
 
-					robot.ajouteDeplacementsVersDest(dest, carte);
+				    long date = 0;
+				    CalculChemin cc = new CalculChemin(carte, robot);
+				    Chemin chemin = cc.dijkstra(robot.getPosition(), dest);
+				    for (int k=1; k < chemin.getNbSommets(); k++) {
+					date += (long) chemin.getSommet(k).getTempsTraverse();
+				    }
 
-					long date = 0;
-					CalculChemin cc = new CalculChemin(carte, robot);
-					Chemin chemin = cc.dijkstra(robot.getPosition(), dest);
-					for (int k=1; k < chemin.getNbSommets(); k++) {
-						date += (long) chemin.getSommet(k).getTempsTraverse();
-					}
-
-					robot.eteindreIncendie(date, incendie, carte);	   
-					incendiesAffectes.add(incendie);    
-					break;
+				    robot.eteindreIncendie(date, incendie, carte);	   
+				    incendiesAffectes.add(incendie);    
+				    break;
 				}
 			}
 
