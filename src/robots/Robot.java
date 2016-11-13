@@ -220,7 +220,6 @@ public abstract class Robot {
 	   for (int j = 0; j < carte.getNbColonnes(); j++) {
 	   if (carte.getCase(i, j).getNature() == NatureTerrain.EAU) {
 	   caseEau.add(carte.getCase(i, j));
-	   >>>>>>> 3ce97a8f429dc22971fac4a50a872e76b0b0a981
 	   }
 
 	   return casePlusProche;
@@ -302,15 +301,7 @@ public void eteindreIncendie(long date, Incendie incendie, Carte carte) {
 
     public void seRecharger(Carte carte) {
 	
-=======
-	simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, EtatRobot.LIBRE));
-	simulateur.ajouteEvenement(new Eteindre(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, incendie, carte));
 
-}
-
-public void seRecharger(Carte carte) {
-
->>>>>>> 66c078d4ed242367be18a4891cf08d5fb299647d
 	Case caseRechargement = (this.toString() == "Drone") ? (Case) chefPompier.getPointsEau().get(0) : this.caseLaPlusProcheAutour((Case) chefPompier.getPointsEau().get(0), carte);
 	Case caseDest;
 	CalculChemin cc = new CalculChemin(carte, this);
