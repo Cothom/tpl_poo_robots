@@ -116,25 +116,5 @@ public class ChefPompier {
 		}	
 	}
 
-	public void strategieElementaire2() {
-		Robot robotCourant;
-		Incendie incendiePlusProche, incendieCourant;
-		Case dest;
-		double tempsMin;
-		for (int i = 0; i < this.donnees.getIndiceRobots(); i++) {
-			robotCourant = this.donnees.getRobot(i);
-			
-			for (int j = 0; j < this.donnees.getIndiceIncendies(); j++) {
-				incendieCourant = this.donnees.getIncendie(j);
-				if (robotCourant.toString() == "Drone") {
-					dest = incendieCourant.getPosition();
-				} else {
-				}
-
-			}
-
-		}
-	
-	}
 }
 

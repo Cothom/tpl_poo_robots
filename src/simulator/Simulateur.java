@@ -241,7 +241,6 @@ public class Simulateur implements Simulable {
 			((Evenement)  Evenements.get(0)).execute();
 			Evenements.remove(0);
 		}
-
 		this.afficheEtatSim();
 		gui.reset();
 		draw();	      	

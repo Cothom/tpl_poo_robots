@@ -19,7 +19,7 @@ public class Sommet {
 	public Sommet(CalculChemin pCc, Case pCase) {
 		this.cc = pCc;
 		this.position = pCase;
-//		this.poids = pPoids;
+		//		this.poids = pPoids;
 		this.tabVoisins = new Vector();
 		this.poidsVoisins = new Vector();
 		this.estMarque = false;
@@ -50,11 +50,11 @@ public class Sommet {
 	public double getDistanceSource() {
 		return this.distanceSource;
 	}
-	
+
 	public Vector<Sommet> getVoisins() {
 		return this.tabVoisins;
 	}
-	
+
 	public Sommet getVoisin(int i) {
 		return (Sommet) this.tabVoisins.get(i);
 	}
