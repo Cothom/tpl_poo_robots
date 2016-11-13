@@ -119,6 +119,7 @@ public abstract class Robot {
 				}
 			}
 		}
+
 		for (Case cr : casesEau) {
 			for (Direction d : Direction.values()) {
 				if (carte.voisinExiste(cr, d) && carte.getVoisin(cr, d).estAccessible(this)) {
