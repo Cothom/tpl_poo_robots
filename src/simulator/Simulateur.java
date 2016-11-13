@@ -125,8 +125,11 @@ public class Simulateur implements Simulable {
 		/* Calcul du décalage */
 		int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
 		int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
+		
+		int numero_image = (((int) dateSimulation / 1)% 3) + 1; // A changer pour aller moins vite
+		String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
 
-		String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
+		//String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
 
 		for (int i = 0; i < nb_incendies; i++) {
 			if (!incendies[i].estEteint()) {
@@ -138,9 +141,6 @@ public class Simulateur implements Simulable {
 		}
 	}
 
-//	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
-//	//int numero_image = ((int) dateSimulation % 8) + 1;
-//	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
 
 
 
@@ -177,6 +177,12 @@ public class Simulateur implements Simulable {
 	    case "Roues" :
 		cheminImage = cheminDossierImages + "roues.png";
 		break;
+	    case "Pattes" :
+		cheminImage = cheminDossierImages + "pattes.png";
+		break;
+	    case "Chenille" :
+		cheminImage = cheminDossierImages + "chenille.png";
+		break;		
 	    default :
 		cheminImage = cheminDossierImages + "roues.png";
 		break;

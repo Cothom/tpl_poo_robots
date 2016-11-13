@@ -137,7 +137,6 @@ public abstract class Robot {
 	System.out.println("Intensite " + incendie.getIntensite() + "volumeDeversUnitaire " + volumeDeversUnitaire + " volumeDisponible " + this.volumeDisponible);
 	
 	simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date + (nbDeversUnitaire)*tempsDeversUnitaire, this, EtatRobot.LIBRE));
-	System.out.println(" Test  avant boucle " + this.toString());
 	for (int i=1; i <= nbDeversUnitaire; i++) {
 	    simulateur.ajouteEvenement(new Eteindre(simulateur.getDateSimulation() + date + i*tempsDeversUnitaire, this, incendie, carte));
 	}
