@@ -82,7 +82,7 @@ public class ChefPompier {
 		   CalculChemin cc = new CalculChemin(carte, robot);
 		   Chemin chemin = cc.dijkstra(robot.getPosition(), positionIncendie);
 		   for (int k=1; k < chemin.getNbSommets(); k++) {
-		       date += (long) chemin.getSommet(k).getPoids();
+		       date += (long) chemin.getSommet(k).getTempsTraverse();
 		   }
 		   robot.eteindreIncendie(date, incendie, carte);
 		   

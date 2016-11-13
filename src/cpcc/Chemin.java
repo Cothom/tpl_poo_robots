@@ -22,7 +22,7 @@ public class Chemin {
 	}
 
 	public void ajouterSommet(Sommet s) {
-		int temps = CalculChemin.calculPoidsArc(this.carte, this.tabSommets.get(this.tabSommets.size()-1), s.getCase(), this.robot);
+		double temps = CalculChemin.calculPoidsArc(this.carte, ((Sommet) this.tabSommets.get(this.tabSommets.size()-1)).getCase(), s.getCase(), this.robot);
 		this.tabSommets.add(s);
 		this.tabTemps.add(temps);
 		this.tempsParcours += temps;

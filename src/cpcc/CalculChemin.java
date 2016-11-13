@@ -65,6 +65,10 @@ public class CalculChemin {
 		return this.carte;
 	}
 
+	public Robot getRobot() {
+		return this.robot;
+	}
+
 //	private boolean tousMarques() {
 //		for (int i = 0; i < this.nbLignes; i++) {
 //			for (int j = 0; j < this.nbColonnes; j++) {
@@ -153,7 +157,7 @@ public class CalculChemin {
 	public void afficherChemin(Chemin c) {
 		System.out.println("Chemin le plus court entre "+ c.getSommet(0).getCase().getLigne() + ", " + c.getSommet(0).getCase().getColonne() + " et " + c.getSommet(c.getNbSommets()-1).getCase().getLigne() + ", " + c.getSommet(c.getNbSommets()-1).getCase().getColonne() + " pour le robot " + this.robot.toString());
 		System.out.println("Tailles des cases : " + this.carte.getTailleCases());
-		double temps = c.getTempsParcours()-c.getSommet(0).getPoids();
+		double temps = c.getTempsParcours()-c.getSommet(0).getTempsTraverse();
 		System.out.println("Temps de parcours du chemin : (RANA) " + temps);
 		for (int i = 0; i < c.getNbSommets(); i++) {
 			System.out.print("(" + c.getSommet(i).getCase().getLigne() + ", " + c.getSommet(i).getCase().getColonne() + ") ");

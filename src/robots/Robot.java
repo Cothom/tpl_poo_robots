@@ -79,6 +79,16 @@ public abstract class Robot {
 			throw new IllegalArgumentException("Ce robot (" + this.toString() + ") ne peut pas se rendre sur cette case.");
 		}
 		cc.afficherChemin(chemin);
+		this.ajouteDeplacementChemin(chemin);
+	}
+
+	public void eteindreIncendie(long date, Incendie incendie, Carte carte) {
+		simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date, this, EtatRobot.ETEINDRE));
+		simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, EtatRobot.LIBRE));
+		simulateur.ajouteEvenement(new Eteindre(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, incendie, carte));
+	}
+
+	public ajouteDeplacementChemin(Chemin chemin) {
 		long dateEvenement = simulateur.getDateSimulation();
 		for (int i=1; i < chemin.getNbSommets(); i++) {
 			dateEvenement += (long) chemin.getSommet(i).getTempsTraverse();
@@ -89,13 +99,40 @@ public abstract class Robot {
 		simulateur.ajouteEvenement(new Etat(dateEvenement, this, EtatRobot.LIBRE));
 	}
 
-	public void eteindreIncendie(long date, Incendie incendie, Carte carte) {
-		simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date, this, EtatRobot.ETEINDRE));
-		simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, EtatRobot.LIBRE));
-		simulateur.ajouteEvenement(new Eteindre(simulateur.getDateSimulation() + date + tempsDeversUnitaire, this, incendie, carte));
+	public void seRecharger() {
+		this.ajouteDeplacementChemin(this.trouverCheminRechargement());
 	}
 
-	public void seRecharger() {
+	public Chemin trouverCheminRechargement() {
+		Vector caseEau = new Vector();
+		Carte carte = this.simulateur.getCarte();
+		CalculChemin cc = new CalculChemin(carte, this);
+		Chemin chemin;
+		double tempsMin = Double.POSITIVE_INFINITY;
+		Case caseCourante;
+		Chemin meilleurChemin;
+
+		for (int i = 0; i < carte.getNbLignes(); i++) {
+			for (int j = 0; j < carte.getNbColonnes(); j++) {
+				if (carte.getCase(i, j).getNature() == NatureTerrain.EAU) {
+					caseEau.add(carte.getCase(i, j));
+				}
+			}
+		}
+		for (Case cr : casesEau) {
+			for (Direction d : Direction.values()) {
+				if (carte.voisinExiste(cr, d) && carte.getVoisin(cr, d).estAccessible(this)) {
+					caseCourante = carte.getCase(cr.getLigne() + CalculChemin.getDeltaL(d), cr.getColonne() + CalculChemin.getDeltaC(d));
+					chemin = cc.dijsktra(this.position, caseCourante);
+					if (chemin.getTempsParcours() < tempsMin) {
+						tempsMin = chemin.getTempsParcours();
+						meilleurChemin = chemin;
+					}
+//					this.casesRechargement.add(carte.getCase(cr.getLigne() + CalculChemin.getDeltaL(d), cr.getColonne() + CalculChemin.getDeltaC(d)));
+				}
+			}
+		}
+		return meilleurChemin;
 	}
 
 	public boolean estOccupe() {

@@ -63,7 +63,7 @@ public class Sommet {
 	}
 
 	public double getPoids(int i) {
-		return this.poidsVoisins.get(i);
+		return (double) this.poidsVoisins.get(i);
 	}
 
 	public double getTempsTraverse() {
@@ -80,7 +80,7 @@ public class Sommet {
 
 	public void setVoisinVersSource(Sommet v) {
 		this.voisinVersSource = v;
-		this.tempsTraverseFinal = calculPoidsArc(this.cc.getCarte(), this.position, v.getCase(), this.cc.getRobot());
+		this.tempsTraverseFinal = CalculChemin.calculPoidsArc(this.cc.getCarte(), this.position, v.getCase(), this.cc.getRobot());
 	}
 
 	public void setEstMarque(boolean b) {
