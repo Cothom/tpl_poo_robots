@@ -1,5 +1,6 @@
 package robots;
- 
+
+import cpcc.*;
 import maps.*;
 
 public class RobotRoues extends Robot {
@@ -41,10 +42,24 @@ public class RobotRoues extends Robot {
 	}
 
 	public void remplirReservoir() {
-		if (this.position.getNature() == NatureTerrain.EAU)
-			this.volumeDisponible = this.volumeReservoir;
-		else 
-			throw new IllegalArgumentException("Impossible de remplir le reservoir : la case ne contient pas d'eau.");
+	    Carte carte = chefPompier.getCarte();
+	    Case voisin;
+	    boolean aCoteCaseEau = false;
+	    CalculChemin cc = new CalculChemin(carte, this);
+
+	    for (Direction d : Direction.values()) {	    
+		if (carte.voisinExiste(this.position, d)) {
+		    voisin = carte.getCase(this.position.getLigne() + cc.getDeltaL(d), this.position.getColonne() + cc.getDeltaC(d));
+		    if (voisin.getNature() == NatureTerrain.EAU) {
+			aCoteCaseEau = true;
+			break;
+		    }
+		}
+	    }
+	    if (aCoteCaseEau)
+		this.volumeDisponible = this.volumeReservoir;
+	    else 
+		throw new IllegalArgumentException("Impossible de remplir le reservoir : le robot n'est pas a coté d'une case contenant de l'eau.");
 	}
     
     @Override

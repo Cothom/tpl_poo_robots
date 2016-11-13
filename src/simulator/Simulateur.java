@@ -228,7 +228,7 @@ public class Simulateur implements Simulable {
 			Evenements.remove(0);
 		}
 		
-		System.out.println("Etat Robot : " +  donnees.getRobot(0).getEtatRobot());
+		System.out.println("Etat Robot : " +  donnees.getRobot(2).getEtatRobot());
 		gui.reset();
 		draw();	      	
 	}
