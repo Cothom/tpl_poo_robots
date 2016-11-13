@@ -30,7 +30,7 @@ public class Simulateur implements Simulable {
 	private long dateSimulation;
 	private ArrayList Evenements;
 
-        private ChefPompier chefPompier;
+	private ChefPompier chefPompier;
 
 	public Simulateur(GUISimulator pGui, DonneesSimulation pDonnees) {
 		this.gui = pGui;
@@ -50,8 +50,8 @@ public class Simulateur implements Simulable {
 		chefPompier = new ChefPompier(donnees);
 	}
 
-        public long getDateSimulation() {
-	    return this.dateSimulation;
+	public long getDateSimulation() {
+		return this.dateSimulation;
 	}
 
 	private void draw() {
@@ -138,59 +138,59 @@ public class Simulateur implements Simulable {
 		}
 	}
 
-//	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
-//	//int numero_image = ((int) dateSimulation % 8) + 1;
-//	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
+	//	String cheminImage = System.getProperty("user.dir") + "/src/images/fire.png";
+	//	//int numero_image = ((int) dateSimulation % 8) + 1;
+	//	//String cheminImage = System.getProperty("user.dir") + "/src/images/fire/fire" + String.valueOf(numero_image) + ".png";
 
 
 
 
-    private void dessineRobots() {
-	Robot[] robots = donnees.getRobots();
+	private void dessineRobots() {
+		Robot[] robots = donnees.getRobots();
 
-	int nb_robots = donnees.getIndiceRobots(); // Voir si on garde cet attribut ou non avec le groupe.
+		int nb_robots = donnees.getIndiceRobots(); // Voir si on garde cet attribut ou non avec le groupe.
 
-	/* Changement d'échelle */
-	int a = gui.getPanelWidth() / donnees.getCarte().getNbColonnes();
-	int b = gui.getPanelHeight() / donnees.getCarte().getNbLignes();
-	int tailleCases = (a < b) ? a : b;
+		/* Changement d'échelle */
+		int a = gui.getPanelWidth() / donnees.getCarte().getNbColonnes();
+		int b = gui.getPanelHeight() / donnees.getCarte().getNbLignes();
+		int tailleCases = (a < b) ? a : b;
 
-	int x;
-	int y;	
-	/* Calcul du décalage */
-	int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
-	int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
+		int x;
+		int y;	
+		/* Calcul du décalage */
+		int dx = (a < b) ? 0 : (gui.getPanelWidth() - donnees.getCarte().getNbColonnes() * tailleCases) / 2;
+		int dy = (a < b) ? (gui.getPanelHeight() - donnees.getCarte().getNbLignes() * tailleCases) / 2 : 0;
 
-	String cheminDossierImages = System.getProperty("user.dir") + "/src/images/";
-	String cheminImage;
-	String typeRobot;
+		String cheminDossierImages = System.getProperty("user.dir") + "/src/images/";
+		String cheminImage;
+		String typeRobot;
 
-	for (int i = 0; i < nb_robots; i++) {
-	    x = tailleCases * robots[i].getPosition().getColonne() + tailleCases / 4;
-	    y = tailleCases * robots[i].getPosition().getLigne() + tailleCases / 4;
+		for (int i = 0; i < nb_robots; i++) {
+			x = tailleCases * robots[i].getPosition().getColonne() + tailleCases / 4;
+			y = tailleCases * robots[i].getPosition().getLigne() + tailleCases / 4;
 
-	    typeRobot = robots[i].toString();
-	    switch (typeRobot) { // Autres robots a Ajouter
-	    case "Drone" :
-		cheminImage = cheminDossierImages + "drone.png";
-		break;
-	    case "Roues" :
-		cheminImage = cheminDossierImages + "roues.png";
-		break;
-	    default :
-		cheminImage = cheminDossierImages + "roues.png";
-		break;
-	    }
-	    gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases / 2, tailleCases / 2, null));
+			typeRobot = robots[i].toString();
+			switch (typeRobot) { // Autres robots a Ajouter
+				case "Drone" :
+					cheminImage = cheminDossierImages + "drone.png";
+					break;
+				case "Roues" :
+					cheminImage = cheminDossierImages + "roues.png";
+					break;
+				default :
+					cheminImage = cheminDossierImages + "roues.png";
+					break;
+			}
+			gui.addGraphicalElement(new ImageElement(x + dx, y + dy, cheminImage, tailleCases / 2, tailleCases / 2, null));
+		}
 	}
-    }
- 
+
 
 	public void ajouteEvenement(Evenement e) {
 		long date = e.getDate();
 		if (date < this.dateSimulation)
 			throw new IllegalArgumentException("Impossible d'ajouter un évènement antérieur à la date courante de simulation.");
-	        
+
 		if (Evenements.size() == 0) {
 			Evenements.add(e);
 			return;
@@ -214,21 +214,35 @@ public class Simulateur implements Simulable {
 			return true;
 	}
 
+	public void afficheEtatSim() {
+		Robot r;
+		System.out.println("Date Simulation \t" + this.dateSimulation);
+		for (int i = 0; i < this.donnees.getIndiceRobots(); i++) {
+			r = (Robot) this.donnees.getRobot(i);
+			System.out.println("Etat " + i + " " + r.toString() + " " + r.getEtatRobot());
+		}
+		Incendie incendie;
+		for (int i = 0; i < this.donnees.getIndiceIncendies(); i++) {
+			incendie = (Incendie) this.donnees.getIncendie(i);
+			System.out.println("Incendie " + i + " \t Intensite " + incendie.getIntensite());
+		}
+	}
+
 	@Override
 	public void next() {	
 		incrementeDate();
 		System.out.println(dateSimulation);
 
 		if (dateSimulation%10 == 0) {
-		    chefPompier.strategieElementaire();
+			chefPompier.strategieElementaire();
 		}
-		
+
 		while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
 			((Evenement)  Evenements.get(0)).execute();
 			Evenements.remove(0);
 		}
-		
-		System.out.println("Etat Robot : " +  donnees.getRobot(2).getEtatRobot());
+
+		this.afficheEtatSim();
 		gui.reset();
 		draw();	      	
 	}
@@ -241,9 +255,9 @@ public class Simulateur implements Simulable {
 		return this.donnees;
 	}
 
-    /*public Carte getCarte() {
-		return this.carte;
-		} */
+//	public Carte getCarte() {
+//		return this.carte;
+//	}
 }
 
 

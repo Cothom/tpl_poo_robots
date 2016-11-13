@@ -30,13 +30,13 @@ public class DonneesSimulation {
 	}
 
 	public Incendie[] getIncendies() {
-	        return this.incendies;
+		return this.incendies;
 	}
-    
-        public Incendie getIncendie(int i) {
-         	return this.incendies[i];
-        }
-  
+
+	public Incendie getIncendie(int i) {
+		return this.incendies[i];
+	}
+
 	public int getIndiceRobots() {
 		return this.indiceRobots;
 	}

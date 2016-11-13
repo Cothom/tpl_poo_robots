@@ -119,6 +119,30 @@ public abstract class Robot {
 		simulateur.ajouteEvenement(new Etat(dateEvenement, this, EtatRobot.LIBRE));
 	}
 
+	public Chemin ajouteDeplacementsVersDest2(Case dest, Carte carte) {
+		/*
+		   - requiert Etat du robot Libre ou Reservoir vide
+		   */
+
+		if (this.getEtatRobot() != EtatRobot.LIBRE && this.getEtatRobot() != EtatRobot.RESERVOIR_VIDE) { return; }
+		CalculChemin cc = new CalculChemin(carte, this);
+		Chemin chemin = cc.dijkstra(this.getPosition(), dest);
+
+		if (chemin.getTempsParcours() == Double.POSITIVE_INFINITY) {
+			throw new IllegalArgumentException("Ce robot (" + this.toString() + ") ne peut pas se rendre sur cette case.");
+		}
+
+		long dateEvenement = simulateur.getDateSimulation();
+		for (int i=1; i < chemin.getNbSommets(); i++) {
+			dateEvenement += (long) chemin.getSommet(i).getTempsTraverse();
+			simulateur.ajouteEvenement(new Deplacement(dateEvenement, this, chemin.getSommet(i).getCase(), carte));		    
+		}
+
+		this.etatRobot = EtatRobot.DEPLACEMENT;
+		simulateur.ajouteEvenement(new Etat(dateEvenement, this, EtatRobot.LIBRE));
+		return chemin;
+	}
+
 	public void eteindreIncendie(long date, Incendie incendie, Carte carte) {
 
 		simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date, this, EtatRobot.ETEINDRE));
@@ -219,6 +243,7 @@ public abstract class Robot {
 	   }
 	   return meilleurChemin;
 	   }
+	   */
 
 }
 
