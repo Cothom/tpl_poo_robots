@@ -94,6 +94,8 @@ public class ChefPompier {
 		Robot robot;
 		ArrayList incendiesAffectes = new ArrayList();
 		//afficheIncendies();
+		System.out.println("Nb incendies a passer : " + incendiesNonAffectes.size());
+		System.out.println("Nb robots a passer : " + robots.size());
 		for (int i=0; i < incendiesNonAffectes.size(); i++) {
 			incendie = (Incendie)incendiesNonAffectes.get(i);
 			positionIncendie = incendie.getPosition();
@@ -120,6 +122,7 @@ public class ChefPompier {
                 long date = 0;
 //                CalculChemin cc = new CalculChemin(carte, robot);
                 Chemin chemin = robot.dijkstra(dest);
+				System.out.println("\n\nIncendie : " + i + "\nRobot : " + j + "\nDijkstra termine !\n\n");
                 System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());
                 if (!robot.estOccupe() && chemin.getTempsParcours() < Double.POSITIVE_INFINITY) {
                     robot.ajouteDeplacementChemin(chemin);

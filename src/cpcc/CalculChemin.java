@@ -104,19 +104,19 @@ public class CalculChemin {
     }
 
     private Sommet sommetMin() {
-        int x = 0;
-        int y = 0;
+        int l = 0;
+        int c = 0;
         double min = Double.POSITIVE_INFINITY;
         for (int i = 0; i < this.nbLignes; i++) {
             for (int j = 0; j < this.nbColonnes; j++) {
                 if (this.sommets[i][j].getDistanceSource() < min && !this.sommets[i][j].getEstMarque()) {
                     min = this.sommets[i][j].getDistanceSource();
-                    x = i;
-                    y = j;
+                    l = i;
+                    c = j;
                 }
             }
         }	
-        return this.sommets[x][y];
+        return this.sommets[l][c];
     }
 
     private void majDistances(Sommet s) {
