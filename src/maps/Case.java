@@ -38,4 +38,8 @@ public class Case {
 	public boolean estAccessible(Robot r) {
 		return (r.getVitesse(this.nature) > 0) ? true : false;
 	}
+
+    public String toString() {
+        return "(" + this.ligne + ", " + this.colonne + ")";
+    }
 }

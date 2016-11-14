@@ -69,11 +69,17 @@ public abstract class Robot {
 
 	public void setEtatRobot(EtatRobot etat) {
 		this.etatRobot = etat;
-        if (etat == EtatRobot.LIBRE)
-            this.trouveCheminsVersIncendies();
-        else if (etat == EtatRobot.ETEINDRE)
-            this.trouveCheminsVersRecharge();
+//        if (etat == EtatRobot.LIBRE)
+//            this.trouveCheminsVersIncendies();
+//        else if (etat == EtatRobot.ETEINDRE)
+//            this.trouveCheminsVersRecharge();
 	}
+
+    public Chemin dijkstra(Case dst) {
+        Chemin c = this.cc.dijkstra(this.position, dst);
+        this.cc.reinitSommets(this.simulateur.getCarte());
+        return c;
+    }
 
     public boolean estInaccessible(Incendie incendie) {
         for (int i = 0; i < this.cheminsIncendies.size(); i++) {
@@ -96,7 +102,7 @@ public abstract class Robot {
                 }
             }
         }
-        return (this.cc.dijkstra(this.getPosition(), c).getTempsParcours() == Double.POSITIVE_INFINITY) ? true : false;
+        return (this.dijkstra(c).getTempsParcours() == Double.POSITIVE_INFINITY) ? true : false;
     }
 
     public Incendie getPlusProcheIncendie() {
@@ -124,12 +130,17 @@ public abstract class Robot {
     }
 
     public void trouveCheminsVersIncendies() {
+        //System.out.println("\n\nDebut trouveCheminVersIncendies");
         this.incendiesInaccessibles.clear();
         if (this.toString() == "Drone") {
+            //System.out.println("Cas : Drone");
             for (int i = 0; i < this.chefPompier.getIncendies().size(); i++) {
-                this.cheminsIncendies.add(this.cc.dijkstra(this.position, this.chefPompier.getIncendie(i).getPosition()));
+                //System.out.println("\nIteration : " + i);
+                this.cheminsIncendies.add(this.dijkstra(this.chefPompier.getIncendie(i).getPosition()));
             }
+            //System.out.println("Fin Cas : Drone");
         } else {
+            //System.out.println("Cas : Autres");
             Incendie iCourant;
 //            Chemin cCourant;
 //            Chemin pcChemin;
@@ -139,7 +150,7 @@ public abstract class Robot {
                 iCourant = (Incendie) this.chefPompier.getIncendie(i);
                 ppIncendie = this.caseLaPlusProcheAutour(iCourant.getPosition(), this.chefPompier.getCarte());
 //                for (Direction d : Direction.values()) {
-//                    cCourant = this.cc.dijkstra(this.position, this.chefPompier.getCarte().getVoisin(iCourant.getPosition()));
+//                    cCourant = this.dijkstra(this.chefPompier.getCarte().getVoisin(iCourant.getPosition()));
 //                    if (cCourant.getTempsParcours() == Double.POSITIVE_INFINITY)
 //                        this.incendiesInaccessibles.add(iCourant);
 //                    if (cCourant.getTempsParcours() < tempsMin) {
@@ -150,13 +161,14 @@ public abstract class Robot {
                 this.cheminsIncendies.add(ppIncendie.getChemin());
             }
         }
+        //System.out.println("Fin trouveCheminVersIncendies");
     }
 
     public void trouveCheminsVersRecharge() {
         this.rechargesInaccessibles.clear();
         if (this.toString() == "Drone") {
             for (int i = 0; i < this.chefPompier.getPointsEau().size(); i++) {
-                this.cheminsRecharge.add(this.cc.dijkstra(this.position, this.chefPompier.getPointEau(i)));
+                this.cheminsRecharge.add(this.dijkstra(this.chefPompier.getPointEau(i)));
             }
         } else {
             Case ptCourant;
@@ -167,7 +179,7 @@ public abstract class Robot {
                 ptCourant = (Case) this.chefPompier.getPointEau(i);
                 ppRecharge = this.caseLaPlusProcheAutour(ptCourant, this.chefPompier.getCarte());
 //                for (Direction d : Direction.values()) {
-//                    cCourant = this.cc.dijkstra(this.position, this.chefPompier.getCarte().getVoisin(ptCourant));
+//                    cCourant = this.dijkstra(this.chefPompier.getCarte().getVoisin(ptCourant));
 //                    if (cCourant.getTempsParcours() == Double.POSITIVE_INFINITY)
 //                        this.rechargesInaccessibles.add(ptCourant);
 //                    if (cCourant.getTempsParcours() < tempsMin) {
@@ -182,7 +194,7 @@ public abstract class Robot {
 
 	public void setChefPompier(ChefPompier chefPompier) {
 		this.chefPompier = chefPompier;
-        this.trouveCheminsVersIncendies();
+//        this.trouveCheminsVersIncendies();
 //        this.trouveCheminsVersRecharge();
 	}
 
@@ -201,7 +213,7 @@ public abstract class Robot {
 
 			if (carte.voisinExiste(dest, d)) {
 				voisin = carte.getCase(dest.getLigne() + this.cc.getDeltaL(d), dest.getColonne() + this.cc.getDeltaC(d));
-				chemin = this.cc.dijkstra(this.position, voisin);
+				chemin = this.dijkstra(voisin);
 
 				if (chemin.getTempsParcours() < temps) {		  
 					temps = chemin.getTempsParcours();
@@ -313,5 +325,16 @@ public abstract class Robot {
 		}
 		return true;
 	}
+
+    public void ajouteDeplacementChemin(Chemin chemin) {
+        long dateEvenement = simulateur.getDateSimulation();
+        for (int i=1; i < chemin.getNbSommets(); i++) {
+            dateEvenement += (long) chemin.getSommet(i).getTempsTraverse();
+            simulateur.ajouteEvenement(new Deplacement(dateEvenement, this, chemin.getSommet(i).getCase(), this.chefPompier.getCarte()));		    
+        }
+        this.etatRobot = EtatRobot.DEPLACEMENT;
+        simulateur.ajouteEvenement(new Etat(dateEvenement, this, EtatRobot.LIBRE));
+    }
+
 }
 

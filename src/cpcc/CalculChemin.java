@@ -1,6 +1,7 @@
 package cpcc;
 
 import java.util.Collections;
+import java.util.Scanner;
 
 import robots.*;
 import maps.*;
@@ -20,6 +21,7 @@ public class CalculChemin {
     public CalculChemin(Carte pCarte, Robot pRobot) {
         this.robot = pRobot;
         this.setCarte(pCarte);
+        //System.out.println("\nCalculChemin : Carte initialisée !");
     }
 
     public static double tempsTraverse(Carte pCarte, Case c, Robot r) {
@@ -27,6 +29,8 @@ public class CalculChemin {
     }
 
     public static double calculPoidsArc(Carte pCarte, Case src, Case dst, Robot r) {
+        if (r.getVitesse(src.getNature()) == 0 || r.getVitesse(dst.getNature()) == 0)
+            return Double.POSITIVE_INFINITY;
         return (double) pCarte.getTailleCases() / ((r.getVitesse(src.getNature()) + r.getVitesse(dst.getNature())) / 2);
     }
 
@@ -63,13 +67,18 @@ public class CalculChemin {
         this.nbLignes = pCarte.getNbLignes();
         this.nbColonnes = pCarte.getNbColonnes();
         this.sommets = new Sommet[pCarte.getNbLignes()][pCarte.getNbColonnes()];
-        for (int i = 0; i < pCarte.getNbLignes(); i++) {
-            for (int j = 0; j < pCarte.getNbColonnes(); j++) {
-                this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j));
+        this.reinitSommets(pCarte);
+        //System.out.println("\nFIN setCarte !\n");
+    }
+
+    public void reinitSommets(Carte c) {
+        for (int i = 0; i < c.getNbLignes(); i++) {
+            for (int j = 0; j < c.getNbColonnes(); j++) {
+                this.sommets[i][j] = new Sommet(this, c.getCase(i, j));
             }
         }
-        for (int i = 0; i < pCarte.getNbLignes(); i++) {
-            for (int j = 0; j < pCarte.getNbColonnes(); j++) {
+        for (int i = 0; i < c.getNbLignes(); i++) {
+            for (int j = 0; j < c.getNbColonnes(); j++) {
                 this.sommets[i][j].ajouterVoisins();
             }
         }
@@ -142,29 +151,39 @@ public class CalculChemin {
 
         chemin.ajouterSommet(tmp);
         Collections.reverse(chemin.getTabSommets());
-        this.afficherChemin(chemin);
+        //this.afficherChemin(chemin);
         return chemin;
     }
 
     public Chemin dijkstra(Case src, Case dst) {
+        //System.out.println("\n\nDEBUT : CalculChemin.dijkstra");
         Sommet source = this.sommets[src.getLigne()][src.getColonne()];
         Sommet destin = this.sommets[dst.getLigne()][dst.getColonne()];
-        int xDestin = destin.getCase().getColonne();
-        int yDestin = destin.getCase().getLigne();
+        int lDestin = destin.getCase().getLigne();
+        int cDestin = destin.getCase().getColonne();
         Sommet courant = source;
         source.setDistanceSource(0);
 
+//        System.out.println("Coords source : " + src.getLigne() + " " + src.getColonne());
+//        Scanner sc = new Scanner(System.in);
+//        sc.nextLine();
 //        while (!this.tousMarques()) {
-        while (!(courant.getCase().getColonne() == xDestin && courant.getCase().getLigne() == yDestin)) {
+        while (!(courant.getCase().getColonne() == cDestin && courant.getCase().getLigne() == lDestin)) {
+//            System.out.println("dijkstra->while : \nIteration : " + courant.getCase().getLigne() + courant.getCase().getColonne() + "\n");
+//            sc.nextLine();
 
-            //this.majDistances(courant); // Modif Rana;
+            this.majDistances(courant); // Modif Rana;
+//            System.out.print("majDistance done");
             courant = this.sommetMin();
+//            System.out.print("sommetMin done");
             courant.setEstMarque(true);
+//            System.out.print("setEstMarque done");
             //afficheSommetsNonMarques();
-            this.majDistances(courant); // Version Conte
+            //this.majDistances(courant); // Version Conte
 
         }
 
+        //System.out.println("\n\nFIN (avant return): CalculChemin.dijkstra");
         return cheminComplet(source, destin);
     }
 

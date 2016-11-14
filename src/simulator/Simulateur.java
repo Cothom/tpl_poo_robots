@@ -45,15 +45,11 @@ public class Simulateur implements Simulable {
             this.donnees.getRobot(i).setSimulateur(this);
         }
 
-        System.out.println("\n\nsetsimulateur done\n\n");
         draw();
-        System.out.println("\n\ndraw done\n\n");
         dateSimulation = 0;
         Evenements = new ArrayList();
 
-        System.out.println("\n\nEvenements done\n\n");
         chefPompier = new ChefPompier(pDonnees);
-        System.out.println("\n\nPompier initialisé\n\n");
     }
 
     public Carte getCarte() {
@@ -230,6 +226,15 @@ public class Simulateur implements Simulable {
             return true;
     }
 
+    private void afficheEtatSim() {
+        for (int i = 0; i < this.donnees.getIndiceRobots(); i++) {
+            System.out.println("Etat Robot " + i + " " + donnees.getRobot(i).toString() + " : " +  donnees.getRobot(i).getEtatRobot());
+        }
+        for (int i = 0; i < this.donnees.getIndiceIncendies(); i++) {
+            System.out.println("Etat incendie " + i + " : " + ((Incendie) this.donnees.getIncendie(i)).getIntensite());
+        }
+    }
+
     @Override
     public void next() {	
         incrementeDate();
@@ -244,9 +249,7 @@ public class Simulateur implements Simulable {
             Evenements.remove(0);
         }
 
-        System.out.println("Etat " + donnees.getRobot(0).toString() + " : " +  donnees.getRobot(0).getEtatRobot());
-        System.out.println("Etat " + donnees.getRobot(1).toString() + " : " +  donnees.getRobot(1).getEtatRobot());
-        System.out.println("Etat " + donnees.getRobot(2).toString() + " : " +  donnees.getRobot(2).getEtatRobot());
+        this.afficheEtatSim();
         gui.reset();
         draw();	      	
     }

@@ -34,14 +34,13 @@ public class ChefPompier {
 				}
 			}	    
 		}
-        System.out.println("\n\nPoints eau initialisé\n\n");
 
 		this.robots = new ArrayList();
 		for (int i = 0; i < donnees.getIndiceRobots(); i++) {
+            System.out.println("ChefPompier : Iteration " + i);
 			donnees.getRobot(i).setChefPompier(this);
 			robots.add(donnees.getRobot(i));
 		}
-        System.out.println("\n\nConstructeur Pompier initialisé\n\n");
 
 	}
 
@@ -84,6 +83,10 @@ public class ChefPompier {
 		return !robot.estOccupe() && robot.cheminExiste(caseIncendie, carte);
 	}
 
+//    public boolean proposition(Robot r, Incendie i) {
+//        return !r.estOccupe() && !r.estInaccessible(i);
+//    }
+
 	public void strategieElementaire() {
 		Incendie incendie;
 		Case positionIncendie;
@@ -102,30 +105,33 @@ public class ChefPompier {
 				} else {
 				    dest = (Case) robot.caseLaPlusProcheAutour(positionIncendie, carte).getObjet();
 				}
-				boolean test = proposition(robot , dest, this.carte);
-				if (robot.toString() == "Roues" || robot.toString() == "Pattes") {
-				    if (!robot.estOccupe()) {
-					System.out.println(robot.toString()+" non occupé");
-				    }
-				    System.out.println("chemin vers ("+dest.getLigne() +","+ dest.getColonne()+") existe ?");
-				    if (robot.cheminExiste(dest, carte)) {
-					System.out.println("Chemin existe");
-				    }
-				}
-				if (proposition(robot , dest, this.carte)) { //
-				    robot.ajouteDeplacementsVersDest(dest, carte);
+//				boolean test = proposition(robot , dest, this.carte);
+//				if (robot.toString() == "Roues" || robot.toString() == "Pattes") {
+//				    if (!robot.estOccupe()) {
+//					System.out.println(robot.toString()+" non occupé");
+//				    }
+//				    System.out.println("chemin vers ("+dest.getLigne() +","+ dest.getColonne()+") existe ?");
+//				    if (robot.cheminExiste(dest, carte)) {
+//					System.out.println("Chemin existe");
+//				    }
+//				}
+//				if (proposition(robot , dest, this.carte)) { //
+//				if (proposition(robot , incendie)) { //
+                long date = 0;
+//                CalculChemin cc = new CalculChemin(carte, robot);
+                Chemin chemin = robot.dijkstra(dest);
+                System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());
+                if (!robot.estOccupe() && chemin.getTempsParcours() < Double.POSITIVE_INFINITY) {
+                    robot.ajouteDeplacementChemin(chemin);
 
-				    long date = 0;
-				    CalculChemin cc = new CalculChemin(carte, robot);
-				    Chemin chemin = cc.dijkstra(robot.getPosition(), dest);
-				    for (int k=1; k < chemin.getNbSommets(); k++) {
-					date += (long) chemin.getSommet(k).getTempsTraverse();
-				    }
+                    for (int k=1; k < chemin.getNbSommets(); k++) {
+                        date += (long) chemin.getSommet(k).getTempsTraverse();
+                    }
 
-				    robot.eteindreIncendie(date, incendie, carte);	   
-				    incendiesAffectes.add(incendie);    
-				    break;
-				}
+                    robot.eteindreIncendie(date, incendie, carte);	   
+                    incendiesAffectes.add(incendie);    
+                    break;
+                }
 			}
 
 		}
