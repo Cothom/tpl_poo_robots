@@ -134,6 +134,7 @@ public class CalculChemin {
 
 	chemin.ajouterSommet(tmp);
 	Collections.reverse(chemin.getTabSommets());
+	this.afficherChemin(chemin);
 	return chemin;
     }
 
