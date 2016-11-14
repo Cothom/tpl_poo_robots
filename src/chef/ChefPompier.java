@@ -92,6 +92,16 @@ public class ChefPompier {
 				} else {
 				    dest = robot.caseLaPlusProcheAutour(positionIncendie, carte);
 				}
+				boolean test = proposition(robot , dest, this.carte);
+				if (robot.toString() == "Roues" || robot.toString() == "Pattes") {
+				    if (!robot.estOccupe()) {
+					System.out.println(robot.toString()+" non occupé");
+				    }
+				    System.out.println("chemin vers ("+dest.getLigne() +","+ dest.getColonne()+") existe ?");
+				    if (robot.cheminExiste(dest, carte)) {
+					System.out.println("Chemin existe");
+				    }
+				}
 				if (proposition(robot , dest, this.carte)) { //
 				    robot.ajouteDeplacementsVersDest(dest, carte);
 

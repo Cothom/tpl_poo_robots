@@ -124,7 +124,7 @@ public class CalculChemin {
     }
 
     private Chemin cheminComplet(Sommet src, Sommet dest) {
-	System.out.println("RANA Chemin entre " + src.getCase().getLigne() + "," + src.getCase().getColonne() + " et " + dest.getCase().getLigne() + "," + dest.getCase().getColonne());
+	//System.out.println("RANA Chemin entre " + src.getCase().getLigne() + "," + src.getCase().getColonne() + " et " + dest.getCase().getLigne() + "," + dest.getCase().getColonne());
 	Chemin chemin = new Chemin(this.carte, this.robot);
 	Sommet tmp = dest;
 	while (!tmp.equals(src)) {
