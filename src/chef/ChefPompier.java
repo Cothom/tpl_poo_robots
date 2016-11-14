@@ -92,7 +92,7 @@ public class ChefPompier {
 				} else {
 				    dest = robot.caseLaPlusProcheAutour(positionIncendie, carte);
 				}
-				boolean test = proposition(robot , dest, this.carte);
+			
 				if (robot.toString() == "Roues" || robot.toString() == "Pattes") {
 				    if (!robot.estOccupe()) {
 					System.out.println(robot.toString()+" non occupé");
