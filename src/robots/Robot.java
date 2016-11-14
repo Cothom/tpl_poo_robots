@@ -8,6 +8,8 @@ import simulator.*;
 
 public abstract class Robot {
 
+    protected CalculChemin cc;
+    protected Chemin[][] chemins;
 	protected Simulateur simulateur;
 	protected Case position;
 	protected double vitesse;
