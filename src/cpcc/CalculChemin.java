@@ -123,9 +123,13 @@ public class CalculChemin {
         //		Sommet v;
         //		for (int i = 0; i < s.getNbVoisins(); i++) {
         //			v = s.getVoisin(i);
+		double poidsArc = 0;
         for(Sommet v : s.getVoisins()) {
-            if (s.getTempsTraverse() + s.getDistanceSource() < v.getDistanceSource()) {
-                v.setDistanceSource(s.getTempsTraverse() + s.getDistanceSource());
+			poidsArc = calculPoidsArc(this.carte, s.getCase(), v.getCase(), this.robot);
+            if (poidsArc + s.getDistanceSource() < v.getDistanceSource()) {
+//            if (s.getTempsTraverse() + s.getDistanceSource() < v.getDistanceSource()) {
+                v.setDistanceSource(poidsArc + s.getDistanceSource());
+//                v.setDistanceSource(s.getTempsTraverse() + s.getDistanceSource());
                 v.setVoisinVersSource(s);
             }
 
@@ -164,7 +168,8 @@ public class CalculChemin {
         Sommet courant = source;
         source.setDistanceSource(0);
 
-//        System.out.println("Coords source : " + src.getLigne() + " " + src.getColonne());
+        System.out.println("Coords source : " + src.getLigne() + " " + src.getColonne());
+        System.out.println("Coords destin : " + dst.getLigne() + " " + dst.getColonne());
 //        Scanner sc = new Scanner(System.in);
 //        sc.nextLine();
 //        while (!this.tousMarques()) {
