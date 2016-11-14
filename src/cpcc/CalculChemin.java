@@ -1,6 +1,7 @@
 package cpcc;
 
 import java.util.Collections;
+import java.util.Vector;
 import java.util.Scanner;
 
 import robots.*;
@@ -13,13 +14,15 @@ public class CalculChemin {
     private Robot robot;
     private Carte carte;
     private Sommet[][] sommets;
+//	private Vector sommetsMarques;
 
     public CalculChemin(Robot pRobot) {
         this.robot = pRobot;
+//		this.sommetsMarques = new Vector();
     }
 
     public CalculChemin(Carte pCarte, Robot pRobot) {
-        this.robot = pRobot;
+        this(pRobot);
         this.setCarte(pCarte);
         //System.out.println("\nCalculChemin : Carte initialisée !");
     }
@@ -82,6 +85,7 @@ public class CalculChemin {
                 this.sommets[i][j].ajouterVoisins();
             }
         }
+//		this.sommetsMarques.clear();
     }
 
     public Carte getCarte() {
@@ -119,18 +123,42 @@ public class CalculChemin {
         return this.sommets[l][c];
     }
 
+//	private Sommet sommetMin() {
+//		int l = 0;
+//		int c = 0;
+//		double min = Double.POSITIVE_INFINITY;
+//		double d;
+//		Sommet s;
+//		for (int i = 0; i < this.sommetsMarques.size(); i++) {
+//			s = (Sommet) this.sommetsMarques.get(i);
+//			for (Sommet v : s.getVoisins()) {
+//				d = v.getDistanceSource();
+//				if (d < min && !v.getEstMarque()) {
+//					min = d;
+//					l = v.getCase().getLigne();
+//					c = v.getCase().getColonne();
+//				}
+//			}
+//		}
+//		return this.sommets[l][c];
+//	}
+
     private void majDistances(Sommet s) {
         //		Sommet v;
         //		for (int i = 0; i < s.getNbVoisins(); i++) {
         //			v = s.getVoisin(i);
+//		double poidsArc = 0;
         for(Sommet v : s.getVoisins()) {
+//			poidsArc = calculPoidsArc(this.carte, s.getCase(), v.getCase(), this.robot);
             if (s.getTempsTraverse() + s.getDistanceSource() < v.getDistanceSource()) {
+//            if (poidsArc + s.getDistanceSource() < v.getDistanceSource()) {
                 v.setDistanceSource(s.getTempsTraverse() + s.getDistanceSource());
+//                v.setDistanceSource(poidsArc + s.getDistanceSource());
                 v.setVoisinVersSource(s);
             }
 
         }
-        }
+	}
 
     private Chemin renverserChemin(Chemin c) {
         Chemin r = new Chemin(this.carte, this.robot);
@@ -170,13 +198,14 @@ public class CalculChemin {
 //        while (!this.tousMarques()) {
         while (!(courant.getCase().getColonne() == cDestin && courant.getCase().getLigne() == lDestin)) {
 //            System.out.println("dijkstra->while : \nIteration : " + courant.getCase().getLigne() + courant.getCase().getColonne() + "\n");
-//            sc.nextLine();
+//          sc.nextLine();
 
             this.majDistances(courant); // Modif Rana;
 //            System.out.print("majDistance done");
             courant = this.sommetMin();
 //            System.out.print("sommetMin done");
             courant.setEstMarque(true);
+//			this.sommetsMarques.add(courant);
 //            System.out.print("setEstMarque done");
             //afficheSommetsNonMarques();
             //this.majDistances(courant); // Version Conte
@@ -202,7 +231,7 @@ public class CalculChemin {
         System.out.println("Chemin le plus court entre "+ c.getSommet(0).getCase().getLigne() + ", " + c.getSommet(0).getCase().getColonne() + " et " + c.getSommet(c.getNbSommets()-1).getCase().getLigne() + ", " + c.getSommet(c.getNbSommets()-1).getCase().getColonne() + " pour le robot " + this.robot.toString());
         System.out.println("Tailles des cases : " + this.carte.getTailleCases());
         double temps = c.getTempsParcours()-c.getSommet(0).getTempsTraverse();
-        System.out.println("Temps de parcours du chemin : (RANA) " + temps);
+        System.out.println("Temps de parcours du chemin : " + temps);
         for (int i = 0; i < c.getNbSommets(); i++) {
             System.out.print("(" + c.getSommet(i).getCase().getLigne() + ", " + c.getSommet(i).getCase().getColonne() + ") ");
         }
