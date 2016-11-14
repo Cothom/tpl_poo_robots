@@ -13,22 +13,13 @@ public class CalculChemin {
     private Carte carte;
     private Sommet[][] sommets;
 
+    public CalculChemin(Robot pRobot) {
+        this.robot = pRobot;
+    }
+
     public CalculChemin(Carte pCarte, Robot pRobot) {
         this.robot = pRobot;
-        this.carte = pCarte;
-        this.nbLignes = pCarte.getNbLignes();
-        this.nbColonnes = pCarte.getNbColonnes();
-        this.sommets = new Sommet[pCarte.getNbLignes()][pCarte.getNbColonnes()];
-        for (int i = 0; i < pCarte.getNbLignes(); i++) {
-            for (int j = 0; j < pCarte.getNbColonnes(); j++) {
-                this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j));
-            }
-        }
-        for (int i = 0; i < pCarte.getNbLignes(); i++) {
-            for (int j = 0; j < pCarte.getNbColonnes(); j++) {
-                this.sommets[i][j].ajouterVoisins();
-            }
-        }
+        this.setCarte(pCarte);
     }
 
     public static double tempsTraverse(Carte pCarte, Case c, Robot r) {
@@ -66,6 +57,23 @@ public class CalculChemin {
        this.sommets[i][j].ajouterVoisins();
        } 
        } */
+
+    public void setCarte(Carte pCarte) {
+        this.carte = pCarte;
+        this.nbLignes = pCarte.getNbLignes();
+        this.nbColonnes = pCarte.getNbColonnes();
+        this.sommets = new Sommet[pCarte.getNbLignes()][pCarte.getNbColonnes()];
+        for (int i = 0; i < pCarte.getNbLignes(); i++) {
+            for (int j = 0; j < pCarte.getNbColonnes(); j++) {
+                this.sommets[i][j] = new Sommet(this, pCarte.getCase(i, j));
+            }
+        }
+        for (int i = 0; i < pCarte.getNbLignes(); i++) {
+            for (int j = 0; j < pCarte.getNbColonnes(); j++) {
+                this.sommets[i][j].ajouterVoisins();
+            }
+        }
+    }
 
     public Carte getCarte() {
         return this.carte;
@@ -160,25 +168,15 @@ public class CalculChemin {
         return cheminComplet(source, destin);
     }
 
-    public Chemin dijkstra(Case src) {
+    public void dijkstra(Case src) {
         Sommet source = this.sommets[src.getLigne()][src.getColonne()];
-        Sommet destin = this.sommets[dst.getLigne()][dst.getColonne()];
-        int xDestin = destin.getCase().getColonne();
-        int yDestin = destin.getCase().getLigne();
-        Sommet courant = source;
         source.setDistanceSource(0);
-
+        Sommet courant = source;
         while (!this.tousMarques()) {
-        //while (!(courant.getCase().getColonne() == xDestin && courant.getCase().getLigne() == yDestin)) {
-
-            //this.majDistances(courant); // Modif Rana;
             courant = this.sommetMin();
             courant.setEstMarque(true);
-            //afficheSommetsNonMarques();
-            this.majDistances(courant); // Version Conte
-
+            this.majDistances(courant);
         }
-
     }
 
     public void afficherChemin(Chemin c) {

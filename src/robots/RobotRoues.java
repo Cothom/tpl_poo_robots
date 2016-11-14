@@ -1,5 +1,7 @@
 package robots;
 
+import java.util.Vector;
+
 import cpcc.*;
 import maps.*;
 
@@ -17,6 +19,12 @@ public class RobotRoues extends Robot {
 		this.tempsRemplissage = 600;
 		this.volumeDeversUnitaire = 100;
 		this.tempsDeversUnitaire = 5;
+
+        this.cc = new CalculChemin(this);
+        this.cheminsIncendies = new Vector();
+        this.cheminsRecharge = new Vector();
+        this.incendiesInaccessibles = new Vector();
+        this.rechargesInaccessibles = new Vector();
 	}
 
 	public void setPosition(Case pPosition) {

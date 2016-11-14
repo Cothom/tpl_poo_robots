@@ -26,28 +26,38 @@ public class Simulateur implements Simulable {
 
     private DonneesSimulation donnees;
     private DonneesSimulation donneesInitiales;
+    private String filename;
 
     private long dateSimulation;
     private ArrayList Evenements;
 
     private ChefPompier chefPompier;
 
-    public Simulateur(GUISimulator pGui, DonneesSimulation pDonnees) {
+    public Simulateur(GUISimulator pGui, DonneesSimulation pDonnees, String pFile) {
         this.gui = pGui;
         gui.setSimulable(this);
 
         this.donnees = pDonnees;
         this.donneesInitiales = pDonnees;
+        this.filename = pFile;
 
         for (int i = 0; i < this.donnees.getIndiceRobots(); i++) {
             this.donnees.getRobot(i).setSimulateur(this);
         }
 
+        System.out.println("\n\nsetsimulateur done\n\n");
         draw();
+        System.out.println("\n\ndraw done\n\n");
         dateSimulation = 0;
         Evenements = new ArrayList();
 
-        chefPompier = new ChefPompier(donnees);
+        System.out.println("\n\nEvenements done\n\n");
+        chefPompier = new ChefPompier(pDonnees);
+        System.out.println("\n\nPompier initialisé\n\n");
+    }
+
+    public Carte getCarte() {
+        return this.donnees.getCarte();
     }
 
     public long getDateSimulation() {
@@ -226,7 +236,7 @@ public class Simulateur implements Simulable {
         System.out.println(dateSimulation);
 
         if (dateSimulation%10 == 0) {
-            chefPompier.strategieElementaire();
+            this.chefPompier.strategieElementaire();
         }
 
         while (!simulationTerminee() && ((Evenement)  Evenements.get(0)).getDate() <= dateSimulation) {
@@ -243,6 +253,12 @@ public class Simulateur implements Simulable {
 
     @Override
     public void restart() {
+        this.donnees = LecteurDonnees.creeDonnees(this.filename);
+        draw();
+        dateSimulation = 0;
+        Evenements = new ArrayList();
+
+        chefPompier = new ChefPompier(donnees);
     }
 
     public DonneesSimulation getDonnees() {

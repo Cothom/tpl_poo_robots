@@ -34,12 +34,14 @@ public class ChefPompier {
 				}
 			}	    
 		}
+        System.out.println("\n\nPoints eau initialisé\n\n");
 
 		this.robots = new ArrayList();
 		for (int i = 0; i < donnees.getIndiceRobots(); i++) {
 			donnees.getRobot(i).setChefPompier(this);
 			robots.add(donnees.getRobot(i));
 		}
+        System.out.println("\n\nConstructeur Pompier initialisé\n\n");
 
 	}
 
@@ -51,6 +53,10 @@ public class ChefPompier {
 		return this.incendies;
 	}
 
+    public Incendie getIncendie(int i) {
+        return (Incendie) this.incendies.get(i);
+    }
+
 	public ArrayList getIncendiesNonAffectes() {
 		return this.incendiesNonAffectes;
 	}
@@ -58,6 +64,10 @@ public class ChefPompier {
 	public ArrayList getPointsEau() {
 		return this.pointsEau;
 	}
+
+    public Case getPointEau(int i) {
+        return (Case) this.pointsEau.get(i);
+    }
 
 	public ArrayList getRobots() {
 		return this.robots;
@@ -90,7 +100,7 @@ public class ChefPompier {
 				if (robot.toString() == "Drone") {
 				    dest = positionIncendie;
 				} else {
-				    dest = robot.caseLaPlusProcheAutour(positionIncendie, carte);
+				    dest = (Case) robot.caseLaPlusProcheAutour(positionIncendie, carte).getObjet();
 				}
 				boolean test = proposition(robot , dest, this.carte);
 				if (robot.toString() == "Roues" || robot.toString() == "Pattes") {

@@ -42,7 +42,7 @@ public class TestAffichage {
 		GUISimulator gui = new GUISimulator(largeur, hauteur, Color.WHITE);
 
 		// création du simulateur
-		Simulateur simulateur = new Simulateur(gui, donnees);
+		Simulateur simulateur = new Simulateur(gui, donnees, args[0]);
 		
 	}
 }

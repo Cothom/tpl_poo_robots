@@ -19,7 +19,6 @@ public class Sommet {
 	public Sommet(CalculChemin pCc, Case pCase) {
 		this.cc = pCc;
 		this.position = pCase;
-		//		this.poids = pPoids;
 		this.tabVoisins = new Vector();
 		this.poidsVoisins = new Vector();
 		this.estMarque = false;

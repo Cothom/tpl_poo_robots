@@ -1,5 +1,7 @@
 package robots;
 
+import java.util.Vector;
+
 import cpcc.*;
 import maps.*;
 
@@ -26,6 +28,12 @@ public class RobotChenilles extends Robot {
 		this.vitesseForet = this.vitesse / 2;
 
 		this.setPosition(pPosition);
+
+        this.cc = new CalculChemin(this);
+        this.cheminsIncendies = new Vector();
+        this.cheminsRecharge = new Vector();
+        this.incendiesInaccessibles = new Vector();
+        this.rechargesInaccessibles = new Vector();
 	}
 
 	public void setPosition(Case pPosition) {

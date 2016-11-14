@@ -1,5 +1,8 @@
 package robots;
  
+import java.util.Vector;
+
+import cpcc.*;
 import maps.*;
 
 public class RobotPattes extends Robot {
@@ -20,6 +23,11 @@ public class RobotPattes extends Robot {
 
 		this.setPosition(pPosition);
 
+        this.cc = new CalculChemin(this);
+        this.cheminsIncendies = new Vector();
+        this.cheminsRecharge = new Vector();
+        this.incendiesInaccessibles = new Vector();
+        this.rechargesInaccessibles = new Vector();
 	}
 
 	public void setPosition(Case pPosition) {
