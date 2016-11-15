@@ -32,6 +32,10 @@ public class Chemin {
 		return this.tempsParcours;
 	}
 
+    public void setTempsParcours(double t) {
+	    this.tempsParcours = t;
+	}
+
 	public int getNbSommets() {
 		return this.tabSommets.size();
 	}

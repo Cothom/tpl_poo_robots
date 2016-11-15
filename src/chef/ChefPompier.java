@@ -117,20 +117,22 @@ public class ChefPompier {
 //				}
 //				if (proposition(robot , dest, this.carte)) { //
 //				if (proposition(robot , incendie)) { //
-                long date = 0;
-//                CalculChemin cc = new CalculChemin(carte, robot);
-                Chemin chemin = robot.dijkstra(dest);
-                System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());
-                if (!robot.estOccupe() && chemin.getTempsParcours() < Double.POSITIVE_INFINITY) {
-                    robot.ajouteDeplacementChemin(chemin);
+				if (!robot.estOccupe()) {
+                    long date = 0;
+                    //                CalculChemin cc = new CalculChemin(carte, robot);
+                    Chemin chemin = robot.dijkstra(dest);
+                    if (chemin.getTempsParcours() < Double.POSITIVE_INFINITY && chemin.getNbSommets() > 0) {
+                        System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());
+                        robot.ajouteDeplacementChemin(chemin);
 
-                    for (int k=1; k < chemin.getNbSommets(); k++) {
-                        date += (long) chemin.getSommet(k).getTempsTraverse();
+                        for (int k=1; k < chemin.getNbSommets(); k++) {
+                            date += (long) chemin.getSommet(k).getTempsTraverse();
+                        }
+
+                        robot.eteindreIncendie(date, incendie, carte);	   
+                        incendiesAffectes.add(incendie);    
+                        break;
                     }
-
-                    robot.eteindreIncendie(date, incendie, carte);	   
-                    incendiesAffectes.add(incendie);    
-                    break;
                 }
 			}
 

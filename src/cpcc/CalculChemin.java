@@ -134,7 +134,7 @@ public class CalculChemin {
             }
 
         }
-        }
+    }
 
     private Chemin renverserChemin(Chemin c) {
         Chemin r = new Chemin(this.carte, this.robot);
@@ -168,8 +168,23 @@ public class CalculChemin {
         Sommet courant = source;
         source.setDistanceSource(0);
 
-        System.out.println("Coords source : " + src.getLigne() + " " + src.getColonne());
-        System.out.println("Coords destin : " + dst.getLigne() + " " + dst.getColonne());
+        //System.out.println("Coords source : " + src.getLigne() + " " + src.getColonne());
+        //System.out.println("Coords destin : " + dst.getLigne() + " " + dst.getColonne());
+        /* TEST pour ne pas calculer dijkstra quand c'est pas la peine */
+        if (this.robot.toString() != "Drone") {
+            boolean incendieAccessible = false;
+            for (Sommet v : destin.getVoisins()) {
+                if (this.robot.getVitesse(dst.getNature()) > 0) {
+                    incendieAccessible = true;
+                    break;
+                }
+            }
+            if (!incendieAccessible) {
+                Chemin c = new Chemin(this.carte, this.robot);
+                c.setTempsParcours(Double.POSITIVE_INFINITY);
+                return c;
+            }
+        }
 //        Scanner sc = new Scanner(System.in);
 //        sc.nextLine();
 //        while (!this.tousMarques()) {
