@@ -1,5 +1,8 @@
 package events;
 
+/**
+ * Classe abstraite qui permet d'implémenter un événement.
+ */
 public abstract class Evenement {
 	private long date;
 
@@ -13,6 +16,9 @@ public abstract class Evenement {
 		return this.date;
 	}
 
+	/**
+	 * Méthode abstraite qui effectuera une action différente en fonction du type de l'événement.
+	 */
 	public abstract void execute();
 }
 

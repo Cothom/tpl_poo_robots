@@ -21,6 +21,12 @@ import gui.Simulable;
 import gui.Text;
 
 
+/**
+* Cette classe permet à la fois d'afficher les graphismes (la carte, les robots.. etc) et de gérer les événements. 
+* Elle permet de gérer l'ensemble de la simulation car c'est cette classe qui contient toutes les données du problème.
+* Elle permet ainsi de mettre à jour la fenêtre d'affichage principale.
+*/
+
 public class Simulateur implements Simulable {
     private GUISimulator gui;
 
@@ -66,6 +72,9 @@ public class Simulateur implements Simulable {
         dessineRobots();
     }
 
+    /**
+     * Fonction qui dessine la carte sur la fenêtre principale.
+     */
     private void dessineCarte() {
         Carte carte = donnees.getCarte();
 
@@ -86,6 +95,13 @@ public class Simulateur implements Simulable {
         }
     }
 
+    /**
+     * Fonction qui dessine une case aux coordonnées renseignées dans les paramètres sur la fenêtre principale.
+     * @param x
+     * @param y
+     * @param pCase
+     * @param tailleCase
+     */
     private void dessineCase(int x, int y, Case pCase, int tailleCase) {
 
         NatureTerrain nature = pCase.getNature();	
@@ -115,7 +131,11 @@ public class Simulateur implements Simulable {
 
 
     }
-
+    
+    
+    /**
+     *  Fonction qui dessine les incendies sur la fenêtre principale.
+     */
     private void dessineIncendies() {
         Incendie[] incendies = donnees.getIncendies();
         int nb_incendies = donnees.getIndiceIncendies();
@@ -146,8 +166,9 @@ public class Simulateur implements Simulable {
 
 
 
-
-
+    /**
+     *  Fonction qui dessine les robots sur la fenêtre principale.
+     */
     private void dessineRobots() {
         Robot[] robots = donnees.getRobots();
 
@@ -195,6 +216,10 @@ public class Simulateur implements Simulable {
     }
 
 
+    /**
+     * Fonction qui ajoute un evenement a la liste des événements.
+     * @param e
+     */
     public void ajouteEvenement(Evenement e) {
         long date = e.getDate();
         if (date < this.dateSimulation)
@@ -212,17 +237,28 @@ public class Simulateur implements Simulable {
         Evenements.add(i, e);
     }
 
+    /**
+     * Fonction qui incremente la date courante de simulation.
+     */
     private void incrementeDate() {
         dateSimulation++;
     }
 
-    private boolean simulationTerminee() {
+    /**
+     * Fonction qui indique si la simulation est terminee.
+     * @return
+     */
+    private Boolean simulationTerminee() {
         if (Evenements.size() != 0) 
             return false;
         else
             return true;
     }
 
+    
+    /**
+     * Fonction qui indique l'état de la simulation.
+     */
     private void afficheEtatSim() {
         for (int i = 0; i < this.donnees.getIndiceRobots(); i++) {
             System.out.println("Etat Robot " + i + " " + donnees.getRobot(i).toString() + " : " +  donnees.getRobot(i).getEtatRobot());

@@ -85,7 +85,7 @@ public class ChefPompier {
 				robot = ((Robot) robots.get(j));
                 dest = positionIncendie;
 				if (!robot.estOccupe() && robot.getVitesse(dest.getNature()) > 0) {
-                    long date = 0;
+                    long date = 0;	
                     Chemin chemin = robot.dijkstra(dest);
                     if (chemin.getTempsParcours() < Double.POSITIVE_INFINITY && chemin.getNbSommets() > 0) {
                         //System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());

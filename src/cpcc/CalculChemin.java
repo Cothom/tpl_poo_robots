@@ -191,6 +191,7 @@ public class CalculChemin {
      * @return le chemin le plus court entre src et dst
      */
     public Chemin dijkstra(Case src, Case dst) {
+	if (this.sommets == null) {System.out.println("pd de conte");}
         Sommet source = this.sommets[src.getLigne()][src.getColonne()];
         Sommet destin = this.sommets[dst.getLigne()][dst.getColonne()];
         int lDestin = destin.getCase().getLigne();

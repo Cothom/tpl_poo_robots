@@ -1,5 +1,8 @@
 package maps;
 
+/**
+ * Classe qui permet de socker les informations relatives a un incendie.
+ */
 public class Incendie {
 
 	private Case position;
@@ -15,10 +18,17 @@ public class Incendie {
 		this.intensite = pIntensite;
 	}
 
+	/**
+	 * Permet de décrémenter l'intensite de l'incendie.
+	 * @param nbLitres
+	 */
 	public void eteindre(int nbLitres) {
 		this.intensite = (nbLitres > this.intensite) ? 0 : this.intensite - nbLitres;
 	}
 
+	/**
+	 * Permet de savoir si un incendie est éteint ou non.
+	 */
 	public boolean estEteint() {
 		return (this.intensite == 0) ? true : false;
 	}

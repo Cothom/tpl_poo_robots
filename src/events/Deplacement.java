@@ -4,6 +4,9 @@ import chef.EtatRobot;
 import maps.*;
 import robots.*;
 
+/**
+ * Classe qui permet a un robot d'effectuer un déplacement sur une case.
+ */
 public class Deplacement extends Evenement {
 
 	private Robot robot;
@@ -39,6 +42,10 @@ public class Deplacement extends Evenement {
 		}		
 	}
     
+	/**
+	 * Fonction qui effectue le déplacement a une date donnée. 
+	 * Elle renvoie une erreur si le robot n'est pas sur une case adjacente à celle-ci.
+	 */	
 	@Override
 	public void execute() {
 	    int d_x = caseDestination.getColonne() - robot.getPosition().getColonne();
