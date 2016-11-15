@@ -84,17 +84,6 @@ public class CalculChemin {
         return this.robot;
     }
 
-    private boolean tousMarques() {
-        for (int i = 0; i < this.nbLignes; i++) {
-            for (int j = 0; j < this.nbColonnes; j++) {
-                if (!this.sommets[i][j].getEstMarque()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     private Sommet sommetMin() {
         int x = 0;
         int y = 0;
@@ -163,17 +152,6 @@ public class CalculChemin {
             courant.setEstMarque(true);
         }
         return cheminComplet(source, destin);
-    }
-
-    public void dijkstra(Case src) {
-        Sommet source = this.sommets[src.getLigne()][src.getColonne()];
-        source.setDistanceSource(0);
-        Sommet courant = source;
-        while (!this.tousMarques()) {
-            courant = this.sommetMin();
-            courant.setEstMarque(true);
-            this.majDistances(courant);
-        }
     }
 
     public void afficherChemin(Chemin c) {

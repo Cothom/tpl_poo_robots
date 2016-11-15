@@ -10,7 +10,6 @@ import robots.*;
 public class ChefPompier {
 
 	private Carte carte;
-	private ArrayList incendies;
 	private ArrayList incendiesNonAffectes;
 	private ArrayList pointsEau;
 	private ArrayList robots;
@@ -18,11 +17,9 @@ public class ChefPompier {
 	public ChefPompier(DonneesSimulation donnees) {
 		this.carte = donnees.getCarte();
 
-		this.incendies = new ArrayList();
 		this.incendiesNonAffectes = new ArrayList();
 
 		for (int i = 0; i < donnees.getIndiceIncendies(); i++) {
-			incendies.add(donnees.getIncendie(i));
 			incendiesNonAffectes.add(donnees.getIncendie(i));
 		}
 
@@ -46,14 +43,6 @@ public class ChefPompier {
 	public Carte getCarte() {
 		return this.carte;
 	}
-
-	public ArrayList getIncendies() {
-		return this.incendies;
-	}
-
-    public Incendie getIncendie(int i) {
-        return (Incendie) this.incendies.get(i);
-    }
 
 	public ArrayList getIncendiesNonAffectes() {
 		return this.incendiesNonAffectes;
