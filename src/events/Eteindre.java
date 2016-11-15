@@ -1,9 +1,12 @@
 package events;
 
 import chef.EtatRobot;
+
 import maps.*;
 import robots.*;
-
+/**
+ * Classe qui permet a un robot d'eteindre un incendie.
+ */
 public class Eteindre extends Evenement {
 
     private Robot robot;
@@ -17,6 +20,10 @@ public class Eteindre extends Evenement {
         this.carte = pCarte;
     }
 
+    /**
+	 * Fonction qui effectue l'action d'un déversement unitaire par le robot sur l'incendie. 
+	 * Elle renvoie une erreur si le robot n'est pas sur la case de l'incendie.
+	 */
     @Override
     public void execute() {
         int d_x = incendie.getPosition().getColonne() - robot.getPosition().getColonne();

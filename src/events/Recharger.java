@@ -1,9 +1,12 @@
 package events;
 
 import chef.EtatRobot;
+
 import maps.*;
 import robots.*;
-
+/**
+ * Classe qui permet a un robot de recharger son reservoir.
+ */
 public class Recharger extends Evenement {
 
 	private Robot robot;
@@ -14,7 +17,11 @@ public class Recharger extends Evenement {
 		this.robot = pRobot;
 		this.carte = pCarte;
 	}
-
+	
+	/**
+	 * Fonction qui remplit le reservoir du robot a une date donnee.
+	 * Elle renvoie une erreur si le robot n'est pas a coté d'une case d'eau.
+	 */	
 	@Override
 	public void execute() {
 		robot.remplirReservoir();

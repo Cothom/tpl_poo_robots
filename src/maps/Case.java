@@ -2,6 +2,9 @@ package maps;
 
 import robots.Robot;
 
+/**
+ * Classe qui permet de stocker les informations relatives a une case.
+ */
 public class Case {
 	private int ligne;
 	private int colonne;
@@ -35,6 +38,11 @@ public class Case {
 		this.nature = pNature;
 	}
 
+	/**
+	 * Permet de savoir si une case est accessible par un robot.
+	 * @param r
+	 * @return
+	 */
 	public boolean estAccessible(Robot r) {
 		return (r.getVitesse(this.nature) > 0) ? true : false;
 	}

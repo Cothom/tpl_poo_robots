@@ -2,6 +2,9 @@ package maps;
 
 import cpcc.*;
 
+/**
+ * Classe qui permet de stocker les infomations de la carte.
+ */
 public class Carte {
 
 	private Case[][] matrice;
@@ -25,9 +28,6 @@ public class Carte {
 		}
 	}
 
-	public void Evenement(long date) {
-	}
-
 	public int getNbLignes() {
 		return this.nbLignes;
 	}
@@ -43,7 +43,13 @@ public class Carte {
 	public Case getCase(int ligne, int colonne) {
 		return this.matrice[ligne][colonne];
 	}
-
+	
+	/**
+	 * Permet de savoir si une case possède un voisin dans une direction donnée.
+	 * @param src
+	 * @param dir
+	 * @return
+	 */
 	public boolean voisinExiste(Case src, Direction dir) {
 		int dl = CalculChemin.getDeltaL(dir);
 		int dc = CalculChemin.getDeltaC(dir);
@@ -57,6 +63,12 @@ public class Carte {
 		return r;
 	}
 
+	/**
+	 * Permet d'obtenir le voisin d'une case dans une direction donnée.
+	 * @param src
+	 * @param dir
+	 * @return
+	 */
 	public Case getVoisin(Case src, Direction dir) {
 		Case r;
 		if (!voisinExiste(src, dir)) throw new IllegalArgumentException("Argument invalide : cette case n'a pas de voisin dans cette direction.");
