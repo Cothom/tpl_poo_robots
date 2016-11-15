@@ -160,7 +160,7 @@ public class CalculChemin {
     }
 
     public Chemin dijkstra(Case src, Case dst) {
-        //System.out.println("\n\nDEBUT : CalculChemin.dijkstra");
+        System.out.println("\n\nDEBUT : CalculChemin.dijkstra");
         Sommet source = this.sommets[src.getLigne()][src.getColonne()];
         Sommet destin = this.sommets[dst.getLigne()][dst.getColonne()];
         int lDestin = destin.getCase().getLigne();
@@ -170,21 +170,17 @@ public class CalculChemin {
 
         //System.out.println("Coords source : " + src.getLigne() + " " + src.getColonne());
         //System.out.println("Coords destin : " + dst.getLigne() + " " + dst.getColonne());
-        /* TEST pour ne pas calculer dijkstra quand c'est pas la peine */
-        if (this.robot.toString() != "Drone") {
-            boolean incendieAccessible = false;
-            for (Sommet v : destin.getVoisins()) {
-                if (this.robot.getVitesse(dst.getNature()) > 0) {
-                    incendieAccessible = true;
-                    break;
-                }
-            }
-            if (!incendieAccessible) {
-                Chemin c = new Chemin(this.carte, this.robot);
-                c.setTempsParcours(Double.POSITIVE_INFINITY);
-                return c;
-            }
-        }
+//        /* TEST pour ne pas calculer dijkstra quand c'est pas la peine */
+//      boolean incendieAccessible = false;
+//          if (this.robot.getVitesse(dst.getNature()) > 0) {
+//              incendieAccessible = true;
+//              break;
+//          }
+      if (this.robot.getVitesse(dst.getNature()) == 0) {
+          Chemin c = new Chemin(this.carte, this.robot);
+          c.setTempsParcours(Double.POSITIVE_INFINITY);
+          return c;
+      }
 //        Scanner sc = new Scanner(System.in);
 //        sc.nextLine();
 //        while (!this.tousMarques()) {
@@ -203,7 +199,7 @@ public class CalculChemin {
 
         }
 
-        //System.out.println("\n\nFIN (avant return): CalculChemin.dijkstra");
+        System.out.println("\n\nFIN (avant return): CalculChemin.dijkstra");
         return cheminComplet(source, destin);
     }
 

@@ -100,11 +100,11 @@ public class ChefPompier {
 			for (int j=0; j < robots.size(); j++) {
 				robot = ((Robot) robots.get(j));
 				//if (proposition(robot , positionIncendie, this.carte)) {
-				if (robot.toString() == "Drone") {
-				    dest = positionIncendie;
-				} else {
-				    dest = (Case) robot.caseLaPlusProcheAutour(positionIncendie, carte).getObjet();
-				}
+				//if (robot.toString() == "Drone") {
+                dest = positionIncendie;
+				//} else {
+				//    dest = (Case) robot.caseLaPlusProcheAutour(positionIncendie, carte).getObjet();
+				//}
 //				boolean test = proposition(robot , dest, this.carte);
 //				if (robot.toString() == "Roues" || robot.toString() == "Pattes") {
 //				    if (!robot.estOccupe()) {
@@ -117,7 +117,7 @@ public class ChefPompier {
 //				}
 //				if (proposition(robot , dest, this.carte)) { //
 //				if (proposition(robot , incendie)) { //
-				if (!robot.estOccupe()) {
+				if (!robot.estOccupe() && robot.getVitesse(dest.getNature()) > 0) {
                     long date = 0;
                     //                CalculChemin cc = new CalculChemin(carte, robot);
                     Chemin chemin = robot.dijkstra(dest);

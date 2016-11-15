@@ -25,10 +25,12 @@ public class Eteindre extends Evenement {
 	System.out.println("("+incendie.getPosition().getLigne()+","+incendie.getPosition().getColonne()+")");
 	System.out.println("("+robot.getPosition().getLigne()+","+robot.getPosition().getColonne()+")");
 		
-	if (robot.toString() == "Drone" && (d_x != 0 || d_y != 0)) {
-	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le Drone n'est pas au-dessus celui-ci.");
-	} else if (robot.toString() != "Drone" && (Math.abs(d_x) > 1 || Math.abs(d_y) > 1 || (Math.abs(d_x) == 1 && Math.abs(d_y) == 1) || (Math.abs(d_x) == 0 && Math.abs(d_y) == 0))) {
-	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le robot ("+ robot.toString() +") n'est pas a coté de celui-ci.");
+//	if (robot.toString() == "Drone" && (d_x != 0 || d_y != 0)) {
+//	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le Drone n'est pas au-dessus celui-ci.");
+//	} else if (robot.toString() != "Drone" && (Math.abs(d_x) > 1 || Math.abs(d_y) > 1 || (Math.abs(d_x) == 1 && Math.abs(d_y) == 1) || (Math.abs(d_x) == 0 && Math.abs(d_y) == 0))) {
+//	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le robot ("+ robot.toString() +") n'est pas a coté de celui-ci.");
+	if (d_x != 0 || d_y != 0) {
+	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le robot n'est pas au-dessus celui-ci.");
 	} else { 
 	    System.out.println("Intensite : " + incendie.getIntensite());
 	    System.out.println(robot.toString() + " Volume avant deversement  : " + robot.getVolumeDisponible());
