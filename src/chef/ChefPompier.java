@@ -79,47 +79,20 @@ public class ChefPompier {
 		}
 	}
 
-	public boolean proposition(Robot robot, Case caseIncendie, Carte carte) {
-		return !robot.estOccupe() && robot.cheminExiste(caseIncendie, carte);
-	}
-
-//    public boolean proposition(Robot r, Incendie i) {
-//        return !r.estOccupe() && !r.estInaccessible(i);
-//    }
-
 	public void strategieElementaire() {
 		Incendie incendie;
 		Case positionIncendie;
 		Case dest;
 		Robot robot;
 		ArrayList incendiesAffectes = new ArrayList();
-		//afficheIncendies();
 		for (int i=0; i < incendiesNonAffectes.size(); i++) {
 			incendie = (Incendie)incendiesNonAffectes.get(i);
 			positionIncendie = incendie.getPosition();
 			for (int j=0; j < robots.size(); j++) {
 				robot = ((Robot) robots.get(j));
-				//if (proposition(robot , positionIncendie, this.carte)) {
-				//if (robot.toString() == "Drone") {
                 dest = positionIncendie;
-				//} else {
-				//    dest = (Case) robot.caseLaPlusProcheAutour(positionIncendie, carte).getObjet();
-				//}
-//				boolean test = proposition(robot , dest, this.carte);
-//				if (robot.toString() == "Roues" || robot.toString() == "Pattes") {
-//				    if (!robot.estOccupe()) {
-//					System.out.println(robot.toString()+" non occupé");
-//				    }
-//				    System.out.println("chemin vers ("+dest.getLigne() +","+ dest.getColonne()+") existe ?");
-//				    if (robot.cheminExiste(dest, carte)) {
-//					System.out.println("Chemin existe");
-//				    }
-//				}
-//				if (proposition(robot , dest, this.carte)) { //
-//				if (proposition(robot , incendie)) { //
 				if (!robot.estOccupe() && robot.getVitesse(dest.getNature()) > 0) {
                     long date = 0;
-                    //                CalculChemin cc = new CalculChemin(carte, robot);
                     Chemin chemin = robot.dijkstra(dest);
                     if (chemin.getTempsParcours() < Double.POSITIVE_INFINITY && chemin.getNbSommets() > 0) {
                         System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());

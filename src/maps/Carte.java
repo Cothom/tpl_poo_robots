@@ -57,28 +57,6 @@ public class Carte {
 		return r;
 	}
 
-	//	public boolean voisinExiste(Case src, Direction dir) {
-	//		int ligne = src.getLigne();
-	//		int colonne = src.getColonne();
-	//		switch (dir) {
-	//			case NORD :
-	//				if (ligne <= 0) return false;
-	//				break;
-	//			case SUD :
-	//				if (ligne >= this.nbLignes - 1) return false;
-	//				break;
-	//			case OUEST :
-	//				if (colonne <= 0) return false;
-	//				break;
-	//			case EST :
-	//				if (colonne >= this.nbColonnes - 1) return false;
-	//				break;
-	//			default :
-	//				throw new IllegalArgumentException("Argument invalide : cette direction n'existe pas.");
-	//		}
-	//        return true;
-	//    }
-
 	public Case getVoisin(Case src, Direction dir) {
 		Case r;
 		if (!voisinExiste(src, dir)) throw new IllegalArgumentException("Argument invalide : cette case n'a pas de voisin dans cette direction.");

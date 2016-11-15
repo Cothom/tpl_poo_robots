@@ -49,6 +49,6 @@ public class Chemin {
 	}
 
 	public boolean estVide() {
-	    return (this.tabSommets.size() > 0) ? false : true; // Tu as inverse et j'ai corrige (Rana) ? OK ? ok
+	    return (this.tabSommets.size() > 0) ? false : true;
 	}
 }

@@ -8,7 +8,6 @@ public class Recharger extends Evenement {
 
 	private Robot robot;
 	private Carte carte;
-	/* Faut-il rajouter un attribut case si on recharge sur une case ? */
 
 	public Recharger(long pDate, Robot pRobot, Carte pCarte) {
 		super(pDate);

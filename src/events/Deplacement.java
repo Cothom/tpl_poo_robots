@@ -9,7 +9,6 @@ public class Deplacement extends Evenement {
 	private Robot robot;
 	private Case caseDestination;
 	private Carte carte;
-    // private int temps; INUTILE ?
 
     
 	public Deplacement(long pDate, Robot pRobot, Case pCaseDestination, Carte pCarte) {
@@ -41,7 +40,7 @@ public class Deplacement extends Evenement {
 	}
     
 	@Override
-	public void execute() { // Prendre en compte la vitesse de Deplacement
+	public void execute() {
 	    int d_x = caseDestination.getColonne() - robot.getPosition().getColonne();
 	    int d_y = caseDestination.getLigne() - robot.getPosition().getLigne();
 	    

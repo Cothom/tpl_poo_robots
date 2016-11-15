@@ -13,7 +13,7 @@ public class Eteindre extends Evenement {
     public Eteindre(long pDate, Robot pRobot, Incendie pIncendie, Carte pCarte) {
 	super(pDate);
 	this.robot = pRobot;
-	this.incendie = pIncendie; // Il faut rajouter un controle sur la position de l'incendie par rapport au robot
+	this.incendie = pIncendie;
 	this.carte = pCarte;
     }
 
@@ -25,10 +25,6 @@ public class Eteindre extends Evenement {
 	System.out.println("("+incendie.getPosition().getLigne()+","+incendie.getPosition().getColonne()+")");
 	System.out.println("("+robot.getPosition().getLigne()+","+robot.getPosition().getColonne()+")");
 		
-//	if (robot.toString() == "Drone" && (d_x != 0 || d_y != 0)) {
-//	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le Drone n'est pas au-dessus celui-ci.");
-//	} else if (robot.toString() != "Drone" && (Math.abs(d_x) > 1 || Math.abs(d_y) > 1 || (Math.abs(d_x) == 1 && Math.abs(d_y) == 1) || (Math.abs(d_x) == 0 && Math.abs(d_y) == 0))) {
-//	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le robot ("+ robot.toString() +") n'est pas a coté de celui-ci.");
 	if (d_x != 0 || d_y != 0) {
 	    throw new IllegalArgumentException("Impossible d'éteindre l'incendie : le robot n'est pas au-dessus celui-ci.");
 	} else { 
