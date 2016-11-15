@@ -8,6 +8,13 @@ import events.*;
 import maps.*;
 import simulator.*;
 
+/**
+ * Classe abstraite représentant un robot
+ * Un robot est capable de trouver son chemin vers une case de la carte
+ * et programme lui-même les évènements lui permettant d'y accéder
+ * Il est aussi capable de détecter qu'il doit aller se recharger
+ * et il le fait de manière autonome.
+ */
 public abstract class Robot {
 
     protected CalculChemin cc;
@@ -25,7 +32,16 @@ public abstract class Robot {
 	protected int tempsDeversUnitaire;
 	protected EtatRobot etatRobot = EtatRobot.LIBRE;
 	protected ChefPompier chefPompier;
+	/**
+	 * Change la position du robot vers la case pCase
+	 * @param pCase case sur laquelle on met le robot
+	 */
 	public abstract void setPosition(Case pCase);
+	/**
+	 * Retourne la vitesse du robot en fonction de la nature du terrain
+	 * @param nature
+	 * @return
+	 */
 	public abstract double getVitesse(NatureTerrain nature);
 	public abstract void deverserEau();
 	public abstract void remplirReservoir();
@@ -70,7 +86,12 @@ public abstract class Robot {
 	public void setEtatRobot(EtatRobot etat) {
 		this.etatRobot = etat;
 	}
-
+	/**
+	 * Cete fonction est utile car elle comprend la réinitialisation
+	 * des sommets de la classe CalculChemin.
+	 * @param dst
+	 * @return c C'est le chemin le plus court entre la position du robot et dst.
+	 */
     public Chemin dijkstra(Case dst) {
         Chemin c = this.cc.dijkstra(this.position, dst);
         this.cc.reinitSommets(this.simulateur.getCarte());
@@ -85,6 +106,13 @@ public abstract class Robot {
 		chefPompier.getIncendiesNonAffectes().add(incendie);
 	}
 
+	/**
+	 * Cherche la carte adjacente à la carte dest qui est la plus proche du robot
+	 * au sens du plus court chemin de la méthode CalculChemin.dijkstra
+	 * @param dest case dont le voisin le plus proche est recherché
+	 * @param carte permet d'accéder directement à la carte et donc aux cases
+	 * @return le voisin de dest le plus proche de robot ainsi que le chemin pour y arriver
+	 */
 	public PlusProcheObjet caseLaPlusProcheAutour(Case dest, Carte carte) {
 		Case voisin;
 		Case casePlusProche = dest;
@@ -109,7 +137,12 @@ public abstract class Robot {
 		return new PlusProcheObjet(casePlusProche, pcChemin);
 
 	}
-
+	/**
+	 * Calcule le plus cours chemin jusqu'à dest et programme
+	 * la suite des évènements Deplacements permettant au robot d'y arriver
+	 * @param dest case vers laquelle le robot doit se déplacer
+	 * @param carte permet d'accéder directement à la carte et donc aux cases
+	 */
 	public void ajouteDeplacementsVersDest(Case dest, Carte carte) {
 		/*
 		   - requiert Etat du robot Libre ou Reservoir vide
@@ -133,6 +166,13 @@ public abstract class Robot {
 		simulateur.ajouteEvenement(new Etat(dateEvenement, this, EtatRobot.LIBRE));
 	}
 
+	/**
+	 * Programme la suite des évènements nécessaire aux robots pour
+	 * éteindre l'incendie
+	 * @param date date à laquelle le robot commence à éteindre l'incendie
+	 * @param incendie l'incendie à éteindre
+	 * @param carte permet d'accéder directement à la carte et donc aux cases
+	 */
 	public void eteindreIncendie(long date, Incendie incendie, Carte carte) {
 
 		simulateur.ajouteEvenement(new Etat(simulateur.getDateSimulation() + date, this, EtatRobot.ETEINDRE));
@@ -153,7 +193,11 @@ public abstract class Robot {
 
 
 	}
-
+	/**
+	 * Trouve la case de rechargement la plus proche et programme la série d'évènements
+	 * pour y accéder
+	 * @param carte permet d'accéder directement à la carte et donc aux cases
+	 */
     public void seRecharger(Carte carte) {
 
         Case caseRechargement = (this.toString() == "Drone") ? (Case) chefPompier.getPointsEau().get(0) : (Case) this.caseLaPlusProcheAutour((Case) chefPompier.getPointsEau().get(0), carte).getObjet();
@@ -187,7 +231,11 @@ public abstract class Robot {
 	public boolean estOccupe() {
 		return (this.etatRobot == EtatRobot.LIBRE) ? false : true; 
 	}
-
+	
+	/**
+	 * Ajoute les évènements nécessaires au déplacement à partir du chemin
+	 * @param chemin permet de déduire les micro-déplacements à effectuer
+	 */
     public void ajouteDeplacementChemin(Chemin chemin) {
         long dateEvenement = simulateur.getDateSimulation();
         for (int i=1; i < chemin.getNbSommets(); i++) {

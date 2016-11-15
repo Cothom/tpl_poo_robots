@@ -5,6 +5,13 @@ import java.util.Vector;
 import robots.*;
 import maps.*;
 
+/**
+ * Représente une case dans le graphe utile CalculChemin.dijkstra
+ * avec ses voisins ainsi que d'autres informations nécessaires
+ * aux calculs de plus court chemin.
+ * @author contet
+ *
+ */
 public class Sommet {
 
 	private CalculChemin cc;
@@ -25,6 +32,10 @@ public class Sommet {
 		this.distanceSource = Double.POSITIVE_INFINITY;
 	}
 
+	/**
+	 * Recherche tous les voisins de la case représentée
+	 * et les stocke
+	 */
 	public void ajouterVoisins() {
 		int lVoisin = 0;
 		int cVoisin = 0;

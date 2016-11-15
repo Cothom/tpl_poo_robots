@@ -216,7 +216,7 @@ public class Simulateur implements Simulable {
         dateSimulation++;
     }
 
-    private Boolean simulationTerminee() {
+    private boolean simulationTerminee() {
         if (Evenements.size() != 0) 
             return false;
         else
@@ -246,7 +246,7 @@ public class Simulateur implements Simulable {
             Evenements.remove(0);
         }
 
-        //this.afficheEtatSim();
+        this.afficheEtatSim();
         gui.reset();
         draw();	      	
     }
@@ -254,11 +254,14 @@ public class Simulateur implements Simulable {
     @Override
     public void restart() {
         this.donnees = LecteurDonnees.creeDonnees(this.filename);
+        for (int i = 0; i < this.donnees.getIndiceRobots(); i++) {
+            this.donnees.getRobot(i).setSimulateur(this);
+        }
         draw();
         dateSimulation = 0;
         Evenements = new ArrayList();
 
-        chefPompier = new ChefPompier(donnees);
+        this.chefPompier = new ChefPompier(donnees);
     }
 
     public DonneesSimulation getDonnees() {

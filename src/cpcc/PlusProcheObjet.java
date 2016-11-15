@@ -1,5 +1,11 @@
 package cpcc;
 
+/**
+ * Classe permettant de stocker à la fois le chemin
+ * et l'objet vers lequel il va, on s'en sert avec la méthode
+ * Robot.caseLaPlusProcheAutour.
+ *
+ */
 public class PlusProcheObjet {
 
     private Object objet;

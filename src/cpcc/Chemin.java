@@ -5,6 +5,13 @@ import java.util.Vector;
 import robots.*;
 import maps.*;
 
+/**
+ * Classe représentant un chemin entre deux sommets et
+ * stocke tous les sommets intermediaires ainsi que le temps de
+ * parcours du chemin
+ * @author contet
+ *
+ */
 public class Chemin {
 
 	private Carte carte;
@@ -21,6 +28,10 @@ public class Chemin {
 		this.tabTemps = new Vector();
 	}
 
+	/**
+	 * Ajoute un sommet au chemin et actualise son temps de parcours
+	 * @param s
+	 */
 	public void ajouterSommet(Sommet s) {
 		this.tabSommets.add(s);
 		double temps = CalculChemin.calculPoidsArc(this.carte, ((Sommet) this.tabSommets.get(this.tabSommets.size()-1)).getCase(), s.getCase(), this.robot);

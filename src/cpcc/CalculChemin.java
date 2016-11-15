@@ -6,6 +6,10 @@ import java.util.Scanner;
 import robots.*;
 import maps.*;
 
+/**
+ * Classe contenant toutes les méthodes nécessaires aux calculs
+ * d'un plus court chemin grâce à l'algorithme de dijksra
+ */
 public class CalculChemin {
 
     private int nbLignes;
@@ -27,19 +31,38 @@ public class CalculChemin {
         return (double) pCarte.getTailleCases() / r.getVitesse(c.getNature());
     }
 
+    /**
+     * Retourne le temps que mettra le robot r pour aller de src à dst
+     * en calculant la moyenne des vitesses du robot sur les deux cases
+     * @param pCarte
+     * @param src
+     * @param dst
+     * @param r
+     * @return
+     */
     public static double calculPoidsArc(Carte pCarte, Case src, Case dst, Robot r) {
         if (r.getVitesse(src.getNature()) == 0 || r.getVitesse(dst.getNature()) == 0)
             return Double.POSITIVE_INFINITY;
         return (double) pCarte.getTailleCases() / ((r.getVitesse(src.getNature()) + r.getVitesse(dst.getNature())) / 2);
     }
-
+    
+    /**
+     * Retourne la différence de colonne à laquelle correspond la direction d
+     * @param d
+     * @return
+     */
     public static int getDeltaC(Direction d) {
         if (d == Direction.NORD || d == Direction.SUD) return 0;
         if (d == Direction.OUEST) return -1;
         if (d == Direction.EST) return 1;
         return 0;
     }
-
+    
+    /**
+     * Retourne la différence de ligne à laquelle correspond la direction d
+     * @param d
+     * @return
+     */
     public static int getDeltaL(Direction d) {
         if (d == Direction.OUEST || d == Direction.EST) return 0;
         if (d == Direction.NORD) return -1;
@@ -55,6 +78,12 @@ public class CalculChemin {
         return this.sommets[i][j];
     }
 
+    /**
+     * L'attribut carte de la classe n'a pas forcément été défini lors de la
+     * construction de l'objet.
+     * @param pCarte permet de déduire tous les sommets permettant à la classe
+     * de faire les calculs de plus court chemin.
+     */
     public void setCarte(Carte pCarte) {
         this.carte = pCarte;
         this.nbLignes = pCarte.getNbLignes();
@@ -62,7 +91,12 @@ public class CalculChemin {
         this.sommets = new Sommet[pCarte.getNbLignes()][pCarte.getNbColonnes()];
         this.reinitSommets(pCarte);
     }
-
+    
+    /**
+     * Réinitialise tous les sommets pour annuler les valeurs
+     * retenues lors des calculs précédents.
+     * @param c
+     */
     public void reinitSommets(Carte c) {
         for (int i = 0; i < c.getNbLignes(); i++) {
             for (int j = 0; j < c.getNbColonnes(); j++) {
@@ -84,6 +118,9 @@ public class CalculChemin {
         return this.robot;
     }
 
+    /**
+     * @return Renvoie le sommet actuellement le plus proche de la source du chemin
+     */
     private Sommet sommetMin() {
         int x = 0;
         int y = 0;
@@ -100,6 +137,12 @@ public class CalculChemin {
         return this.sommets[x][y];
     }
 
+    /**
+     * Apres le marquage d'un sommet minimum, on met à jour
+     * les distance à la source de ses voisins
+     * @param s Sommet dont les voisins voient leur distances à la source
+     * être actualisées
+     */
     private void majDistances(Sommet s) {
 		double poidsArc = 0;
         for(Sommet v : s.getVoisins()) {
@@ -119,7 +162,15 @@ public class CalculChemin {
         }
         return r;
     }
-
+    
+    /**
+     * Permet de déduire un chemin complet à partir du fait que chaque sommet
+     * connait son voisin par lequel le robot doit passer pour aller
+     * jusquau point de départ, src
+     * @param src point de départ du chemin
+     * @param dest point d'arrivée du chemin
+     * @return le chemin entre src et dest
+     */
     private Chemin cheminComplet(Sommet src, Sommet dest) {
         Chemin chemin = new Chemin(this.carte, this.robot);
         Sommet tmp = dest;
@@ -132,6 +183,13 @@ public class CalculChemin {
         return chemin;
     }
 
+    /**
+     * Méthode principale de l'algorithme de dijkstra, elle permet de trouver
+     * le plus court chemin entre les cases src et dst
+     * @param src point de départ du chemin
+     * @param dst point d'arrivée du chemin
+     * @return le chemin le plus court entre src et dst
+     */
     public Chemin dijkstra(Case src, Case dst) {
         Sommet source = this.sommets[src.getLigne()][src.getColonne()];
         Sommet destin = this.sommets[dst.getLigne()][dst.getColonne()];
@@ -154,6 +212,10 @@ public class CalculChemin {
         return cheminComplet(source, destin);
     }
 
+    /**
+     * Affiche un chemin sur la sortie standard de manière lisible
+     * @param c chemin à afficher
+     */
     public void afficherChemin(Chemin c) {
         System.out.println("Chemin le plus court entre "+ c.getSommet(0).getCase().getLigne() + ", " + c.getSommet(0).getCase().getColonne() + " et " + c.getSommet(c.getNbSommets()-1).getCase().getLigne() + ", " + c.getSommet(c.getNbSommets()-1).getCase().getColonne() + " pour le robot " + this.robot.toString());
         System.out.println("Tailles des cases : " + this.carte.getTailleCases());
@@ -163,7 +225,11 @@ public class CalculChemin {
             System.out.print("(" + c.getSommet(i).getCase().getLigne() + ", " + c.getSommet(i).getCase().getColonne() + ") ");
         }
 
-    }    
+    }
+    
+    /**
+     * Affiche les sommets qui non pas encore été marqués par l'algorithme de dijkstra
+     */
     private void afficheSommetsNonMarques() {
         for (int i = 0; i < this.nbLignes; i++) {
             for (int j = 0; j < this.nbColonnes; j++) {
@@ -174,4 +240,4 @@ public class CalculChemin {
         }
     }
 
-    }
+}

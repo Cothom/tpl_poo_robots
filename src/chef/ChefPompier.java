@@ -7,6 +7,11 @@ import data.*;
 import maps.*;
 import robots.*;
 
+/*
+ * La classe chefPompier représente l'entité qui gère les robots
+ * et leur répartition sur les différents incendies.
+ */
+
 public class ChefPompier {
 
 	private Carte carte;
