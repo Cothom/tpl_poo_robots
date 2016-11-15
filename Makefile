@@ -21,7 +21,7 @@
 #   -classpath : repertoire dans lequel sont cherches les .class deja compiles
 #   -sourcepath : repertoire dans lequel sont cherches les .java (dependances)
 
-all: testInvader testLecture testAffichage # Ajout de testAffichage
+all: testInvader testLecture testAffichage doc# Ajout de testAffichage
 
 testInvader:
 	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestInvader.java
@@ -57,5 +57,8 @@ exeAffichage3:
 exeAffichage4: 
 	java -classpath bin:bin/gui.jar TestAffichage cartes/spiralOfMadness-50x50.map
 
+doc:
+	mkdir -p doc
+	javadoc -d doc -classpath bin/gui.jar src src/*/*.java
 clean:
 	rm -rf bin/*.class
