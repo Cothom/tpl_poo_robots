@@ -235,7 +235,7 @@ public class Simulateur implements Simulable {
     @Override
     public void next() {	
         incrementeDate();
-        System.out.println(dateSimulation);
+        //System.out.println(dateSimulation);
 
         if (dateSimulation%10 == 0) {
             this.chefPompier.strategieElementaire();
@@ -246,7 +246,7 @@ public class Simulateur implements Simulable {
             Evenements.remove(0);
         }
 
-        this.afficheEtatSim();
+        //this.afficheEtatSim();
         gui.reset();
         draw();	      	
     }

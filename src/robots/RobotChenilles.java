@@ -80,8 +80,6 @@ public class RobotChenilles extends Robot {
         Case voisin;
         boolean aCoteCaseEau = false;
         CalculChemin cc = new CalculChemin(carte, this);
-        System.out.println("\n\nRobotChenille, case rechargement : " + this.position.toString());
-
 
         for (Direction d : Direction.values()) {	    
             if (carte.voisinExiste(this.position, d)) {

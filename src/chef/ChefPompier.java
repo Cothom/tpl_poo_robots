@@ -37,7 +37,6 @@ public class ChefPompier {
 
 		this.robots = new ArrayList();
 		for (int i = 0; i < donnees.getIndiceRobots(); i++) {
-            System.out.println("ChefPompier : Iteration " + i);
 			donnees.getRobot(i).setChefPompier(this);
 			robots.add(donnees.getRobot(i));
 		}
@@ -95,7 +94,7 @@ public class ChefPompier {
                     long date = 0;
                     Chemin chemin = robot.dijkstra(dest);
                     if (chemin.getTempsParcours() < Double.POSITIVE_INFINITY && chemin.getNbSommets() > 0) {
-                        System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());
+                        //System.out.println("robot "+j+" "+robot.toString()+" "+chemin.getSommet(0).getCase().toString()+" "+chemin.getSommet(chemin.getNbSommets()-1).getCase().toString()+" temps: "+chemin.getTempsParcours());
                         robot.ajouteDeplacementChemin(chemin);
 
                         for (int k=1; k < chemin.getNbSommets(); k++) {
